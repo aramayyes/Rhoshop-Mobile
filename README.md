@@ -1,3 +1,3 @@
-# rhoshop
+# Rhoshop
 
 Rhoshop mobile application.
