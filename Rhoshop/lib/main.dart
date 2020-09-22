@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'localization/app_localization.dart';
+import 'package:rhoshop/localization/app_localization.dart';
 
 void main() {
   runApp(RhoshopApp());
@@ -10,6 +10,10 @@ void main() {
 class RhoshopApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalization.of(context).appTitle,
       localizationsDelegates: [
