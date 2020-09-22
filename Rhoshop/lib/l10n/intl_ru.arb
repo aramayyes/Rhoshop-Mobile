@@ -1,8 +1,32 @@
 {
-  "@@last_modified": "2020-09-22T09:37:47.191646",
+  "@@last_modified": "2020-09-22T19:18:40.204873",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "logIn": "Вход",
+  "@logIn": {
+    "description": "Login text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signUp": "Регистрация",
+  "@signUp": {
+    "description": "Signup text",
+    "type": "text",
+    "placeholders": {}
+  },
+  "welcomeMessageTitle": "Приветствуем на Rhoshop",
+  "@welcomeMessageTitle": {
+    "description": "Title of the welcome message that is shown in intro page.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "welcomeMessageBody": "Исследуй нас",
+  "@welcomeMessageBody": {
+    "description": "Body of the welcome message that is shown in intro page.",
     "type": "text",
     "placeholders": {}
   }

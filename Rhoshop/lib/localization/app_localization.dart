@@ -23,7 +23,7 @@ class AppLocalization {
     );
   }
 
-  // list of locales
+  //#region Globals
   String get appTitle {
     return Intl.message(
       'Rhoshop',
@@ -31,6 +31,41 @@ class AppLocalization {
       desc: 'Application title',
     );
   }
+
+  String get logIn {
+    return Intl.message(
+      'Log in',
+      name: 'logIn',
+      desc: 'Login text',
+    );
+  }
+
+  String get signUp {
+    return Intl.message(
+      'Log in',
+      name: 'signUp',
+      desc: 'Signup text',
+    );
+  }
+  //#endregion Globals
+
+  //#region IntroScreen
+  String get welcomeMessageTitle {
+    return Intl.message(
+      'Welcome to Rhoshop',
+      name: 'welcomeMessageTitle',
+      desc: 'Title of the welcome message that is shown in intro page.',
+    );
+  }
+
+  String get welcomeMessageBody {
+    return Intl.message(
+      'Explore Us',
+      name: 'welcomeMessageBody',
+      desc: 'Body of the welcome message that is shown in intro page.',
+    );
+  }
+  //#endregion
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {
