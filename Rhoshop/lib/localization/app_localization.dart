@@ -42,7 +42,7 @@ class AppLocalization {
 
   String get signUp {
     return Intl.message(
-      'Log in',
+      'Signup',
       name: 'signUp',
       desc: 'Signup text',
     );

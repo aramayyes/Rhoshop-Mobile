@@ -12,7 +12,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "signUp": "Log in",
+  "signUp": "Signup",
   "@signUp": {
     "description": "Signup text",
     "type": "text",
