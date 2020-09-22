@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:rhoshop/localization/app_localization.dart';
+import 'package:rhoshop/screens/intro_screen.dart';
+import 'package:rhoshop/styles/app_colors.dart' as AppColors;
+
+import 'localization/app_localization.dart';
 
 void main() {
   runApp(RhoshopApp());
@@ -27,34 +30,29 @@ class RhoshopApp extends StatelessWidget {
       ],
       locale: Locale('en'),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: AppColors.primary,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  HomePage({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalization.of(context).appTitle),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Welcome!',
-              style: Theme.of(context).textTheme.headline4,
+        textTheme: TextTheme(
+            headline3: TextStyle(
+              color: AppColors.primaryText,
+              fontSize: 24,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w700,
             ),
-          ],
-        ),
+            subtitle2: TextStyle(
+              color: AppColors.primaryText,
+              fontSize: 18,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w400,
+            ),
+            button: TextStyle(
+              color: AppColors.secondaryText,
+              fontSize: 20,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w400,
+            )),
       ),
+      home: IntroScreen(),
     );
   }
 }
