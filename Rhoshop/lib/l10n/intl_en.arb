@@ -1,0 +1,9 @@
+{
+  "@@last_modified": "2020-09-22T09:37:47.191646",
+  "appTitle": "Rhoshop",
+  "@appTitle": {
+    "description": "Application title",
+    "type": "text",
+    "placeholders": {}
+  }
+}

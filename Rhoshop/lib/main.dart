@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'localization/app_localization.dart';
 
 void main() {
   runApp(RhoshopApp());
@@ -8,26 +11,34 @@ class RhoshopApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Rhoshop',
+      onGenerateTitle: (context) => AppLocalization.of(context).appTitle,
+      localizationsDelegates: [
+        const AppLocalizationDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: [
+        const Locale('en', ''),
+        const Locale('ru', ''),
+      ],
+      locale: Locale('en'),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(title: 'Home'),
+      home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatelessWidget {
-  HomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  HomePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(AppLocalization.of(context).appTitle),
       ),
       body: Center(
         child: Column(
