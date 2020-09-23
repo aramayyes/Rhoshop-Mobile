@@ -7,19 +7,22 @@ import 'package:rhoshop/styles/app_theme.dart' as AppTheme;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/regexps.dart' as RegExps;
 
-/// Provides functionality for user signing in.
-class SignInScreen extends StatefulWidget {
+/// Provides functionality for user signing up.
+class SignUpScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _SignInScreenState();
+  State<StatefulWidget> createState() => _SignUpScreenState();
 }
 
 /// Manages visibility for password input field.
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   /// Controls whether or not to show the password in input field.
-  var _obscureText = true;
+  var _passwordObscureText = true;
 
   /// Sign in form key.
   final _formKey = GlobalKey<FormState>();
+
+  /// Name from input field.
+  String name;
 
   /// Email address from input field.
   String email;
@@ -27,13 +30,17 @@ class _SignInScreenState extends State<SignInScreen> {
   /// Password from input field.
   String password;
 
-  /// Handles 'Sign In' button presses.
-  void onSignInButtonPressed() {
+  /// Handles 'Sign up' button presses.
+  void onSignUpButtonPressed() {
     if (_formKey.currentState.validate()) {
+      print(name);
       print(email);
       print(password);
     }
   }
+
+  /// Handles 'Sign in' button presses.
+  void onSignInButtonPressed() {}
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalization.of(context).signInScreenTitle,
+                    AppLocalization.of(context).signUpScreenTitle,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   SizedBox(
@@ -75,6 +82,15 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        TextFormField(
+                          decoration: AppTheme.constructTextFieldDecoration(
+                              AppLocalization.of(context).nameLabelText),
+                          validator: (value) => value.isEmpty ? '' : null,
+                          onChanged: (value) => name = value,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           decoration: AppTheme.constructTextFieldDecoration(
@@ -89,7 +105,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           height: 20,
                         ),
                         TextFormField(
-                          obscureText: _obscureText,
+                          obscureText: _passwordObscureText,
                           decoration: AppTheme.constructTextFieldDecoration(
                             AppLocalization.of(context).password,
                             suffixIcon: SizedBox(
@@ -99,14 +115,15 @@ class _SignInScreenState extends State<SignInScreen> {
                                 splashColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 icon: Icon(
-                                  _obscureText
+                                  _passwordObscureText
                                       ? Icons.visibility
                                       : Icons.visibility_off,
                                   color: AppColors.descriptionText,
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    _obscureText = !_obscureText;
+                                    _passwordObscureText =
+                                        !_passwordObscureText;
                                   });
                                 },
                               ),
@@ -120,9 +137,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           height: 60,
                         ),
                         PrimaryButton(
-                          onPressed: onSignInButtonPressed,
+                          onPressed: onSignUpButtonPressed,
                           child: Text(
-                            AppLocalization.of(context).signIn,
+                            AppLocalization.of(context).signUp,
                             style: Theme.of(context).textTheme.button,
                           ),
                         ),
@@ -137,11 +154,11 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       FlatButton(
                         padding: EdgeInsets.symmetric(horizontal: 0),
-                        onPressed: () {},
+                        onPressed: onSignInButtonPressed,
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         child: Text(
-                          AppLocalization.of(context).noAccountText,
+                          AppLocalization.of(context).hasAccountText,
                           style: Theme.of(context)
                               .textTheme
                               .subtitle2
@@ -149,11 +166,11 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                       FlatButton(
-                        onPressed: () {},
+                        onPressed: onSignInButtonPressed,
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         child: Text(
-                          AppLocalization.of(context).signUp,
+                          AppLocalization.of(context).signIn,
                           style: Theme.of(context).textTheme.subtitle2,
                         ),
                       )
