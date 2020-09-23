@@ -40,7 +40,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   /// Handles 'Sign in' button presses.
-  void onSignInButtonPressed() {}
+  void onSignInButtonPressed() {
+    Navigator.popAndPushNamed(context, '/sign_in');
+  }
 
   @override
   Widget build(BuildContext context) {

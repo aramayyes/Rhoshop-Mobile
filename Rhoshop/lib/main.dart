@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:rhoshop/screens/intro_screen.dart';
+import 'package:rhoshop/localization/app_localization.dart';
+import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
-
-import 'localization/app_localization.dart';
 
 void main() {
   runApp(RhoshopApp());
@@ -30,6 +29,11 @@ class RhoshopApp extends StatelessWidget {
         const Locale('ru', ''),
       ],
       locale: Locale('en'),
+      routes: {
+        '/': (context) => IntroScreen(),
+        '/sign_in': (context) => SignInScreen(),
+        '/sign_up': (context) => SignUpScreen()
+      },
       theme: ThemeData(
         primaryColor: AppColors.primary,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -59,7 +63,6 @@ class RhoshopApp extends StatelessWidget {
               fontWeight: FontWeight.w400,
             )),
       ),
-      home: IntroScreen(),
     );
   }
 }

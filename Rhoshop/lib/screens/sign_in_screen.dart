@@ -27,12 +27,17 @@ class _SignInScreenState extends State<SignInScreen> {
   /// Password from input field.
   String password;
 
-  /// Handles 'Sign In' button presses.
+  /// Handles 'Sign in' button presses.
   void onSignInButtonPressed() {
     if (_formKey.currentState.validate()) {
       print(email);
       print(password);
     }
+  }
+
+  /// Handles 'Sign up' button presses.
+  void onSignUpButtonPressed() {
+    Navigator.popAndPushNamed(context, '/sign_up');
   }
 
   @override
@@ -137,7 +142,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       FlatButton(
                         padding: EdgeInsets.symmetric(horizontal: 0),
-                        onPressed: () {},
+                        onPressed: onSignUpButtonPressed,
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         child: Text(
@@ -149,7 +154,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                       FlatButton(
-                        onPressed: () {},
+                        onPressed: onSignUpButtonPressed,
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         child: Text(
