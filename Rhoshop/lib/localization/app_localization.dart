@@ -28,23 +28,39 @@ class AppLocalization {
     return Intl.message(
       'Rhoshop',
       name: 'appTitle',
-      desc: 'Application title',
+      desc: 'Application title.',
     );
   }
 
-  String get logIn {
+  String get signIn {
     return Intl.message(
-      'Log in',
-      name: 'logIn',
-      desc: 'Login text',
+      'Sign in',
+      name: 'signIn',
+      desc: 'Sign in text.',
     );
   }
 
   String get signUp {
     return Intl.message(
-      'Signup',
+      'Sign up',
       name: 'signUp',
-      desc: 'Signup text',
+      desc: 'Sign up text.',
+    );
+  }
+
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: 'Email text.',
+    );
+  }
+
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: 'Password text.',
     );
   }
   //#endregion Globals
@@ -65,7 +81,25 @@ class AppLocalization {
       desc: 'Body of the welcome message that is shown in intro page.',
     );
   }
-  //#endregion
+  //#endregion IntroScreen
+
+  //#region SignInScreen
+  String get signInScreenTitle {
+    return Intl.message(
+      'Sign in',
+      name: 'signInScreenTitle',
+      desc: 'Title of the sign in screen.',
+    );
+  }
+
+  String get noAccountText {
+    return Intl.message(
+      "Don't have an account?",
+      name: 'noAccountText',
+      desc: 'Asks whether or not user has an account.',
+    );
+  }
+  //#endregion SignInScreen
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

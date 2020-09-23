@@ -1,20 +1,32 @@
 {
-  "@@last_modified": "2020-09-22T19:18:40.204873",
+  "@@last_modified": "2020-09-23T12:52:52.083576",
   "appTitle": "Rhoshop",
   "@appTitle": {
-    "description": "Application title",
+    "description": "Application title.",
     "type": "text",
     "placeholders": {}
   },
-  "logIn": "Log in",
-  "@logIn": {
-    "description": "Login text",
+  "signIn": "Sign in",
+  "@signIn": {
+    "description": "Sign in text.",
     "type": "text",
     "placeholders": {}
   },
-  "signUp": "Signup",
+  "signUp": "Sign up",
   "@signUp": {
-    "description": "Signup text",
+    "description": "Sign up text.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email text.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password text.",
     "type": "text",
     "placeholders": {}
   },
@@ -27,6 +39,18 @@
   "welcomeMessageBody": "Explore Us",
   "@welcomeMessageBody": {
     "description": "Body of the welcome message that is shown in intro page.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signInScreenTitle": "Sign in",
+  "@signInScreenTitle": {
+    "description": "Title of the sign in screen.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "noAccountText": "Don't have an account?",
+  "@noAccountText": {
+    "description": "Asks whether or not user has an account.",
     "type": "text",
     "placeholders": {}
   }

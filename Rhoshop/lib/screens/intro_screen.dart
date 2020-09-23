@@ -1,11 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:rhoshop/components/primary_button.dart';
 import 'package:rhoshop/localization/app_localization.dart';
+import 'package:rhoshop/screens/sign_in_screen.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 
-/// Welcomes user and provides functionality to log in or signup.
+/// Welcomes user and provides routes to sign in and sign up screens.
 class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,9 +33,16 @@ class IntroScreen extends StatelessWidget {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.7,
               child: PrimaryButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignInScreen(),
+                    ),
+                  );
+                },
                 child: Text(
-                  AppLocalization.of(context).logIn,
+                  AppLocalization.of(context).signIn,
                   style: Theme.of(context).textTheme.button,
                 ),
               ),

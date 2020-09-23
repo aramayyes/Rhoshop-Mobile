@@ -22,8 +22,12 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appTitle" : MessageLookupByLibrary.simpleMessage("Rhoshop"),
-    "logIn" : MessageLookupByLibrary.simpleMessage("Log in"),
-    "signUp" : MessageLookupByLibrary.simpleMessage("Signup"),
+    "email" : MessageLookupByLibrary.simpleMessage("Email"),
+    "noAccountText" : MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
+    "password" : MessageLookupByLibrary.simpleMessage("Password"),
+    "signIn" : MessageLookupByLibrary.simpleMessage("Sign in"),
+    "signInScreenTitle" : MessageLookupByLibrary.simpleMessage("Sign in"),
+    "signUp" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "welcomeMessageBody" : MessageLookupByLibrary.simpleMessage("Explore Us"),
     "welcomeMessageTitle" : MessageLookupByLibrary.simpleMessage("Welcome to Rhoshop")
   };

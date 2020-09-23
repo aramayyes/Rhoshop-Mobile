@@ -18,6 +18,7 @@ class RhoshopApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => AppLocalization.of(context).appTitle,
       localizationsDelegates: [
         const AppLocalizationDelegate(),
@@ -33,6 +34,12 @@ class RhoshopApp extends StatelessWidget {
         primaryColor: AppColors.primary,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: TextTheme(
+            headline1: TextStyle(
+              color: AppColors.primaryText,
+              fontSize: 46,
+              fontFamily: 'Nunito',
+              fontWeight: FontWeight.w700,
+            ),
             headline3: TextStyle(
               color: AppColors.primaryText,
               fontSize: 24,
