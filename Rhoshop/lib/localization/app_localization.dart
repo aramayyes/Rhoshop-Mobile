@@ -100,6 +100,32 @@ class AppLocalization {
     );
   }
   //#endregion SignInScreen
+
+  //#region SignUpScreen
+  String get signUpScreenTitle {
+    return Intl.message(
+      'Sign up',
+      name: 'signUpScreenTitle',
+      desc: 'Title of the sign up screen.',
+    );
+  }
+
+  String get nameLabelText {
+    return Intl.message(
+      'Name',
+      name: 'nameLabelText',
+      desc: 'Text of the label for text field that takes user name.',
+    );
+  }
+
+  String get hasAccountText {
+    return Intl.message(
+      "Already have an account?",
+      name: 'hasAccountText',
+      desc: 'Asks whether the user already has an account.',
+    );
+  }
+  //#endregion SignUpScreen
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

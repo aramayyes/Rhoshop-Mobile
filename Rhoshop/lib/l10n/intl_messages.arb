@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-23T12:52:52.083576",
+  "@@last_modified": "2020-09-23T14:43:32.024021",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -51,6 +51,24 @@
   "noAccountText": "Don't have an account?",
   "@noAccountText": {
     "description": "Asks whether or not user has an account.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "signUpScreenTitle": "Sign up",
+  "@signUpScreenTitle": {
+    "description": "Title of the sign up screen.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "nameLabelText": "Name",
+  "@nameLabelText": {
+    "description": "Text of the label for text field that takes user name.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hasAccountText": "Already have an account?",
+  "@hasAccountText": {
+    "description": "Asks whether the user already has an account.",
     "type": "text",
     "placeholders": {}
   }

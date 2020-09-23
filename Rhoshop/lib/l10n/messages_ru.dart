@@ -23,11 +23,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static _notInlinedMessages(_) => <String, Function> {
     "appTitle" : MessageLookupByLibrary.simpleMessage("Rhoshop"),
     "email" : MessageLookupByLibrary.simpleMessage("Эл. почта"),
+    "hasAccountText" : MessageLookupByLibrary.simpleMessage("Уже есть учётная запись?"),
+    "nameLabelText" : MessageLookupByLibrary.simpleMessage("Имя"),
     "noAccountText" : MessageLookupByLibrary.simpleMessage("Нет учетной записи?"),
     "password" : MessageLookupByLibrary.simpleMessage("Пароль"),
     "signIn" : MessageLookupByLibrary.simpleMessage("Вход"),
     "signInScreenTitle" : MessageLookupByLibrary.simpleMessage("Вход"),
     "signUp" : MessageLookupByLibrary.simpleMessage("Регистрация"),
+    "signUpScreenTitle" : MessageLookupByLibrary.simpleMessage("Регистрация"),
     "welcomeMessageBody" : MessageLookupByLibrary.simpleMessage("Исследуй нас"),
     "welcomeMessageTitle" : MessageLookupByLibrary.simpleMessage("Приветствуем на Rhoshop")
   };
