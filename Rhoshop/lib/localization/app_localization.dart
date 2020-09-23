@@ -126,6 +126,49 @@ class AppLocalization {
     );
   }
   //#endregion SignUpScreen
+
+  //#region HomeScreen
+  String get searchText {
+    return Intl.message(
+      "Search",
+      name: 'searchText',
+      desc: 'Text (title or hint text) of the search bar.',
+    );
+  }
+
+  String get categoriesSectionTitle {
+    return Intl.message(
+      "Categories",
+      name: 'categoriesSectionTitle',
+      desc: 'Title of the categories section.',
+    );
+  }
+
+  String get newArrivalsSectionTitle {
+    return Intl.message(
+      "New Arrivals",
+      name: 'newArrivalsSectionTitle',
+      desc: 'Title of the new Arrivals section.',
+    );
+  }
+
+  String get bestSellSectionTitle {
+    return Intl.message(
+      "Best Sell",
+      name: 'bestSellSectionTitle',
+      desc: 'Title of the best sell section.',
+    );
+  }
+
+  String get seeAllText {
+    return Intl.message(
+      "See all",
+      name: 'seeAllText',
+      desc:
+          'Text of the button, which is intended for seeing all items in a section.',
+    );
+  }
+  //#endregion HomeScreen
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

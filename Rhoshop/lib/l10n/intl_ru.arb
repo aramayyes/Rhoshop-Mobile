@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-23T14:43:32.024021",
+  "@@last_modified": "2020-09-23T22:17:28.724302",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -69,6 +69,36 @@
   "hasAccountText": "Уже есть учётная запись?",
   "@hasAccountText": {
     "description": "Asks whether the user already has an account.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchText": "Поиск",
+  "@searchText": {
+    "description": "Text (title or hint text) of the search bar.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "categoriesSectionTitle": "Категории",
+  "@categoriesSectionTitle": {
+    "description": "Title of the categories section.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "newArrivalsSectionTitle": "Новинки",
+  "@newArrivalsSectionTitle": {
+    "description": "Title of the new Arrivals section.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "bestSellSectionTitle": "Бестселлеры",
+  "@bestSellSectionTitle": {
+    "description": "Title of the best sell section.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "seeAllText": "Смотреть все",
+  "@seeAllText": {
+    "description": "Text of the button, which is intended for seeing all items in a section.",
     "type": "text",
     "placeholders": {}
   }
