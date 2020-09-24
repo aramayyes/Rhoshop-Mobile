@@ -95,14 +95,6 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       child: TypeAheadField(
-        transitionBuilder: (context, suggestionsBox, animationController) =>
-            FadeTransition(
-          child: suggestionsBox,
-          opacity: CurvedAnimation(
-            parent: animationController,
-            curve: Curves.fastOutSlowIn,
-          ),
-        ),
         textFieldConfiguration: TextFieldConfiguration(
           style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 22),
           decoration: InputDecoration(
@@ -120,6 +112,15 @@ class HomeScreen extends StatelessWidget {
             hintText: AppLocalization.of(context).searchText,
             hintStyle:
                 Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 22),
+          ),
+        ),
+        hideOnError: true,
+        transitionBuilder: (context, suggestionsBox, animationController) =>
+            FadeTransition(
+          child: suggestionsBox,
+          opacity: CurvedAnimation(
+            parent: animationController,
+            curve: Curves.fastOutSlowIn,
           ),
         ),
         suggestionsCallback: (pattern) {
