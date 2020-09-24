@@ -29,39 +29,54 @@ class RhoshopApp extends StatelessWidget {
         const Locale('ru', ''),
       ],
       locale: Locale('en'),
+      initialRoute: '/intro',
       routes: {
-        '/': (context) => IntroScreen(),
+        '/intro': (context) => IntroScreen(),
         '/sign_in': (context) => SignInScreen(),
-        '/sign_up': (context) => SignUpScreen()
+        '/sign_up': (context) => SignUpScreen(),
+        '/home': (context) => HomeScreen(),
       },
       theme: ThemeData(
         primaryColor: AppColors.primary,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: TextTheme(
-            headline1: TextStyle(
-              color: AppColors.primaryText,
-              fontSize: 46,
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w700,
-            ),
-            headline3: TextStyle(
-              color: AppColors.primaryText,
-              fontSize: 24,
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w700,
-            ),
-            subtitle2: TextStyle(
-              color: AppColors.primaryText,
-              fontSize: 18,
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w400,
-            ),
-            button: TextStyle(
-              color: AppColors.secondaryText,
-              fontSize: 20,
-              fontFamily: 'Nunito',
-              fontWeight: FontWeight.w400,
-            )),
+          headline1: TextStyle(
+            color: AppColors.primaryText,
+            fontSize: 46,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w700,
+          ),
+          headline3: TextStyle(
+            color: AppColors.primaryText,
+            fontSize: 24,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w600,
+          ),
+          subtitle2: TextStyle(
+            color: AppColors.primaryText,
+            fontSize: 18,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w400,
+          ),
+          bodyText1: TextStyle(
+            color: AppColors.primaryText,
+            fontSize: 18,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w400,
+          ),
+          bodyText2: TextStyle(
+            color: AppColors.descriptionText,
+            fontSize: 16,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w400,
+          ),
+          button: TextStyle(
+            color: AppColors.secondaryText,
+            fontSize: 20,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w400,
+          ),
+        ),
       ),
     );
   }

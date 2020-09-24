@@ -53,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             icon: SvgPicture.asset(
               "assets/icons/left-arrow.svg",
               color: AppColors.primaryText,
-              width: 24,
+              height: 24,
             ),
             onPressed: () {
               Navigator.pop(context);

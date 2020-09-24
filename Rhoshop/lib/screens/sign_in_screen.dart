@@ -29,10 +29,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   /// Handles 'Sign in' button presses.
   void onSignInButtonPressed() {
-    if (_formKey.currentState.validate()) {
-      print(email);
-      print(password);
-    }
+    // TODO: perform validation and make a request to sign in
+    Navigator.pushNamed(context, '/home');
   }
 
   /// Handles 'Sign up' button presses.
@@ -49,7 +47,7 @@ class _SignInScreenState extends State<SignInScreen> {
             icon: SvgPicture.asset(
               "assets/icons/left-arrow.svg",
               color: AppColors.primaryText,
-              width: 24,
+              height: 24,
             ),
             onPressed: () {
               Navigator.pop(context);
