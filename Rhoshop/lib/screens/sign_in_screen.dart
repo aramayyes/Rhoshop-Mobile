@@ -5,7 +5,9 @@ import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/app_theme.dart' as AppTheme;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
+import 'package:rhoshop/utils/helpers.dart' as Helpers;
 import 'package:rhoshop/utils/regexps.dart' as RegExps;
+import 'package:rhoshop/utils/routes.dart' as Routes;
 
 /// Provides functionality for user signing in.
 class SignInScreen extends StatefulWidget {
@@ -30,12 +32,12 @@ class _SignInScreenState extends State<SignInScreen> {
   /// Handles 'Sign in' button presses.
   void onSignInButtonPressed() {
     // TODO: perform validation and make a request to sign in
-    Navigator.pushNamed(context, '/home');
+    Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
   }
 
   /// Handles 'Sign up' button presses.
   void onSignUpButtonPressed() {
-    Navigator.popAndPushNamed(context, '/sign_up');
+    Navigator.popAndPushNamed(context, Routes.signUp);
   }
 
   @override
@@ -56,7 +58,7 @@ class _SignInScreenState extends State<SignInScreen> {
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
+          Helpers.dismissKeyboard(context);
         },
         child: SafeArea(
           child: Container(

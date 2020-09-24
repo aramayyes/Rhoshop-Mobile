@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
+import 'package:rhoshop/utils/routes.dart' as Routes;
 
 void main() {
   runApp(RhoshopApp());
@@ -29,12 +30,12 @@ class RhoshopApp extends StatelessWidget {
         const Locale('ru', ''),
       ],
       locale: Locale('en'),
-      initialRoute: '/intro',
+      initialRoute: Routes.intro,
       routes: {
-        '/intro': (context) => IntroScreen(),
-        '/sign_in': (context) => SignInScreen(),
-        '/sign_up': (context) => SignUpScreen(),
-        '/home': (context) => HomeScreen(),
+        Routes.intro: (context) => IntroScreen(),
+        Routes.signIn: (context) => SignInScreen(),
+        Routes.signUp: (context) => SignUpScreen(),
+        Routes.home: (context) => HomeScreen(),
       },
       theme: ThemeData(
         primaryColor: AppColors.primary,
