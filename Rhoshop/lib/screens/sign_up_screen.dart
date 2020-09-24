@@ -69,6 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SafeArea(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: Dimens.screenPadding),
+            color: AppColors.primary,
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(

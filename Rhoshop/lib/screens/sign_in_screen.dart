@@ -32,7 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
   /// Handles 'Sign in' button presses.
   void onSignInButtonPressed() {
     // TODO: perform validation and make a request to sign in
-    Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
+    Navigator.pushNamed(context, Routes.home);
   }
 
   /// Handles 'Sign up' button presses.
@@ -63,6 +63,7 @@ class _SignInScreenState extends State<SignInScreen> {
         child: SafeArea(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: Dimens.screenPadding),
+            color: AppColors.primary,
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(
