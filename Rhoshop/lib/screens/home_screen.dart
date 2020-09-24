@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
             ),
             IconButton(
               icon: SvgPicture.asset(
-                "assets/icons/filter.svg",
+                "assets/icons/shopping-cart.svg",
                 color: AppColors.primaryText,
                 height: 24,
               ),
