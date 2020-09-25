@@ -29,7 +29,7 @@ class RhoshopApp extends StatelessWidget {
         const Locale('en', ''),
         const Locale('ru', ''),
       ],
-      locale: Locale('ru'),
+      locale: Locale('en'),
       initialRoute: Routes.intro,
       routes: {
         Routes.intro: (context) => IntroScreen(),
