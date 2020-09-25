@@ -131,6 +131,24 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
+        errorBuilder: (context, error) => Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondary),
+            ),
+          ),
+        ),
+        noItemsFoundBuilder: (context) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            AppLocalization.of(context).noItemsFoundText,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Theme.of(context).disabledColor, fontSize: 18.0),
+          ),
+        ),
         suggestionsCallback: (pattern) async {
           return await MockDb.searchProducts(pattern);
         },

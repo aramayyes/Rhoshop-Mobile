@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "nameLabelText" : MessageLookupByLibrary.simpleMessage("Имя"),
     "newArrivalsSectionTitle" : MessageLookupByLibrary.simpleMessage("Новинки"),
     "noAccountText" : MessageLookupByLibrary.simpleMessage("Нет учетной записи?"),
+    "noItemsFoundText" : MessageLookupByLibrary.simpleMessage("Нет соответствующих товаров"),
     "password" : MessageLookupByLibrary.simpleMessage("Пароль"),
     "searchText" : MessageLookupByLibrary.simpleMessage("Поиск"),
     "seeAllText" : MessageLookupByLibrary.simpleMessage("Смотреть все"),

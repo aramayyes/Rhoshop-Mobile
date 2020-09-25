@@ -136,6 +136,15 @@ class AppLocalization {
     );
   }
 
+  String get noItemsFoundText {
+    return Intl.message(
+      "No items found",
+      name: 'noItemsFoundText',
+      desc:
+          'This text(message) is shown in search suggestions bar, if no item is found.',
+    );
+  }
+
   String get categoriesSectionTitle {
     return Intl.message(
       "Categories",

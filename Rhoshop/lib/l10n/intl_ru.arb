@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-23T22:17:28.724302",
+  "@@last_modified": "2020-09-25T22:05:05.559976",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -75,6 +75,12 @@
   "searchText": "Поиск",
   "@searchText": {
     "description": "Text (title or hint text) of the search bar.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "noItemsFoundText": "Нет соответствующих товаров",
+  "@noItemsFoundText": {
+    "description": "This text(message) is shown in search suggestions bar, if no item is found.",
     "type": "text",
     "placeholders": {}
   },

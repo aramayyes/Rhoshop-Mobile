@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "nameLabelText" : MessageLookupByLibrary.simpleMessage("Name"),
     "newArrivalsSectionTitle" : MessageLookupByLibrary.simpleMessage("New Arrivals"),
     "noAccountText" : MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
+    "noItemsFoundText" : MessageLookupByLibrary.simpleMessage("No items found"),
     "password" : MessageLookupByLibrary.simpleMessage("Password"),
     "searchText" : MessageLookupByLibrary.simpleMessage("Search"),
     "seeAllText" : MessageLookupByLibrary.simpleMessage("See all"),
