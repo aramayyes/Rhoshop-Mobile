@@ -47,6 +47,22 @@ Future<List<Product>> fetchBestSellProducts(String categoryId) async {
     ..sublist(0, 7);
 }
 
+Future<List<Product>> searchProducts(String pattern) async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(2000),
+    ),
+  );
+
+  return _products
+      .where(
+        (product) => product.name.toLowerCase().contains(
+              pattern.toLowerCase(),
+            ),
+      )
+      .toList();
+}
+
 final _categories = <Category>[
   Category(
     'Tops',

@@ -4,6 +4,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/mock/db.dart' as MockDb;
 import 'package:rhoshop/mock/models/category.dart';
+import 'package:rhoshop/mock/models/product.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/helpers.dart' as Helpers;
@@ -94,7 +95,7 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      child: TypeAheadField(
+      child: TypeAheadField<Product>(
         textFieldConfiguration: TextFieldConfiguration(
           style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 22),
           decoration: InputDecoration(
@@ -123,13 +124,24 @@ class HomeScreen extends StatelessWidget {
             curve: Curves.fastOutSlowIn,
           ),
         ),
-        suggestionsCallback: (pattern) {
-          return ['1', '2', '3'];
+        loadingBuilder: (context) => Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondary),
+            ),
+          ),
+        ),
+        suggestionsCallback: (pattern) async {
+          return await MockDb.searchProducts(pattern);
         },
         itemBuilder: (context, suggestion) {
           return ListTile(
-            leading: Icon(Icons.shopping_cart),
-            title: Text(suggestion),
+            leading: CircleAvatar(
+              backgroundImage: AssetImage(suggestion.imgUrl),
+            ),
+            title: Text(suggestion.name),
           );
         },
         onSuggestionSelected: (suggestion) {
