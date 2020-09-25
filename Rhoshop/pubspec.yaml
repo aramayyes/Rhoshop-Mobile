@@ -55,6 +55,7 @@ flutter:
       - assets/icons/
       - assets/mock/
       - assets/mock/categories/
+      - assets/mock/products/tops/
       - assets/mock/products/underwear/
       - assets/mock/products/dresses/
       - assets/mock/products/sweaters/

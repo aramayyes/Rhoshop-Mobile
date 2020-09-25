@@ -57,9 +57,13 @@ Future<List<Product>> searchProducts(String pattern) async {
 
   return _products
       .where(
-        (product) => product.name.toLowerCase().contains(
-              pattern.toLowerCase(),
-            ),
+        (product) =>
+            product.name.toLowerCase().contains(
+                  pattern.toLowerCase(),
+                ) ||
+            product.localizedName.toLowerCase().contains(
+                  pattern.toLowerCase(),
+                ),
       )
       .toList()
         ..shuffle();
@@ -110,6 +114,7 @@ Category _findCategory(String id) {
   );
 }
 
+final topsCategory = _findCategory('Tops');
 final underwearCategory = _findCategory('Underwear');
 final dressesCategory = _findCategory('Dresses');
 final sweatersCategory = _findCategory('Sweaters');
@@ -493,5 +498,57 @@ final _products = <Product>[
     null,
     4.1,
     77,
+  ),
+  Product(
+    '30',
+    'Printed T-shirt',
+    'Футболка оверсайз с принтом',
+    'Straight-cut T-shirt in cotton jersey with a printed graphic design at front.',
+    'Футболка оверсайз из мягкого хлопкового трикотажа с тематическим принтом спереди, обтачкой рельефной резинкой по круглой горловине и слегка заниженной линией плеч.',
+    shortsCategory,
+    'assets/mock/products/tops/anne-peres-unsplash.jpg',
+    12.99,
+    null,
+    4.2,
+    31,
+  ),
+  Product(
+    '31',
+    'Drawstring Top',
+    'Короткий топ из лиоцелла',
+    'Short top in crêped jersey. Low-cut V-neck, vertical drawstring at front for a draped effect, and short, wide sleeves.',
+    'Укороченный топ из смесового лиоцеллового Tencel™ с легким блеском. Вырез горловины сердечком, на бюсте запах, на спинке широкая сборка мелкими буфами. Модель отрезная под грудью, низ свободный, длинный широкий рукав с потайной резинкой по плечу и узкой сборкой на резинке внизу. Полочка на хлопковой подкладке.',
+    topsCategory,
+    'assets/mock/products/tops/huseyin-topcu-unsplash.jpg',
+    14.99,
+    null,
+    4.8,
+    12,
+  ),
+  Product(
+    '32',
+    'Jersey Tank Top',
+    'Майка из рельефного трикотажа',
+    'Fitted tank top in soft cotton jersey with narrow shoulder straps.',
+    'Майка с глубоким вырезом из мягкого рельефного трикотажа из вискозы.',
+    topsCategory,
+    'assets/mock/products/tops/pexels-marx-ilagan.jpg',
+    5.99,
+    null,
+    4.0,
+    89,
+  ),
+  Product(
+    '33',
+    'One-shoulder Sweatshirt',
+    'Топ на вафельной сборке',
+    'One-shoulder sweatshirt in cotton-blend fabric. Wide neckline, long sleeves, and ribbing at neckline, cuffs, and hem. Soft, brushed inside. Polyester content is partly recycled.',
+    'Короткий топ из вафельного трикотажа с вырезом горловины каре и короткими рукавами-фонариками с резинкой по плечам и низу. По краю рукава и низу топа обработка оверлоком. Полиэстер в составе топа - частично переработанный.',
+    topsCategory,
+    'assets/mock/products/tops/pexels-kha-ruxury.jpg',
+    17.99,
+    null,
+    4.6,
+    26,
   ),
 ];
