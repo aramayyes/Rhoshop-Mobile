@@ -25,7 +25,7 @@ Future<List<Product>> fetchProductsByCategory(String categoryId) async {
   );
 }
 
-Future<List<Product>> fetchNewProducts(String categoryId) async {
+Future<List<Product>> fetchNewProducts(String categoryId, {count = 7}) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(2000),
@@ -33,10 +33,11 @@ Future<List<Product>> fetchNewProducts(String categoryId) async {
   );
   return List<Product>.from(_products)
     ..shuffle()
-    ..sublist(0, 7);
+    ..sublist(0, count);
 }
 
-Future<List<Product>> fetchBestSellProducts(String categoryId) async {
+Future<List<Product>> fetchBestSellProducts(String categoryId,
+    {count = 7}) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(2000),
@@ -44,7 +45,7 @@ Future<List<Product>> fetchBestSellProducts(String categoryId) async {
   );
   return List<Product>.from(_products)
     ..shuffle()
-    ..sublist(0, 7);
+    ..sublist(0, count);
 }
 
 Future<List<Product>> searchProducts(String pattern) async {
@@ -60,7 +61,8 @@ Future<List<Product>> searchProducts(String pattern) async {
               pattern.toLowerCase(),
             ),
       )
-      .toList();
+      .toList()
+        ..shuffle();
 }
 
 final _categories = <Category>[
@@ -109,6 +111,9 @@ Category _findCategory(String id) {
 }
 
 final underwearCategory = _findCategory('Underwear');
+final dressesCategory = _findCategory('Dresses');
+final sweatersCategory = _findCategory('Sweaters');
+final jeansCategory = _findCategory('Jeans');
 final _products = <Product>[
   Product(
     '1',
@@ -118,7 +123,7 @@ final _products = <Product>[
     'The epitome of minimalist chic, Calvin Klein transfers his love of clean lines seamlessly across the label’s accessory and lingerie collection. Chicly functional purses and bags sit alongside seamless cotton bras, sporty swimwear and luxe loungewear. Look to the fresh Calvin Klein aesthetic and signature CK monogramed prints.',
     underwearCategory,
     'assets/mock/products/underwear/pexels-danielle-pilon.jpg',
-    20.0,
+    19.9,
     null,
     4.6,
     84,
@@ -239,5 +244,201 @@ final _products = <Product>[
     null,
     4.9,
     103,
+  ),
+  Product(
+    '11',
+    'Stand-up Collar Top',
+    'С присборенным рукавом',
+    'Cap-sleeved top in softly draped jersey. Double-layered stand-up collar with gathers at front and opening at back of neck with a button.',
+    'Длинное платье из хрустящей нейлоновой ткани. Короткие присборенные рукава с узкими манжетами на обтянутой пуговице. Кокетка и вытачка снизу со сборкой для дополнительного объема. Потайная молния на спине. Без подкладки.',
+    dressesCategory,
+    'assets/mock/products/dresses/vicky-cheng-unsplash.jpg',
+    12.99,
+    null,
+    4.7,
+    85,
+  ),
+  Product(
+    '12',
+    'Flounce-trimmed Cotton Dress',
+    'Платье из смесового лиоцелла',
+    'Cap-sleeved top in softly draped jersey. Double-layered stand-up collar with gathers at front and opening at back of neck with a button.',
+    'Платье длиной до икры, без рукавов, из мягко драпирующейся ткани из смесового лиоцелла Tencel™. Высокий крой спереди, узкие бретели и обшитая тканью резинка сзади. Трикотажная подкладка из хлопка.',
+    dressesCategory,
+    'assets/mock/products/dresses/pexels-bruno-salvadori.jpg',
+    49.99,
+    99.0,
+    4,
+    113,
+  ),
+  Product(
+    '13',
+    'A-line Dress',
+    'Платье на запахе',
+    'Short, A-line dress in faux leather. Large, ruffle-trimmed collar, buttons at front, short, voluminous puff sleeves, and narrow cuffs with button. Unlined.',
+    'Короткое платье из ткани с v-образным вырезом горловины, запахом спереди и отрезной талией с металлической пуговицей сбоку. Длинный рукав с широким манжетом на металлической пуговице. Подкладка.',
+    dressesCategory,
+    'assets/mock/products/dresses/pexels-mihai-stefan.jpg',
+    39.99,
+    null,
+    4.5,
+    99,
+  ),
+  Product(
+    '14',
+    'Long-sleeved Bodycon Dress',
+    'Хлопковое платье-рубашка',
+    'Short, fitted dress in cotton-blend jersey. Round neckline and long sleeves.',
+    'Короткое прямое платье-футболка из плотного хлопкового трикотажа с круглым вырезом горловины, обработанным рельефной трикотажной резинкой. Без подкладки.',
+    dressesCategory,
+    'assets/mock/products/dresses/pexels-evg-culture.jpg',
+    12.99,
+    null,
+    4.2,
+    117,
+  ),
+  Product(
+    '15',
+    'Chiffon Dress',
+    'Плиссированное платье',
+    'Short, A-line dress in crinkled chiffon. Band collar, covered buttons at top, long puff sleeves, and narrow cuffs with a covered button. Seam at waist and tiered skirt. V-neck liner dress in jersey made from recycled polyester with narrow shoulder straps.',
+    'Studio Collection. Воздушное плиссированное платье из переработанного полиэстера. Треугольный вырез горловины и узкие бретели, а также поперечные перемычки сзади. Широкий силуэт и вытачки с эластичными швами и сборкой. Без подкладки.',
+    dressesCategory,
+    'assets/mock/products/dresses/pexels-maksim-goncharenok.jpg',
+    29.99,
+    null,
+    4.0,
+    74,
+  ),
+  Product(
+    '16',
+    'Chenille Sweater',
+    'Вязаный джемпер',
+    'Sweater in soft, rib-knit chenille. Round neckline, heavily dropped shoulders, and long sleeves. Rounded hem, slightly longer at back.',
+    'Джемпер рельефной вязки из мягкой пряжи с добавлением шерсти. Низкий ворот и длинные широкие рукава реглан с формованными швами. Трикотажная резинка снизу на рукавах и по нижнему краю. Полиэстер в составе джемпера - переработанный.',
+    sweatersCategory,
+    'assets/mock/products/sweaters/pexels-flora-westbrook.jpg',
+    29.99,
+    null,
+    4.8,
+    144,
+  ),
+  Product(
+    '17',
+    'Cropped Turtleneck Sweater',
+    'Джемпер поло',
+    'Boxy turtleneck sweater in a soft rib knit. Dropped shoulders and long, slightly wider sleeves with ribbed cuffs.',
+    'Свободный джемпер из мягкой пряжи с добавлением шерсти. Длинные рукава с заниженной линией плеча. Рельефная обвязка снизу на рукавах и по нижнему краю. Скругленный низ. Спинка слегка удлинена. Полиэстер в составе джемпера - переработанный.',
+    sweatersCategory,
+    'assets/mock/products/sweaters/pexels-daria-shevtsova.jpg',
+    17.99,
+    null,
+    4.5,
+    97,
+  ),
+  Product(
+    '18',
+    'Oversized Sweater',
+    'Джемпер оверсайз',
+    'Oversized sweater in soft, knit fabric with wool content. Dropped shoulders, long sleeves, and ribbing at neckline, cuffs, and hem. Longer at back. Polyester content is recycled.',
+    'Вязаный джемпер оверсайз из мягкой пряжи с добавлением шерсти. Заниженная линия плеча и длинные рукава. Рельефная обвязка по горловине, низу рукавов и нижнему краю. Скругленный нижний край. Спинка удлинена. Полиэстер в составе джемпера - вторичной переработки.',
+    sweatersCategory,
+    'assets/mock/products/sweaters/pexels-elina-sazonova.jpg',
+    34.99,
+    null,
+    4.0,
+    38,
+  ),
+  Product(
+    '19',
+    'Fine-knit Sweater',
+    'Вязаный джемпер',
+    'Fine-knit, crew-neck sweater in soft, viscose-blend fabric. Long sleeves, short slits at sides, and ribbing at neckline, cuffs, and hem. Slightly longer at back.',
+    'Джемпер тонкой вязки из мягкой смесовой вискозы. Круглый вырез горловины, длинные рукава и рельефная трикотажная резинка по горловине, низу рукавов и нижнему краю. Короткие разрезы по бокам и удлиненная спинка.',
+    sweatersCategory,
+    'assets/mock/products/sweaters/pexels-wesley-carvalho.jpg',
+    14.99,
+    null,
+    4.9,
+    113,
+  ),
+  Product(
+    '20',
+    'Knit Mock-turtleneck Sweater',
+    'Свитер из кашемира',
+    'Soft knit sweater with a mock turtleneck and long raglan sleeves.',
+    'Свободный свитер тонкой вязки из мягкого кашемира. Заниженная линия плеча и длинные широкие рукава. Рельефная обвязка горловины, низа рукавов и нижнего края.',
+    sweatersCategory,
+    'assets/mock/products/sweaters/roman-holoschchuk-unsplash.jpg',
+    87.99,
+    null,
+    5.0,
+    238,
+  ),
+  //
+  Product(
+    '21',
+    'Skinny Regular Jeans',
+    'Джинсы Skinny Regular',
+    '5-pocket jeans in washed stretch denim with a regular waist, zip fly with button, and skinny legs.',
+    'Джинсы с пятью карманами из стираного денима стретч. Высокая талия и узкие штанины. Застежка на молнию.',
+    jeansCategory,
+    'assets/mock/products/jeans/tamara-bellis-unsplash.jpg',
+    22.99,
+    null,
+    4.4,
+    126,
+  ),
+  Product(
+    '22',
+    'Straight High Ankle Jeans',
+    'Джинсы Straight High Ankle',
+    '5-pocket, ankle-length jeans in washed stretch denim. High waist, zip fly with button, and straight legs.',
+    'Укороченные джинсы с пятью карманами из стираного денима с очень высокой талией и узкими штанинами. В состав джинсов входит переработанный хлопок.',
+    jeansCategory,
+    'assets/mock/products/jeans/oz-seyrek-unsplash.jpg',
+    17.99,
+    null,
+    4.0,
+    34,
+  ),
+  Product(
+    '23',
+    'Mom High Ankle Jeans',
+    'Джинсы Mom High Ankle',
+    '5-pocket, ankle-length jeans in washed denim in a slightly looser fit. Extra-high waist, zip fly and button and gently tapered legs.',
+    'Прямые узкие укороченные джинсы с пятью карманами из эластичного стираного денима. Высокая талия. Застежка на пуговицу.',
+    jeansCategory,
+    'assets/mock/products/jeans/tomiko-tan-unsplash.jpg',
+    29.99,
+    null,
+    4.6,
+    165,
+  ),
+  Product(
+    '24',
+    'Straight Regular Jeans',
+    'Джинсы Straight Regular',
+    '5-pocket jeans in washed denim with a regular waist and zip fly with button. Straight-cut, extra-long legs with raw-edge hems.',
+    'Прямые, очень длинные джинсы с пятью карманами из стираного денима и необработанным низом штанин. Талия стандартной высоты. Молния и пуговица на талии.',
+    jeansCategory,
+    'assets/mock/products/jeans/pexels-heitor-verdi.jpg',
+    49.99,
+    null,
+    4.2,
+    36,
+  ),
+  Product(
+    '25',
+    'Skinny Regular Ankle Jeans',
+    'Джинсы Skinny Regular Ankle',
+    '5-pocket, jeans in washed, stretch denim. Regular waist, zip fly with button, and skinny, ankle-length legs. Made with Lycra® Beauty technology to retain shape of jeans and provide a sculpting effect with optimal comfort.',
+    'Укороченные джинсы из стираного эластичного денима с талией стандартной высоты. Ложные передние карманы, настоящие задние карманы и узкие брючины.',
+    jeansCategory,
+    'assets/mock/products/jeans/pexels-oleg-magni.jpg',
+    59.99,
+    null,
+    4.3,
+    76,
   ),
 ];
