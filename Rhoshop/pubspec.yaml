@@ -59,6 +59,7 @@ flutter:
       - assets/mock/products/dresses/
       - assets/mock/products/sweaters/
       - assets/mock/products/jeans/
+      - assets/mock/products/shorts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

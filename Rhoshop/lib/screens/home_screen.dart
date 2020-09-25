@@ -64,10 +64,8 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    _buildSectionTitle(
-                        context,
-                        AppLocalization.of(context).categoriesSectionTitle,
-                        () {}),
+                    _buildSectionTitle(context,
+                        AppLocalization.of(context).categoriesSectionTitle),
                     _buildCategories(context),
                   ],
                 ),
@@ -144,16 +142,14 @@ class HomeScreen extends StatelessWidget {
             title: Text(suggestion.name),
           );
         },
-        onSuggestionSelected: (suggestion) {
-          print(suggestion);
-        },
+        onSuggestionSelected: (suggestion) {},
       ),
     );
   }
 
   /// Builds and returns a row which contains given title and a 'See all' button.
-  Widget _buildSectionTitle(
-      BuildContext context, String title, void Function() onSeeAllPress) {
+  Widget _buildSectionTitle(BuildContext context, String title,
+      {void Function() onSeeAllPress}) {
     const verticalPadding = 10.0;
 
     return Padding(
@@ -165,19 +161,20 @@ class HomeScreen extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.headline3,
           ),
-          ButtonTheme(
-            minWidth: 20,
-            child: FlatButton(
-              padding: EdgeInsets.all(0),
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: onSeeAllPress,
-              child: Text(
-                AppLocalization.of(context).seeAllText,
-                style: Theme.of(context).textTheme.bodyText2,
+          if (onSeeAllPress != null)
+            ButtonTheme(
+              minWidth: 20,
+              child: FlatButton(
+                padding: EdgeInsets.all(0),
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: onSeeAllPress,
+                child: Text(
+                  AppLocalization.of(context).seeAllText,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
               ),
             ),
-          )
         ],
       ),
     );

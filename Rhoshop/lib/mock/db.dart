@@ -91,11 +91,11 @@ final _categories = <Category>[
     'assets/mock/categories/jeans.png',
     'Jeans',
   ),
-  Category(
-    'Leggings',
-    'assets/mock/categories/leggings.png',
-    'Leggings',
-  ),
+  // Category(
+  //   'Leggings',
+  //   'assets/mock/categories/leggings.png',
+  //   'Leggings',
+  // ),
   Category(
     'Shorts',
     'assets/mock/categories/shorts.png',
@@ -114,6 +114,7 @@ final underwearCategory = _findCategory('Underwear');
 final dressesCategory = _findCategory('Dresses');
 final sweatersCategory = _findCategory('Sweaters');
 final jeansCategory = _findCategory('Jeans');
+final shortsCategory = _findCategory('Shorts');
 final _products = <Product>[
   Product(
     '1',
@@ -440,5 +441,57 @@ final _products = <Product>[
     null,
     4.3,
     76,
+  ),
+  Product(
+    '26',
+    'Shorts High Waist',
+    'Шорты Vintage High',
+    'Shorts in superstretch twill with a high waist. Zip fly with button, back pockets, and sewn cuffs at hems.',
+    'Короткие шорты с пятью карманами из стираного, слегка эластичного хлопкового денима. Высокая талия и необработанный низ.',
+    shortsCategory,
+    'assets/mock/products/shorts/pexels-gabriel-lima.jpg',
+    17.99,
+    null,
+    4.5,
+    242,
+  ),
+  Product(
+    '27',
+    'Embrace High Denim Shorts',
+    'Шорты Vintage High',
+    'Short, 5-pocket shorts in washed denim with distressed details. High waist, zip fly, and skinny legs. Smart stretch function – molds to body for a comfortable and flattering fit. Made partly from recycled cotton.',
+    'Шорты с пятью карманами из стираного хлопкового денима с высокой талией и пришитыми отворотами снизу. Застежка на молнию и пуговицу.',
+    shortsCategory,
+    'assets/mock/products/shorts/engin-akyurt-unsplash.jpg',
+    29.99,
+    null,
+    4.3,
+    317,
+  ),
+  Product(
+    '28',
+    'Mom Fit Denim Shorts',
+    'Джинсовые шорты Mom Fit',
+    '5-pocket shorts in washed denim. High waist, zip fly with button, and slightly wider legs.',
+    'Шорты с пятью карманами из стираного денима. Высокая талия и довольно широкие штанины. Застежка на молнию и пуговицу.',
+    shortsCategory,
+    'assets/mock/products/shorts/pexels-thegiansepillo.jpg',
+    24.99,
+    null,
+    4.5,
+    100,
+  ),
+  Product(
+    '29',
+    'Tailored Shorts',
+    'Шорты из смесового льна',
+    'Shorts in woven fabric with a high waist. Pleats at front, zip fly with concealed hook-and-eye fasteners, and diagonal side pockets.',
+    'Шорты из смесового льна с талией на резинке и кулиске, боковыми карманами, двумя ложными задними карманами и с короткими разрезами внизу штанин.',
+    shortsCategory,
+    'assets/mock/products/shorts/pexels-gustavo-peres.jpg',
+    38.99,
+    null,
+    4.1,
+    77,
   ),
 ];
