@@ -56,7 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.primaryText,
                 height: 24,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  Routes.notifications,
+                );
+              },
             ),
             IconButton(
               icon: SvgPicture.asset(
@@ -79,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: AppColors.primary,
               height: double.infinity,
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: 40),
+                padding: EdgeInsets.only(bottom: 20),
                 physics: BouncingScrollPhysics(),
                 child: Column(
                   children: <Widget>[

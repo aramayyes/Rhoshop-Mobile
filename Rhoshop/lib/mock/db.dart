@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:rhoshop/mock/models/category.dart';
+import 'package:rhoshop/mock/models/norification.dart';
 import 'package:rhoshop/mock/models/product.dart';
 
 final random = Random();
@@ -79,6 +80,15 @@ Future<List<Product>> searchProducts(String pattern) async {
         ..shuffle();
 }
 
+Future<List<AppNotification>> fetchNotifications() async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
+    ),
+  );
+  return _notifications..sort((n1, n2) => n2.date.compareTo(n1.date));
+}
+
 final _categories = <Category>[
   Category(
     'Tops',
@@ -139,7 +149,7 @@ final _products = <Product>[
     'The epitome of minimalist chic, Calvin Klein transfers his love of clean lines seamlessly across the label’s accessory and lingerie collection. Chicly functional purses and bags sit alongside seamless cotton bras, sporty swimwear and luxe loungewear. Look to the fresh Calvin Klein aesthetic and signature CK monogramed prints.',
     underwearCategory,
     'assets/mock/products/underwear/pexels-danielle-pilon.jpg',
-    19.9,
+    19.99,
     null,
     4.6,
     84,
@@ -216,7 +226,7 @@ final _products = <Product>[
     'Push-up bra in lace with padded, underwire cups to maximize bust and cleavage. Adjustable shoulder straps. Hook-and-eye fasteners at back.',
     'Мягкий бюстгальтер из кружева. Чашечки без косточек, на сетчатой подкладке, придают бюсту естественную форму и слегка поддерживают его. Регулируемые бретели и застежка на крючки сзади, а также широкий кружевной кант снизу.',
     underwearCategory,
-    'assets/mock/products/underwear/max-libertine2-unsplash.jpg',
+    'assets/mock/products/underwear/pexels-jonaorle.jpg',
     41.99,
     null,
     4.9,
@@ -560,5 +570,48 @@ final _products = <Product>[
     null,
     4.6,
     26,
+  ),
+];
+
+final _notifications = <AppNotification>[
+  AppNotification(
+    DateTime(2020, 5, 13),
+    'Be yourself; everyone else is already taken.',
+  ),
+  AppNotification(
+    DateTime(2020, 4, 14),
+    "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
+  ),
+  AppNotification(
+    DateTime(2020, 3, 15),
+    'So many books, so little time.',
+  ),
+  AppNotification(
+    DateTime(2020, 8, 16),
+    "I'm selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. But if you can't handle me at my worst, then you sure as hell don't deserve me at my best.",
+  ),
+  AppNotification(
+    DateTime(2020, 9, 17),
+    "You know you're in love when you can't fall asleep because reality is finally better than your dreams.",
+  ),
+  AppNotification(
+    DateTime(2020, 1, 18),
+    "You only live once, but if you do it right, once is enough.",
+  ),
+  AppNotification(
+    DateTime(2020, 2, 21),
+    "No one can make you feel inferior without your consent.",
+  ),
+  AppNotification(
+    DateTime(2020, 7, 23),
+    "Friendship ... is born at the moment when one man says to another \"What! You too? I thought that no one but myself...",
+  ),
+  AppNotification(
+    DateTime(2020, 9, 24),
+    "Always forgive your enemies; nothing annoys them so much.",
+  ),
+  AppNotification(
+    DateTime(2020, 6, 26),
+    "Live as if you were to die tomorrow. Learn as if you were to live forever.",
   ),
 ];

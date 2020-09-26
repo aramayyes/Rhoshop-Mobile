@@ -45,6 +45,7 @@ class RhoshopApp extends StatelessWidget {
         Routes.home: (context) => HomeScreen(),
         Routes.category: (context) =>
             CategoryScreen(ModalRoute.of(context).settings.arguments),
+        Routes.notifications: (context) => NotificationsScreen(),
       },
       theme: ThemeData(
         primaryColor: AppColors.primary,
@@ -59,6 +60,12 @@ class RhoshopApp extends StatelessWidget {
           headline3: TextStyle(
             color: AppColors.primaryText,
             fontSize: 24,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w600,
+          ),
+          headline4: TextStyle(
+            color: AppColors.primaryText,
+            fontSize: 20,
             fontFamily: 'Nunito',
             fontWeight: FontWeight.w600,
           ),

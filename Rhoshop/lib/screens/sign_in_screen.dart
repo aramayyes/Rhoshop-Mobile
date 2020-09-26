@@ -44,17 +44,18 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          elevation: 0,
-          leading: IconButton(
-            icon: SvgPicture.asset(
-              "assets/icons/left-arrow.svg",
-              color: AppColors.primaryText,
-              height: 24,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )),
+        elevation: 0,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            "assets/icons/left-arrow.svg",
+            color: AppColors.primaryText,
+            height: 24,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {

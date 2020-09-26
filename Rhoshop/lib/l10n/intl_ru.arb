@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-25T22:05:05.559976",
+  "@@last_modified": "2020-09-26T19:21:40.828366",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -27,6 +27,12 @@
   "password": "Пароль",
   "@password": {
     "description": "Password text.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "close": "Закрыть",
+  "@close": {
+    "description": "Close text.",
     "type": "text",
     "placeholders": {}
   },
@@ -105,6 +111,12 @@
   "seeAllText": "Смотреть все",
   "@seeAllText": {
     "description": "Text of the button, which is intended for seeing all items in a section.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "notificationsScreenTitle": "Уведомления",
+  "@notificationsScreenTitle": {
+    "description": "Title of the notifications screen.",
     "type": "text",
     "placeholders": {}
   }

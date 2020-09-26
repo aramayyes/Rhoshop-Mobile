@@ -63,6 +63,14 @@ class AppLocalization {
       desc: 'Password text.',
     );
   }
+
+  String get close {
+    return Intl.message(
+      'Close',
+      name: 'close',
+      desc: 'Close text.',
+    );
+  }
   //#endregion Globals
 
   //#region IntroScreen
@@ -178,6 +186,16 @@ class AppLocalization {
     );
   }
   //#endregion HomeScreen
+
+  //#region Notifications
+  String get notificationsScreenTitle {
+    return Intl.message(
+      'Notifications',
+      name: 'notificationsScreenTitle',
+      desc: 'Title of the notifications screen.',
+    );
+  }
+  //#endregion Notifications
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {
