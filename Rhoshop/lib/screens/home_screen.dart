@@ -10,6 +10,7 @@ import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/helpers.dart' as Helpers;
+import 'package:rhoshop/utils/ids.dart' as Ids;
 import 'package:rhoshop/utils/routes.dart' as Routes;
 
 /// Default screen when user is signed in.
@@ -92,16 +93,37 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(
                       height: 20,
                     ),
-                    _buildSectionTitle(context,
-                        AppLocalization.of(context).newArrivalsSectionTitle,
-                        onSeeAllPress: () {}),
+                    _buildSectionTitle(
+                      context,
+                      AppLocalization.of(context).newArrivalsSectionTitle,
+                      onSeeAllPress: () {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.category,
+                          arguments: CategoryScreenArguments(
+                              AppLocalization.of(context)
+                                  .newArrivalsSectionTitle,
+                              Ids.newArrivalsPseudocategory),
+                        );
+                      },
+                    ),
                     _buildSection(context, newArrivalsFuture),
                     SizedBox(
                       height: 20,
                     ),
-                    _buildSectionTitle(context,
-                        AppLocalization.of(context).bestSellSectionTitle,
-                        onSeeAllPress: () {}),
+                    _buildSectionTitle(
+                      context,
+                      AppLocalization.of(context).bestSellSectionTitle,
+                      onSeeAllPress: () {
+                        Navigator.pushNamed(
+                          context,
+                          Routes.category,
+                          arguments: CategoryScreenArguments(
+                              AppLocalization.of(context).bestSellSectionTitle,
+                              Ids.bestSellPseudocategory),
+                        );
+                      },
+                    ),
                     _buildSection(context, bestsellersFuture),
                   ],
                 ),

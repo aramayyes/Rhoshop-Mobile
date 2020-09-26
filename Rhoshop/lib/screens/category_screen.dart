@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rhoshop/components/product_item.dart';
+import 'package:rhoshop/mock/db.dart' as MockDb;
 import 'package:rhoshop/mock/models/product.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
-import 'package:rhoshop/mock/db.dart' as MockDb;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
+import 'package:rhoshop/utils/ids.dart' as Ids;
 
 /// Displays products which belong to given category.
 class CategoryScreen extends StatefulWidget {
@@ -22,8 +23,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     super.initState();
-    productsFuture =
-        MockDb.fetchProductsByCategory(widget.arguments.categoryId);
+
+    switch (widget.arguments.categoryId) {
+      case Ids.newArrivalsPseudocategory:
+        productsFuture = MockDb.fetchNewProducts(count: 12);
+        break;
+      case Ids.bestSellPseudocategory:
+        productsFuture = MockDb.fetchBestSellProducts(count: 12);
+        break;
+      default:
+        productsFuture =
+            MockDb.fetchProductsByCategory(widget.arguments.categoryId);
+    }
   }
 
   @override
@@ -104,11 +115,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
 /// Contains arguments for CategoryScreen.
 class CategoryScreenArguments {
-  // Title of Category Screen.
+  /// Title of Category Screen.
   final String title;
 
   /// Id of the category products of which should be displayed.
   final String categoryId;
 
-  CategoryScreenArguments(this.title, this.categoryId);
+  CategoryScreenArguments(
+    this.title,
+    this.categoryId,
+  );
 }

@@ -21,26 +21,20 @@ Future<List<Product>> fetchProductsByCategory(String categoryId) async {
     ),
   );
 
-  switch (categoryId) {
-    case 'NewArrivals':
-    case 'BestSell':
-      return fetchNewProducts(count: 12);
-    default:
-      final products = _products
-          .where(
-            (product) => product.category.id == categoryId,
-          )
-          .toList();
-      if (products.length < 10) {
-        final productsClone = List<Product>.from(products);
-        while (products.length < 16) {
-          productsClone.shuffle();
-          products.addAll(productsClone);
-        }
-      }
-
-      return products;
+  final products = _products
+      .where(
+        (product) => product.category.id == categoryId,
+      )
+      .toList();
+  if (products.length < 10) {
+    final productsClone = List<Product>.from(products);
+    while (products.length < 16) {
+      productsClone.shuffle();
+      products.addAll(productsClone);
+    }
   }
+
+  return products;
 }
 
 Future<List<Product>> fetchNewProducts({count = 7}) async {
