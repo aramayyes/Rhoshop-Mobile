@@ -237,6 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Widget child;
     const height = 80.0;
     const gapBetweenCategories = 10.0;
+    const imageBorderRadius = 6.0;
 
     return FutureBuilder<List<Category>>(
       future: categoriesFuture,
@@ -255,9 +256,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    Container(
-                      width: height * 2,
-                      child: Image.asset(snapshot.data[index].imgUrl),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(imageBorderRadius),
+                      child: Image.asset(
+                        snapshot.data[index].imgUrl,
+                        width: height * 2,
+                      ),
                     ),
                     Text(
                       snapshot.data[index].name,
