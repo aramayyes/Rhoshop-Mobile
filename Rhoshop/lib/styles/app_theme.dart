@@ -24,3 +24,12 @@ InputDecoration constructTextFieldDecoration(String label, {suffixIcon}) {
     ),
   );
 }
+
+/// Scroll behavior without glow effect.
+class WithoutGlowScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
+}

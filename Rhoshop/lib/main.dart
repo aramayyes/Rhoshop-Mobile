@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
+import 'package:rhoshop/styles/app_theme.dart';
 import 'package:rhoshop/utils/routes.dart' as Routes;
 
 void main() {
@@ -20,6 +21,12 @@ class RhoshopApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => AppLocalization.of(context).appTitle,
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: WithoutGlowScrollBehavior(),
+          child: child,
+        );
+      },
       localizationsDelegates: [
         const AppLocalizationDelegate(),
         GlobalMaterialLocalizations.delegate,
