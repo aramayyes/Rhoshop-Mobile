@@ -20,9 +20,27 @@ Future<List<Product>> fetchProductsByCategory(String categoryId) async {
       milliseconds: 100 + random.nextInt(2000),
     ),
   );
-  return _products.where(
-    (product) => product.category.id == categoryId,
-  );
+
+  switch (categoryId) {
+    case 'NewArrivals':
+    case 'BestSell':
+      return fetchNewProducts(count: 12);
+    default:
+      final products = _products
+          .where(
+            (product) => product.category.id == categoryId,
+          )
+          .toList();
+      if (products.length < 10) {
+        final productsClone = List<Product>.from(products);
+        while (products.length < 16) {
+          productsClone.shuffle();
+          products.addAll(productsClone);
+        }
+      }
+
+      return products;
+  }
 }
 
 Future<List<Product>> fetchNewProducts({count = 7}) async {
@@ -502,7 +520,7 @@ final _products = <Product>[
     'Футболка оверсайз с принтом',
     'Straight-cut T-shirt in cotton jersey with a printed graphic design at front.',
     'Футболка оверсайз из мягкого хлопкового трикотажа с тематическим принтом спереди, обтачкой рельефной резинкой по круглой горловине и слегка заниженной линией плеч.',
-    shortsCategory,
+    topsCategory,
     'assets/mock/products/tops/anne-peres-unsplash.jpg',
     12.99,
     null,

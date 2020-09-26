@@ -36,6 +36,8 @@ class RhoshopApp extends StatelessWidget {
         Routes.signIn: (context) => SignInScreen(),
         Routes.signUp: (context) => SignUpScreen(),
         Routes.home: (context) => HomeScreen(),
+        Routes.category: (context) =>
+            CategoryScreen(ModalRoute.of(context).settings.arguments),
       },
       theme: ThemeData(
         primaryColor: AppColors.primary,

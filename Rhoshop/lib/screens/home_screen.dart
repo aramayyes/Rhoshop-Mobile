@@ -6,9 +6,11 @@ import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/mock/db.dart' as MockDb;
 import 'package:rhoshop/mock/models/category.dart';
 import 'package:rhoshop/mock/models/product.dart';
+import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/helpers.dart' as Helpers;
+import 'package:rhoshop/utils/routes.dart' as Routes;
 
 /// Default screen when user is signed in.
 ///
@@ -250,8 +252,18 @@ class _HomeScreenState extends State<HomeScreen> {
             scrollDirection: Axis.horizontal,
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
+              final category = snapshot.data[index];
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.category,
+                    arguments: CategoryScreenArguments(
+                      category.name,
+                      category.id,
+                    ),
+                  );
+                },
                 behavior: HitTestBehavior.translucent,
                 child: Stack(
                   alignment: Alignment.center,
@@ -259,12 +271,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(imageBorderRadius),
                       child: Image.asset(
-                        snapshot.data[index].imgUrl,
+                        category.imgUrl,
                         width: height * 2,
                       ),
                     ),
                     Text(
-                      snapshot.data[index].name,
+                      category.name,
                       style: Theme.of(context).textTheme.button.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
@@ -303,13 +315,16 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           child = ListView.separated(
-              separatorBuilder: (context, index) => SizedBox(
-                    width: gapBetweenCategories,
-                  ),
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) =>
-                  ProductItem(snapshot.data[index]));
+            separatorBuilder: (context, index) => SizedBox(
+              width: gapBetweenCategories,
+            ),
+            scrollDirection: Axis.horizontal,
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) => AspectRatio(
+              aspectRatio: 5 / 8,
+              child: ProductItem(snapshot.data[index]),
+            ),
+          );
         } else {
           // This indicator will be also shown in case of error.
           child = Center(
