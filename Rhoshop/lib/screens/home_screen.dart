@@ -14,7 +14,25 @@ import 'package:rhoshop/utils/helpers.dart' as Helpers;
 ///
 /// Contains categories, some express sections to view products
 /// and also provides search functionality.
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  Future<List<Category>> categoriesFuture;
+  Future<List<Product>> newArrivalsFuture;
+  Future<List<Product>> bestsellersFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    categoriesFuture = MockDb.fetchCategories();
+    newArrivalsFuture = MockDb.fetchNewProducts();
+    bestsellersFuture = MockDb.fetchBestSellProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,14 +93,14 @@ class HomeScreen extends StatelessWidget {
                     _buildSectionTitle(context,
                         AppLocalization.of(context).newArrivalsSectionTitle,
                         onSeeAllPress: () {}),
-                    _buildSection(context, MockDb.fetchNewProducts()),
+                    _buildSection(context, newArrivalsFuture),
                     SizedBox(
                       height: 20,
                     ),
                     _buildSectionTitle(context,
                         AppLocalization.of(context).bestSellSectionTitle,
                         onSeeAllPress: () {}),
-                    _buildSection(context, MockDb.fetchBestSellProducts()),
+                    _buildSection(context, bestsellersFuture),
                   ],
                 ),
               ),
@@ -221,7 +239,7 @@ class HomeScreen extends StatelessWidget {
     const gapBetweenCategories = 10.0;
 
     return FutureBuilder<List<Category>>(
-      future: MockDb.fetchCategories(),
+      future: categoriesFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           child = ListView.separated(
