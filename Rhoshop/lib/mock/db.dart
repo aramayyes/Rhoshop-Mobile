@@ -25,27 +25,24 @@ Future<List<Product>> fetchProductsByCategory(String categoryId) async {
   );
 }
 
-Future<List<Product>> fetchNewProducts(String categoryId, {count = 7}) async {
+Future<List<Product>> fetchNewProducts({count = 7}) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(2000),
     ),
   );
-  return List<Product>.from(_products)
-    ..shuffle()
-    ..sublist(0, count);
+  final shuffled = List<Product>.from(_products)..shuffle();
+  return shuffled.sublist(0, count);
 }
 
-Future<List<Product>> fetchBestSellProducts(String categoryId,
-    {count = 7}) async {
+Future<List<Product>> fetchBestSellProducts({count = 7}) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(2000),
     ),
   );
-  return List<Product>.from(_products)
-    ..shuffle()
-    ..sublist(0, count);
+  final shuffled = List<Product>.from(_products)..shuffle();
+  return shuffled.sublist(0, count);
 }
 
 Future<List<Product>> searchProducts(String pattern) async {

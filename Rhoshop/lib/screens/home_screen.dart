@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:rhoshop/components/product_item.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/mock/db.dart' as MockDb;
 import 'package:rhoshop/mock/models/category.dart';
@@ -53,10 +54,11 @@ class HomeScreen extends StatelessWidget {
           },
           child: SafeArea(
             child: Container(
-              padding: EdgeInsets.all(Dimens.screenPadding),
+              padding: EdgeInsets.symmetric(horizontal: Dimens.screenPadding),
               color: AppColors.primary,
               height: double.infinity,
               child: SingleChildScrollView(
+                padding: EdgeInsets.only(bottom: 40),
                 physics: BouncingScrollPhysics(),
                 child: Column(
                   children: <Widget>[
@@ -67,6 +69,20 @@ class HomeScreen extends StatelessWidget {
                     _buildSectionTitle(context,
                         AppLocalization.of(context).categoriesSectionTitle),
                     _buildCategories(context),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _buildSectionTitle(context,
+                        AppLocalization.of(context).newArrivalsSectionTitle,
+                        onSeeAllPress: () {}),
+                    _buildSection(context, MockDb.fetchNewProducts()),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _buildSectionTitle(context,
+                        AppLocalization.of(context).bestSellSectionTitle,
+                        onSeeAllPress: () {}),
+                    _buildSection(context, MockDb.fetchBestSellProducts()),
                   ],
                 ),
               ),
@@ -236,6 +252,42 @@ class HomeScreen extends StatelessWidget {
               );
             },
           );
+        } else {
+          // This indicator will be also shown in case of error.
+          child = Center(
+            child: CircularProgressIndicator(
+              valueColor:
+                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
+            ),
+          );
+        }
+
+        return Container(
+          height: height,
+          child: child,
+        );
+      },
+    );
+  }
+
+  /// Builds and returns section, i.e. a horizontal list with given products.
+  Widget _buildSection(BuildContext context, Future<List<Product>> products) {
+    Widget child;
+    const height = 200.0;
+    const gapBetweenCategories = 10.0;
+
+    return FutureBuilder<List<Product>>(
+      future: products,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          child = ListView.separated(
+              separatorBuilder: (context, index) => SizedBox(
+                    width: gapBetweenCategories,
+                  ),
+              scrollDirection: Axis.horizontal,
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) =>
+                  ProductItem(snapshot.data[index]));
         } else {
           // This indicator will be also shown in case of error.
           child = Center(
