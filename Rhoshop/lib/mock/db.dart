@@ -4,11 +4,12 @@ import 'package:rhoshop/mock/models/category.dart';
 import 'package:rhoshop/mock/models/product.dart';
 
 final random = Random();
+const maxLoadingDuration = 1400;
 
 Future<List<Category>> fetchCategories() async {
   await Future.delayed(
     Duration(
-      milliseconds: 100 + random.nextInt(2000),
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
   return _categories;
@@ -17,7 +18,7 @@ Future<List<Category>> fetchCategories() async {
 Future<List<Product>> fetchProductsByCategory(String categoryId) async {
   await Future.delayed(
     Duration(
-      milliseconds: 100 + random.nextInt(2000),
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
 
@@ -40,7 +41,7 @@ Future<List<Product>> fetchProductsByCategory(String categoryId) async {
 Future<List<Product>> fetchNewProducts({count = 7}) async {
   await Future.delayed(
     Duration(
-      milliseconds: 100 + random.nextInt(2000),
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
   final shuffled = List<Product>.from(_products)..shuffle();
@@ -50,7 +51,7 @@ Future<List<Product>> fetchNewProducts({count = 7}) async {
 Future<List<Product>> fetchBestSellProducts({count = 7}) async {
   await Future.delayed(
     Duration(
-      milliseconds: 100 + random.nextInt(2000),
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
   final shuffled = List<Product>.from(_products)..shuffle();
@@ -60,7 +61,7 @@ Future<List<Product>> fetchBestSellProducts({count = 7}) async {
 Future<List<Product>> searchProducts(String pattern) async {
   await Future.delayed(
     Duration(
-      milliseconds: 100 + random.nextInt(2000),
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
 
