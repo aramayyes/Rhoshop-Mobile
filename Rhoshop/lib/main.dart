@@ -11,7 +11,27 @@ void main() {
   runApp(RhoshopApp());
 }
 
-class RhoshopApp extends StatelessWidget {
+class RhoshopApp extends StatefulWidget {
+  @override
+  _RhoshopAppState createState() => _RhoshopAppState();
+}
+
+class _RhoshopAppState extends State<RhoshopApp> {
+  Locale locale = Locale('en', '');
+
+  @override
+  void initState() {
+    super.initState();
+    AppLocalization.localeChanged.listen(
+      (newLocale) => setState(
+        () {
+          print('main');
+          locale = newLocale;
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -36,7 +56,7 @@ class RhoshopApp extends StatelessWidget {
         const Locale('en', ''),
         const Locale('ru', ''),
       ],
-      locale: Locale('en'),
+      locale: locale,
       initialRoute: Routes.intro,
       routes: {
         Routes.intro: (context) => IntroScreen(),

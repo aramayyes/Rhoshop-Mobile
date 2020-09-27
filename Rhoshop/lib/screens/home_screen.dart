@@ -34,6 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
     categoriesFuture = MockDb.fetchCategories();
     newArrivalsFuture = MockDb.fetchNewProducts();
     bestsellersFuture = MockDb.fetchBestSellProducts();
+
+    AppLocalization.localeChanged.listen(
+      (newLocale) => setState(
+        () {
+          newArrivalsFuture = MockDb.fetchNewProducts();
+        },
+      ),
+    );
   }
 
   @override

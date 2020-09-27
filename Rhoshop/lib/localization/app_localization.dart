@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rhoshop/l10n/messages_all.dart';
@@ -6,7 +8,10 @@ import 'package:rhoshop/l10n/messages_all.dart';
 ///
 /// Holds all multilingual texts as getters.
 class AppLocalization {
+  static final localeChangedController = StreamController<Locale>.broadcast();
+
   static Future<AppLocalization> load(Locale locale) {
+    localeChangedController.add(locale);
     final String name =
         locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
@@ -15,6 +20,8 @@ class AppLocalization {
       return AppLocalization();
     });
   }
+
+  static Stream<Locale> get localeChanged => localeChangedController.stream;
 
   static AppLocalization of(BuildContext context) {
     return Localizations.of<AppLocalization>(
