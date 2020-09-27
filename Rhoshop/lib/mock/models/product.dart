@@ -2,9 +2,9 @@ import 'package:rhoshop/mock/models/category.dart';
 
 class Product {
   String id;
-  String name;
+  String defaultName;
   String localizedName;
-  String description;
+  String defaultDescription;
   String localizedDescription;
   Category category;
   String imgUrl;
@@ -13,16 +13,21 @@ class Product {
   double rating;
   double reviewsCount;
 
+  String name;
+  String description;
+
   Product(
       this.id,
-      this.name,
+      this.defaultName,
       this.localizedName,
-      this.description,
+      this.defaultDescription,
       this.localizedDescription,
       this.category,
       this.imgUrl,
       this.price,
       this.oldPrice,
       this.rating,
-      this.reviewsCount);
+      this.reviewsCount)
+      : name = defaultName,
+        description = defaultDescription;
 }

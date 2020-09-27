@@ -31,14 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    categoriesFuture = MockDb.fetchCategories();
-    newArrivalsFuture = MockDb.fetchNewProducts();
-    bestsellersFuture = MockDb.fetchBestSellProducts();
-
     AppLocalization.localeChanged.listen(
       (newLocale) => setState(
         () {
-          newArrivalsFuture = MockDb.fetchNewProducts();
+          categoriesFuture = MockDb.fetchCategories(newLocale.languageCode);
+          newArrivalsFuture = MockDb.fetchNewProducts(newLocale.languageCode);
+          bestsellersFuture =
+              MockDb.fetchBestSellProducts(newLocale.languageCode);
         },
       ),
     );
@@ -46,6 +45,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (categoriesFuture == null) {
+      categoriesFuture = MockDb.fetchCategories(
+        Localizations.localeOf(context).languageCode,
+      );
+    }
+    if (newArrivalsFuture == null) {
+      newArrivalsFuture = MockDb.fetchNewProducts(
+        Localizations.localeOf(context).languageCode,
+      );
+    }
+    if (categoriesFuture == null) {
+      bestsellersFuture = MockDb.fetchBestSellProducts(
+        Localizations.localeOf(context).languageCode,
+      );
+    }
+
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -221,7 +236,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         suggestionsCallback: (pattern) async {
-          return await MockDb.searchProducts(pattern);
+          return await MockDb.searchProducts(
+              pattern, Localizations.localeOf(context).languageCode);
         },
         itemBuilder: (context, suggestion) {
           return ListTile(

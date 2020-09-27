@@ -7,16 +7,26 @@ import 'package:rhoshop/mock/models/product.dart';
 final random = Random();
 const maxLoadingDuration = 1400;
 
-Future<List<Category>> fetchCategories() async {
+Future<List<Category>> fetchCategories(String locale) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
+
+  for (final category in _categories) {
+    if (locale == 'en') {
+      category.name = category.defaultName;
+    } else {
+      category.name = category.localizedName;
+    }
+  }
+
   return _categories;
 }
 
-Future<List<Product>> fetchProductsByCategory(String categoryId) async {
+Future<List<Product>> fetchProductsByCategory(
+    String categoryId, String locale) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
@@ -36,37 +46,72 @@ Future<List<Product>> fetchProductsByCategory(String categoryId) async {
     }
   }
 
+  for (final product in products) {
+    if (locale == 'en') {
+      product.name = product.defaultName;
+      product.description = product.defaultDescription;
+    } else {
+      product.name = product.localizedName;
+      product.description = product.localizedDescription;
+    }
+  }
+
   return products;
 }
 
-Future<List<Product>> fetchNewProducts({count = 7}) async {
+Future<List<Product>> fetchNewProducts(String locale, {count = 7}) async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
+    ),
+  );
+
+  final shuffled = List<Product>.from(_products)..shuffle();
+  final products = shuffled.sublist(0, count);
+
+  for (final product in products) {
+    if (locale == 'en') {
+      product.name = product.defaultName;
+      product.description = product.defaultDescription;
+    } else {
+      product.name = product.localizedName;
+      product.description = product.localizedDescription;
+    }
+  }
+
+  return products;
+}
+
+Future<List<Product>> fetchBestSellProducts(String locale, {count = 7}) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
   final shuffled = List<Product>.from(_products)..shuffle();
-  return shuffled.sublist(0, count);
+  final products = shuffled.sublist(0, count);
+
+  for (final product in products) {
+    if (locale == 'en') {
+      product.name = product.defaultName;
+      product.description = product.defaultDescription;
+    } else {
+      product.name = product.localizedName;
+      product.description = product.localizedDescription;
+    }
+  }
+
+  return products;
 }
 
-Future<List<Product>> fetchBestSellProducts({count = 7}) async {
+Future<List<Product>> searchProducts(String pattern, String locale) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
-  final shuffled = List<Product>.from(_products)..shuffle();
-  return shuffled.sublist(0, count);
-}
 
-Future<List<Product>> searchProducts(String pattern) async {
-  await Future.delayed(
-    Duration(
-      milliseconds: 100 + random.nextInt(maxLoadingDuration),
-    ),
-  );
-
-  return _products
+  final products = _products
       .where(
         (product) =>
             product.name.toLowerCase().contains(
@@ -78,15 +123,38 @@ Future<List<Product>> searchProducts(String pattern) async {
       )
       .toList()
         ..shuffle();
+
+  for (final product in products) {
+    if (locale == 'en') {
+      product.name = product.defaultName;
+      product.description = product.defaultDescription;
+    } else {
+      product.name = product.localizedName;
+      product.description = product.localizedDescription;
+    }
+  }
+
+  return products;
 }
 
-Future<List<AppNotification>> fetchNotifications() async {
+Future<List<AppNotification>> fetchNotifications(String locale) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
-  return _notifications..sort((n1, n2) => n2.date.compareTo(n1.date));
+  final notifications = _notifications
+    ..sort((n1, n2) => n2.date.compareTo(n1.date));
+
+  for (final notification in notifications) {
+    if (locale == 'en') {
+      notification.content = notification.defaultContent;
+    } else {
+      notification.content = notification.localizedContent;
+    }
+  }
+
+  return notifications;
 }
 
 final _categories = <Category>[
@@ -94,36 +162,37 @@ final _categories = <Category>[
     'Tops',
     'assets/mock/categories/tops.png',
     'Tops',
+    'Топы',
   ),
   Category(
     'Underwear',
     'assets/mock/categories/underwear.png',
     'Underwear',
+    'Белье',
   ),
   Category(
     'Sweaters',
     'assets/mock/categories/sweaters.png',
     'Sweaters',
+    'Джемперы',
   ),
   Category(
     'Dresses',
     'assets/mock/categories/dresses.png',
     'Dresses',
+    'Платья',
   ),
   Category(
     'Jeans',
     'assets/mock/categories/jeans.png',
     'Jeans',
+    'Джинсы',
   ),
-  // Category(
-  //   'Leggings',
-  //   'assets/mock/categories/leggings.png',
-  //   'Leggings',
-  // ),
   Category(
     'Shorts',
     'assets/mock/categories/shorts.png',
     'Shorts',
+    'Шорты',
   ),
 ];
 

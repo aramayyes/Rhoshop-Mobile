@@ -20,11 +20,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   void initState() {
     super.initState();
-    notifications = MockDb.fetchNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (notifications == null) {
+      notifications = MockDb.fetchNotifications(
+          Localizations.localeOf(context).languageCode);
+    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

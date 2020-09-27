@@ -23,22 +23,29 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     super.initState();
-
-    switch (widget.arguments.categoryId) {
-      case Ids.newArrivalsPseudocategory:
-        productsFuture = MockDb.fetchNewProducts(count: 12);
-        break;
-      case Ids.bestSellPseudocategory:
-        productsFuture = MockDb.fetchBestSellProducts(count: 12);
-        break;
-      default:
-        productsFuture =
-            MockDb.fetchProductsByCategory(widget.arguments.categoryId);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (productsFuture == null) {
+      switch (widget.arguments.categoryId) {
+        case Ids.newArrivalsPseudocategory:
+          productsFuture = MockDb.fetchNewProducts(
+              Localizations.localeOf(context).languageCode,
+              count: 12);
+          break;
+        case Ids.bestSellPseudocategory:
+          productsFuture = MockDb.fetchBestSellProducts(
+              Localizations.localeOf(context).languageCode,
+              count: 12);
+          break;
+        default:
+          productsFuture = MockDb.fetchProductsByCategory(
+              Localizations.localeOf(context).languageCode,
+              widget.arguments.categoryId);
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
