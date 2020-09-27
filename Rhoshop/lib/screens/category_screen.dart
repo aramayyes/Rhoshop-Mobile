@@ -3,9 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:rhoshop/components/product_item.dart';
 import 'package:rhoshop/mock/db.dart' as MockDb;
 import 'package:rhoshop/mock/models/product.dart';
+import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/ids.dart' as Ids;
+import 'package:rhoshop/utils/routes.dart' as Routes;
 
 /// Displays products which belong to given category.
 class CategoryScreen extends StatefulWidget {
@@ -41,8 +43,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
           break;
         default:
           productsFuture = MockDb.fetchProductsByCategory(
-              Localizations.localeOf(context).languageCode,
-              widget.arguments.categoryId);
+            widget.arguments.categoryId,
+            Localizations.localeOf(context).languageCode,
+          );
       }
     }
 
@@ -100,6 +103,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
             itemBuilder: (context, index) => ProductItem(
               snapshot.data[index],
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  Routes.product,
+                  arguments: ProductScreenArguments(snapshot.data[index].id),
+                );
+              },
             ),
           );
         } else {

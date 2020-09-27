@@ -66,6 +66,8 @@ class _RhoshopAppState extends State<RhoshopApp> {
         Routes.category: (context) =>
             CategoryScreen(ModalRoute.of(context).settings.arguments),
         Routes.notifications: (context) => NotificationsScreen(),
+        Routes.product: (context) =>
+            ProductScreen(ModalRoute.of(context).settings.arguments),
       },
       theme: ThemeData(
         primaryColor: AppColors.primary,
@@ -74,6 +76,12 @@ class _RhoshopAppState extends State<RhoshopApp> {
           headline1: TextStyle(
             color: AppColors.primaryText,
             fontSize: 46,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w700,
+          ),
+          headline2: TextStyle(
+            color: AppColors.primaryText,
+            fontSize: 28,
             fontFamily: 'Nunito',
             fontWeight: FontWeight.w700,
           ),

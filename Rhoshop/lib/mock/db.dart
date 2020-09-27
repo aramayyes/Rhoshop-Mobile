@@ -25,6 +25,25 @@ Future<List<Category>> fetchCategories(String locale) async {
   return _categories;
 }
 
+Future<Product> fetchProduct(String id, String locale) async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
+    ),
+  );
+
+  final product = _products.singleWhere((product) => product.id == id);
+  if (locale == 'en') {
+    product.name = product.defaultName;
+    product.description = product.defaultDescription;
+  } else {
+    product.name = product.localizedName;
+    product.description = product.localizedDescription;
+  }
+
+  return product;
+}
+
 Future<List<Product>> fetchProductsByCategory(
     String categoryId, String locale) async {
   await Future.delayed(
@@ -38,6 +57,7 @@ Future<List<Product>> fetchProductsByCategory(
         (product) => product.category.id == categoryId,
       )
       .toList();
+
   if (products.length < 10) {
     final productsClone = List<Product>.from(products);
     while (products.length < 16) {

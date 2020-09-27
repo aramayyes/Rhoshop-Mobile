@@ -11,7 +11,7 @@ class Product {
   double price;
   double oldPrice;
   double rating;
-  double reviewsCount;
+  int reviewsCount;
 
   String name;
   String description;
@@ -30,4 +30,11 @@ class Product {
       this.reviewsCount)
       : name = defaultName,
         description = defaultDescription;
+}
+
+enum ProductSize {
+  S,
+  M,
+  L,
+  XL,
 }

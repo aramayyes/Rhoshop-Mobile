@@ -4,3 +4,4 @@ const signUp = '/sign_up';
 const home = '/home';
 const category = '/category';
 const notifications = '/notifications';
+const product = '/product';

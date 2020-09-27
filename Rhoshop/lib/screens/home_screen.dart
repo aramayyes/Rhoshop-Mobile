@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Localizations.localeOf(context).languageCode,
       );
     }
-    if (categoriesFuture == null) {
+    if (bestsellersFuture == null) {
       bestsellersFuture = MockDb.fetchBestSellProducts(
         Localizations.localeOf(context).languageCode,
       );
@@ -373,7 +373,16 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) => AspectRatio(
               aspectRatio: 5 / 8,
-              child: ProductItem(snapshot.data[index]),
+              child: ProductItem(
+                snapshot.data[index],
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.product,
+                    arguments: ProductScreenArguments(snapshot.data[index].id),
+                  );
+                },
+              ),
             ),
           );
         } else {

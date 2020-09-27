@@ -32,7 +32,7 @@ class PrimaryButton extends StatelessWidget {
       ),
       child: Ink(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimens.buttonBorderRadius),
+          borderRadius: BorderRadius.circular(borderRadius),
           gradient: LinearGradient(
             colors: gradientColors,
           ),

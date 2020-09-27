@@ -15,7 +15,7 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  Future<List<AppNotification>> notifications;
+  Future<List<AppNotification>> notificationsFuture;
 
   @override
   void initState() {
@@ -24,8 +24,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (notifications == null) {
-      notifications = MockDb.fetchNotifications(
+    if (notificationsFuture == null) {
+      notificationsFuture = MockDb.fetchNotifications(
           Localizations.localeOf(context).languageCode);
     }
 
@@ -111,7 +111,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     Widget child;
 
     return FutureBuilder<List<AppNotification>>(
-      future: notifications,
+      future: notificationsFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           child = ListView.separated(
