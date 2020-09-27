@@ -19,12 +19,17 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'messages';
 
+  static m0(reviewsCount) => "Reviews: ${reviewsCount}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "addToCartText" : MessageLookupByLibrary.simpleMessage("ADD TO CART"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("Rhoshop"),
     "bestSellSectionTitle" : MessageLookupByLibrary.simpleMessage("Best Sell"),
     "categoriesSectionTitle" : MessageLookupByLibrary.simpleMessage("Categories"),
     "close" : MessageLookupByLibrary.simpleMessage("Close"),
+    "colorSectionTitle" : MessageLookupByLibrary.simpleMessage("Color"),
+    "descriptionSectionTitle" : MessageLookupByLibrary.simpleMessage("Description"),
     "email" : MessageLookupByLibrary.simpleMessage("Email"),
     "hasAccountText" : MessageLookupByLibrary.simpleMessage("Already have an account?"),
     "nameLabelText" : MessageLookupByLibrary.simpleMessage("Name"),
@@ -33,12 +38,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "noItemsFoundText" : MessageLookupByLibrary.simpleMessage("No items found"),
     "notificationsScreenTitle" : MessageLookupByLibrary.simpleMessage("Notifications"),
     "password" : MessageLookupByLibrary.simpleMessage("Password"),
+    "reviewsCaptionText" : m0,
     "searchText" : MessageLookupByLibrary.simpleMessage("Search"),
     "seeAllText" : MessageLookupByLibrary.simpleMessage("See all"),
     "signIn" : MessageLookupByLibrary.simpleMessage("Sign in"),
     "signInScreenTitle" : MessageLookupByLibrary.simpleMessage("Sign in"),
     "signUp" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "signUpScreenTitle" : MessageLookupByLibrary.simpleMessage("Sign up"),
+    "sizeSectionTitle" : MessageLookupByLibrary.simpleMessage("Size"),
     "welcomeMessageBody" : MessageLookupByLibrary.simpleMessage("Explore Us"),
     "welcomeMessageTitle" : MessageLookupByLibrary.simpleMessage("Welcome to Rhoshop")
   };

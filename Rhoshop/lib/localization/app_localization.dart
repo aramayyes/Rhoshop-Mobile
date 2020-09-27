@@ -194,7 +194,7 @@ class AppLocalization {
   }
   //#endregion HomeScreen
 
-  //#region Notifications
+  //#region NotificationsScreen
   String get notificationsScreenTitle {
     return Intl.message(
       'Notifications',
@@ -202,7 +202,51 @@ class AppLocalization {
       desc: 'Title of the notifications screen.',
     );
   }
-  //#endregion Notifications
+  //#endregion NotificationsScreen
+
+  //#region ProductScreen
+  String reviewsCaptionText(int reviewsCount) {
+    return Intl.message('Reviews: $reviewsCount',
+        name: 'reviewsCaptionText',
+        desc: 'Title of the reviews caption.',
+        args: [reviewsCount]);
+  }
+
+  String get descriptionSectionTitle {
+    return Intl.message(
+      'Description',
+      name: 'descriptionSectionTitle',
+      desc: 'Title of the description section.',
+    );
+  }
+
+  String get sizeSectionTitle {
+    return Intl.message(
+      'Size',
+      name: 'sizeSectionTitle',
+      desc:
+          'Title of the size section, which lets user choose size of the product.',
+    );
+  }
+
+  String get colorSectionTitle {
+    return Intl.message(
+      'Color',
+      name: 'colorSectionTitle',
+      desc:
+          'Title of the color section, which lets user choose color of the product.',
+    );
+  }
+
+  String get addToCartText {
+    return Intl.message(
+      'ADD TO CART',
+      name: 'addToCartText',
+      desc:
+          'Title of the button, which is intended for adding the product to cart.',
+    );
+  }
+  //#endregion ProductScreen
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

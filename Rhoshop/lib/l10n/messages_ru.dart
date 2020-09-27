@@ -19,12 +19,17 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
+  static m0(reviewsCount) => "Отзывы: ${reviewsCount}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "addToCartText" : MessageLookupByLibrary.simpleMessage("ДОБАВИТЬ В КОРЗИНУ"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("Rhoshop"),
     "bestSellSectionTitle" : MessageLookupByLibrary.simpleMessage("Бестселлеры"),
     "categoriesSectionTitle" : MessageLookupByLibrary.simpleMessage("Категории"),
     "close" : MessageLookupByLibrary.simpleMessage("Закрыть"),
+    "colorSectionTitle" : MessageLookupByLibrary.simpleMessage("Цвет"),
+    "descriptionSectionTitle" : MessageLookupByLibrary.simpleMessage("Описание"),
     "email" : MessageLookupByLibrary.simpleMessage("Эл. почта"),
     "hasAccountText" : MessageLookupByLibrary.simpleMessage("Уже есть учётная запись?"),
     "nameLabelText" : MessageLookupByLibrary.simpleMessage("Имя"),
@@ -33,12 +38,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "noItemsFoundText" : MessageLookupByLibrary.simpleMessage("Нет соответствующих товаров"),
     "notificationsScreenTitle" : MessageLookupByLibrary.simpleMessage("Уведомления"),
     "password" : MessageLookupByLibrary.simpleMessage("Пароль"),
+    "reviewsCaptionText" : m0,
     "searchText" : MessageLookupByLibrary.simpleMessage("Поиск"),
     "seeAllText" : MessageLookupByLibrary.simpleMessage("Смотреть все"),
     "signIn" : MessageLookupByLibrary.simpleMessage("Вход"),
     "signInScreenTitle" : MessageLookupByLibrary.simpleMessage("Вход"),
     "signUp" : MessageLookupByLibrary.simpleMessage("Регистрация"),
     "signUpScreenTitle" : MessageLookupByLibrary.simpleMessage("Регистрация"),
+    "sizeSectionTitle" : MessageLookupByLibrary.simpleMessage("Размер"),
     "welcomeMessageBody" : MessageLookupByLibrary.simpleMessage("Исследуй нас"),
     "welcomeMessageTitle" : MessageLookupByLibrary.simpleMessage("Приветствуем на Rhoshop")
   };

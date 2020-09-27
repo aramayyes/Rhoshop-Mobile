@@ -119,5 +119,37 @@
     "description": "Title of the notifications screen.",
     "type": "text",
     "placeholders": {}
+  },
+  "reviewsCaptionText": "Отзывы: {reviewsCount}",
+  "@reviewsCaptionText": {
+    "description": "Title of the reviews caption.",
+    "type": "text",
+    "placeholders": {
+      "reviewsCount": {}
+    }
+  },
+  "descriptionSectionTitle": "Описание",
+  "@descriptionSectionTitle": {
+    "description": "Title of the description section.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "sizeSectionTitle": "Размер",
+  "@sizeSectionTitle": {
+    "description": "Title of the size section, which lets user choose size of the product.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "colorSectionTitle": "Цвет",
+  "@colorSectionTitle": {
+    "description": "Title of the color section, which lets user choose color of the product.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "addToCartText": "ДОБАВИТЬ В КОРЗИНУ",
+  "@addToCartText": {
+    "description": "Title of the button, which is intended for adding the product to cart.",
+    "type": "text",
+    "placeholders": {}
   }
 }
