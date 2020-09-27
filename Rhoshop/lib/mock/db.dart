@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:rhoshop/mock/models/cart_item.dart';
 import 'package:rhoshop/mock/models/category.dart';
 import 'package:rhoshop/mock/models/norification.dart';
 import 'package:rhoshop/mock/models/product.dart';
@@ -176,6 +177,66 @@ Future<List<AppNotification>> fetchNotifications(String locale) async {
 
   return notifications;
 }
+
+Future<Set<CartItem>> getCart() async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(500),
+    ),
+  );
+
+  return _cart;
+}
+
+Future<Set<CartItem>> addToCart(CartItem cartItem) async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(500),
+    ),
+  );
+
+  _cart.add(cartItem);
+  return _cart;
+}
+
+Future<CartItem> incrementCardItem(String id) async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(500),
+    ),
+  );
+
+  final cartItem = _cart.singleWhere((cartItem) => cartItem.product.id == id);
+  cartItem.increment();
+
+  return cartItem;
+}
+
+Future<CartItem> decrementCardItem(String id) async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(500),
+    ),
+  );
+
+  final cartItem = _cart.singleWhere((cartItem) => cartItem.product.id == id);
+  cartItem.decrement();
+
+  return cartItem;
+}
+
+Future<Set<CartItem>> removeFromCard(String id) async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(500),
+    ),
+  );
+
+  _cart.removeWhere((cartItem) => cartItem.product.id == id);
+  return _cart;
+}
+
+final _cart = <CartItem>{};
 
 final _categories = <Category>[
   Category(

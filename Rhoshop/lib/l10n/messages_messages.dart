@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "addToCartText" : MessageLookupByLibrary.simpleMessage("ADD TO CART"),
+    "alreadyInCartText" : MessageLookupByLibrary.simpleMessage("ALREADY IN CART"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("Rhoshop"),
     "bestSellSectionTitle" : MessageLookupByLibrary.simpleMessage("Best Sell"),
     "categoriesSectionTitle" : MessageLookupByLibrary.simpleMessage("Categories"),

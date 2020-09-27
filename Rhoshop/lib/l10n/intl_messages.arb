@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-27T14:18:43.002152",
+  "@@last_modified": "2020-09-27T23:20:08.925475",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -149,6 +149,12 @@
   "addToCartText": "ADD TO CART",
   "@addToCartText": {
     "description": "Title of the button, which is intended for adding the product to cart.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "alreadyInCartText": "ALREADY IN CART",
+  "@alreadyInCartText": {
+    "description": "Title of the button, which tells user that the item is already in cart.",
     "type": "text",
     "placeholders": {}
   }

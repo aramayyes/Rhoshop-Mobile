@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:rhoshop/components/primary_button.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/mock/db.dart' as MockDb;
+import 'package:rhoshop/mock/models/cart_item.dart';
 import 'package:rhoshop/mock/models/product.dart';
+import 'package:rhoshop/models/cart.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 
@@ -114,25 +117,43 @@ class _ProductScreenState extends State<ProductScreen> {
               ],
             ),
           ),
-          _buildAddToCart(context),
+          _buildAddToCart(context, product),
         ],
       ),
     );
   }
 
-  Align _buildAddToCart(BuildContext context) {
+  Align _buildAddToCart(BuildContext context, Product product) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: SafeArea(
         child: SizedBox(
           height: 60,
-          child: PrimaryButton(
-            borderRadius: 0,
-            onPressed: () {},
-            child: Text(
-              AppLocalization.of(context).addToCartText,
-              style: Theme.of(context).textTheme.button,
-            ),
+          child: Consumer<Cart>(
+            builder: (context, cart, child) {
+              final isInCart = cart.isInCart(product.id);
+              return PrimaryButton(
+                borderRadius: 0,
+                onPressed: () {
+                  isInCart
+                      ? cart.remove(product.id)
+                      : cart.add(
+                          CartItem(
+                            product,
+                            selectedSize,
+                            selectedColor,
+                            1,
+                          ),
+                        );
+                },
+                child: Text(
+                  isInCart
+                      ? AppLocalization.of(context).alreadyInCartText
+                      : AppLocalization.of(context).addToCartText,
+                  style: Theme.of(context).textTheme.button,
+                ),
+              );
+            },
           ),
         ),
       ),

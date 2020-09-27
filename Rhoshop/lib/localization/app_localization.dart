@@ -246,6 +246,15 @@ class AppLocalization {
           'Title of the button, which is intended for adding the product to cart.',
     );
   }
+
+  String get alreadyInCartText {
+    return Intl.message(
+      'ALREADY IN CART',
+      name: 'alreadyInCartText',
+      desc:
+          'Title of the button, which tells user that the item is already in cart.',
+    );
+  }
   //#endregion ProductScreen
 }
 

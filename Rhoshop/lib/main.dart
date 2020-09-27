@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/app_theme.dart';
 import 'package:rhoshop/utils/routes.dart' as Routes;
 
+import 'models/cart.dart';
+
 void main() {
-  runApp(RhoshopApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => Cart(),
+      child: RhoshopApp(),
+    ),
+  );
 }
 
 class RhoshopApp extends StatefulWidget {
@@ -38,6 +46,9 @@ class _RhoshopAppState extends State<RhoshopApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    Provider.of<Cart>(context, listen: false).load();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => AppLocalization.of(context).appTitle,
