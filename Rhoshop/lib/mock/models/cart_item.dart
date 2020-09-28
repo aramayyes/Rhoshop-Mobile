@@ -15,13 +15,18 @@ class CartItem {
   }
 
   CartItem decrement() {
-    this.count--;
+    if (count > 1) {
+      this.count--;
+    }
     return this;
   }
 
   @override
   bool operator ==(other) {
-    return other is CartItem && this.product.id == other.product.id;
+    return other is CartItem &&
+        this.product.id == other.product.id &&
+        productColor == other.productColor &&
+        this.productSize == other.productSize;
   }
 
   @override

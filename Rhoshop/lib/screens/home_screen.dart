@@ -91,8 +91,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.primaryText,
                 height: 24,
               ),
-              onPressed: () {},
-            )
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  Routes.cart,
+                );
+              },
+            ),
           ],
         ),
         body: GestureDetector(

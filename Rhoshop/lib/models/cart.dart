@@ -6,6 +6,18 @@ import 'package:rhoshop/mock/models/cart_item.dart';
 class Cart extends ChangeNotifier {
   var _items = <CartItem>{};
 
+  Set<CartItem> get items => _items;
+  double get total {
+    double sum = 0;
+    for (var item in _items) {
+      sum += item.count * item.product.price;
+    }
+
+    return sum;
+  }
+
+  bool get isEmpty => _items.isEmpty;
+
   Future<void> load() async {
     try {
       _items = await MockDb.getCart();
@@ -14,8 +26,8 @@ class Cart extends ChangeNotifier {
     }
   }
 
-  bool isInCart(String id) {
-    return _items.any((cartItem) => cartItem.product.id == id);
+  bool isInCart(CartItem cartItem) {
+    return _items.any((item) => item == cartItem);
   }
 
   Future add(CartItem cartItem) async {
@@ -23,8 +35,8 @@ class Cart extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future remove(String id) async {
-    _items = await MockDb.removeFromCard(id);
+  Future remove(CartItem cartItem, {bool removeAll = true}) async {
+    _items = await MockDb.removeFromCard(cartItem, removeAll: removeAll);
     notifyListeners();
   }
 }

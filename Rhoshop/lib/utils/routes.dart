@@ -5,3 +5,4 @@ const home = '/home';
 const category = '/category';
 const notifications = '/notifications';
 const product = '/product';
+const cart = '/cart';

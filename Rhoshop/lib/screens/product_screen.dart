@@ -9,6 +9,7 @@ import 'package:rhoshop/mock/models/product.dart';
 import 'package:rhoshop/models/cart.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
+import 'package:rhoshop/utils/routes.dart' as Routes;
 
 // Mock
 final productColors = <Color>[
@@ -48,17 +49,33 @@ class _ProductScreenState extends State<ProductScreen> {
 
     return Scaffold(
         appBar: AppBar(
-            elevation: 0,
-            leading: IconButton(
+          elevation: 0,
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              "assets/icons/left-arrow.svg",
+              color: AppColors.primaryText,
+              height: 24,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          actions: [
+            IconButton(
               icon: SvgPicture.asset(
-                "assets/icons/left-arrow.svg",
+                "assets/icons/shopping-cart.svg",
                 color: AppColors.primaryText,
                 height: 24,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(
+                  context,
+                  Routes.cart,
+                );
               },
-            )),
+            ),
+          ],
+        ),
         body: FutureBuilder(
           future: productFuture,
           builder: (context, snapshot) {
@@ -131,12 +148,26 @@ class _ProductScreenState extends State<ProductScreen> {
           height: 60,
           child: Consumer<Cart>(
             builder: (context, cart, child) {
-              final isInCart = cart.isInCart(product.id);
+              final isInCart = cart.isInCart(
+                CartItem(
+                  product,
+                  selectedSize,
+                  selectedColor,
+                  1,
+                ),
+              );
               return PrimaryButton(
                 borderRadius: 0,
                 onPressed: () {
                   isInCart
-                      ? cart.remove(product.id)
+                      ? cart.remove(
+                          CartItem(
+                            product,
+                            selectedSize,
+                            selectedColor,
+                            1,
+                          ),
+                        )
                       : cart.add(
                           CartItem(
                             product,

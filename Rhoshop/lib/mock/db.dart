@@ -195,44 +195,38 @@ Future<Set<CartItem>> addToCart(CartItem cartItem) async {
     ),
   );
 
-  _cart.add(cartItem);
+  final item = _cart.singleWhere(
+    (ci) => ci == cartItem,
+    orElse: () => null,
+  );
+  if (item != null) {
+    item.increment();
+  } else {
+    _cart.add(cartItem);
+  }
+
   return _cart;
 }
 
-Future<CartItem> incrementCardItem(String id) async {
+Future<Set<CartItem>> removeFromCard(CartItem cartItem,
+    {bool removeAll = true}) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(500),
     ),
   );
 
-  final cartItem = _cart.singleWhere((cartItem) => cartItem.product.id == id);
-  cartItem.increment();
-
-  return cartItem;
-}
-
-Future<CartItem> decrementCardItem(String id) async {
-  await Future.delayed(
-    Duration(
-      milliseconds: 100 + random.nextInt(500),
-    ),
+  final item = _cart.singleWhere(
+    (ci) => ci == cartItem,
+    orElse: () => null,
   );
 
-  final cartItem = _cart.singleWhere((cartItem) => cartItem.product.id == id);
-  cartItem.decrement();
+  if (item != null && !removeAll) {
+    item.decrement();
+  } else {
+    _cart.remove(item);
+  }
 
-  return cartItem;
-}
-
-Future<Set<CartItem>> removeFromCard(String id) async {
-  await Future.delayed(
-    Duration(
-      milliseconds: 100 + random.nextInt(500),
-    ),
-  );
-
-  _cart.removeWhere((cartItem) => cartItem.product.id == id);
   return _cart;
 }
 
