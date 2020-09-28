@@ -26,7 +26,5 @@ class Cart extends ChangeNotifier {
   Future remove(String id) async {
     _items = await MockDb.removeFromCard(id);
     notifyListeners();
-
-    print(_items);
   }
 }

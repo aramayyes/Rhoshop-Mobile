@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:provider/provider.dart';
 import 'package:rhoshop/components/product_item.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/mock/db.dart' as MockDb;
 import 'package:rhoshop/mock/models/category.dart';
 import 'package:rhoshop/mock/models/product.dart';
+import 'package:rhoshop/models/app_locale.dart';
 import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
@@ -31,16 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    AppLocalization.localeChanged.listen(
-      (newLocale) => setState(
-        () {
-          categoriesFuture = MockDb.fetchCategories(newLocale.languageCode);
-          newArrivalsFuture = MockDb.fetchNewProducts(newLocale.languageCode);
-          bestsellersFuture =
-              MockDb.fetchBestSellProducts(newLocale.languageCode);
-        },
-      ),
-    );
+    Provider.of<AppLocale>(context, listen: false).addListener(() {
+      final newLocale = Provider.of<AppLocale>(context, listen: false).locale;
+
+      categoriesFuture = MockDb.fetchCategories(newLocale.languageCode);
+      newArrivalsFuture = MockDb.fetchNewProducts(newLocale.languageCode);
+      bestsellersFuture = MockDb.fetchBestSellProducts(newLocale.languageCode);
+    });
   }
 
   @override
