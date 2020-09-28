@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-27T23:20:08.925475",
+  "@@last_modified": "2020-09-28T19:07:05.135993",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -155,6 +155,24 @@
   "alreadyInCartText": "ALREADY IN CART",
   "@alreadyInCartText": {
     "description": "Title of the button, which tells user that the item is already in cart.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "cartScreenTitle": "Cart",
+  "@cartScreenTitle": {
+    "description": "Title of the cart screen.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "totalCaptionText": "Total",
+  "@totalCaptionText": {
+    "description": "Title of the caption that shows total sum of products in cart.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "orderButtonText": "Order",
+  "@orderButtonText": {
+    "description": "Title of the button that is intended for ordering products in the cart.",
     "type": "text",
     "placeholders": {}
   }

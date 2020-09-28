@@ -251,6 +251,34 @@ class AppLocalization {
     );
   }
   //#endregion ProductScreen
+
+  //#region CartScreen
+  String get cartScreenTitle {
+    return Intl.message(
+      'Cart',
+      name: 'cartScreenTitle',
+      desc: 'Title of the cart screen.',
+    );
+  }
+
+  String get totalCaptionText {
+    return Intl.message(
+      'Total',
+      name: 'totalCaptionText',
+      desc:
+          'Title of the caption that shows total sum of products in cart.',
+    );
+  }
+
+  String get orderButtonText {
+    return Intl.message(
+      'Order',
+      name: 'orderButtonText',
+      desc:
+      'Title of the button that is intended for ordering products in the cart.',
+    );
+  }
+  //#endregion CartScreen
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "alreadyInCartText" : MessageLookupByLibrary.simpleMessage("УЖЕ В КОРЗИНЕ"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("Rhoshop"),
     "bestSellSectionTitle" : MessageLookupByLibrary.simpleMessage("Бестселлеры"),
+    "cartScreenTitle" : MessageLookupByLibrary.simpleMessage("Корзина"),
     "categoriesSectionTitle" : MessageLookupByLibrary.simpleMessage("Категории"),
     "close" : MessageLookupByLibrary.simpleMessage("Закрыть"),
     "colorSectionTitle" : MessageLookupByLibrary.simpleMessage("Цвет"),
@@ -38,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noAccountText" : MessageLookupByLibrary.simpleMessage("Нет учетной записи?"),
     "noItemsFoundText" : MessageLookupByLibrary.simpleMessage("Нет соответствующих товаров"),
     "notificationsScreenTitle" : MessageLookupByLibrary.simpleMessage("Уведомления"),
+    "orderButtonText" : MessageLookupByLibrary.simpleMessage("Оформить заказ"),
     "password" : MessageLookupByLibrary.simpleMessage("Пароль"),
     "reviewsCaptionText" : m0,
     "searchText" : MessageLookupByLibrary.simpleMessage("Поиск"),
@@ -47,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "signUp" : MessageLookupByLibrary.simpleMessage("Регистрация"),
     "signUpScreenTitle" : MessageLookupByLibrary.simpleMessage("Регистрация"),
     "sizeSectionTitle" : MessageLookupByLibrary.simpleMessage("Размер"),
+    "totalCaptionText" : MessageLookupByLibrary.simpleMessage("Общая стоимость"),
     "welcomeMessageBody" : MessageLookupByLibrary.simpleMessage("Исследуй нас"),
     "welcomeMessageTitle" : MessageLookupByLibrary.simpleMessage("Приветствуем на Rhoshop")
   };

@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "alreadyInCartText" : MessageLookupByLibrary.simpleMessage("ALREADY IN CART"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("Rhoshop"),
     "bestSellSectionTitle" : MessageLookupByLibrary.simpleMessage("Best Sell"),
+    "cartScreenTitle" : MessageLookupByLibrary.simpleMessage("Cart"),
     "categoriesSectionTitle" : MessageLookupByLibrary.simpleMessage("Categories"),
     "close" : MessageLookupByLibrary.simpleMessage("Close"),
     "colorSectionTitle" : MessageLookupByLibrary.simpleMessage("Color"),
@@ -38,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "noAccountText" : MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
     "noItemsFoundText" : MessageLookupByLibrary.simpleMessage("No items found"),
     "notificationsScreenTitle" : MessageLookupByLibrary.simpleMessage("Notifications"),
+    "orderButtonText" : MessageLookupByLibrary.simpleMessage("Order"),
     "password" : MessageLookupByLibrary.simpleMessage("Password"),
     "reviewsCaptionText" : m0,
     "searchText" : MessageLookupByLibrary.simpleMessage("Search"),
@@ -47,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "signUp" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "signUpScreenTitle" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "sizeSectionTitle" : MessageLookupByLibrary.simpleMessage("Size"),
+    "totalCaptionText" : MessageLookupByLibrary.simpleMessage("Total"),
     "welcomeMessageBody" : MessageLookupByLibrary.simpleMessage("Explore Us"),
     "welcomeMessageTitle" : MessageLookupByLibrary.simpleMessage("Welcome to Rhoshop")
   };
