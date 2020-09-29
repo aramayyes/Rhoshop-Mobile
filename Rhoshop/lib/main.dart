@@ -15,10 +15,10 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<AppLocale>(
           create: (context) => AppLocale(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<Cart>(
           create: (context) => Cart(),
         ),
       ],
@@ -80,6 +80,7 @@ class _RhoshopAppState extends State<RhoshopApp> {
               ProductScreen(ModalRoute.of(context).settings.arguments),
           Routes.cart: (context) => CartScreen(),
           Routes.orderConfirmation: (context) => OrderConfirmationScreen(),
+          Routes.settings: (context) => SettingsScreen(),
         },
         theme: ThemeData(
           primaryColor: AppColors.primary,

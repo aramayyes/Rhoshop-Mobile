@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-29T18:06:41.293824",
+  "@@last_modified": "2020-09-29T21:57:14.218507",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -191,6 +191,18 @@
   "backToHomeButtonText": "Back to Home",
   "@backToHomeButtonText": {
     "description": "Title of the button that is intended for going back to home after making an order.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "settingsScreenTitle": "Settings",
+  "@settingsScreenTitle": {
+    "description": "Title of the settings screen.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "languageSettingsItem": "Language",
+  "@languageSettingsItem": {
+    "description": "Title of item in SettingsScreen which is intended for changing language.",
     "type": "text",
     "placeholders": {}
   },

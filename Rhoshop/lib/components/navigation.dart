@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
+import 'package:rhoshop/utils/routes.dart' as Routes;
 
 class Navigation extends StatelessWidget {
   @override
@@ -70,20 +71,29 @@ class Navigation extends StatelessWidget {
         Divider(
           thickness: 1,
         ),
-        Row(
-          children: [
-            Icon(
-              Icons.settings,
-              size: 28,
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              AppLocalization.of(context).settingsNavigationItem,
-              style: Theme.of(context).textTheme.headline3,
-            ),
-          ],
+        GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(
+              context,
+              Routes.settings,
+            );
+          },
+          child: Row(
+            children: [
+              Icon(
+                Icons.settings,
+                size: 28,
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Text(
+                AppLocalization.of(context).settingsNavigationItem,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+            ],
+          ),
         ),
         Divider(
           thickness: 1,

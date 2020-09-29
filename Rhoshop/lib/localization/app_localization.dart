@@ -307,6 +307,25 @@ class AppLocalization {
   }
   //#endregion OrderConfirmationScreen
 
+  //#region SettingsScreen
+  String get settingsScreenTitle {
+    return Intl.message(
+      'Settings',
+      name: 'settingsScreenTitle',
+      desc: 'Title of the settings screen.',
+    );
+  }
+
+  String get languageSettingsItem {
+    return Intl.message(
+      'Language',
+      name: 'languageSettingsItem',
+      desc:
+          'Title of item in SettingsScreen which is intended for changing language.',
+    );
+  }
+  //#endregion SettingsScreen
+
   //#region Navigation
   String get profileNavigationItem {
     return Intl.message(
