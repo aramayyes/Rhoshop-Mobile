@@ -52,21 +52,30 @@ class Navigation extends StatelessWidget {
         Divider(
           thickness: 1,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              AppLocalization.of(context).myOrdersNavigationItem,
-              style: Theme.of(context).textTheme.headline3,
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Icon(
-              Icons.shopping_basket,
-              size: 28,
-            ),
-          ],
+        GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(
+              context,
+              Routes.myOrders,
+            );
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                AppLocalization.of(context).myOrdersNavigationItem,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Icon(
+                Icons.shopping_basket,
+                size: 28,
+              ),
+            ],
+          ),
         ),
         Divider(
           thickness: 1,

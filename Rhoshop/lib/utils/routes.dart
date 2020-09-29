@@ -8,3 +8,4 @@ const product = '/product';
 const cart = '/cart';
 const orderConfirmation = '/orderConfirmation';
 const settings = '/settings';
+const myOrders = '/myOrders';

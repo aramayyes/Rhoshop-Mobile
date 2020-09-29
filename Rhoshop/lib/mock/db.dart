@@ -242,7 +242,31 @@ Future<Set<CartItem>> emptyCard() async {
   return _cart;
 }
 
+Future<Set<CartItem>> order() async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
+    ),
+  );
+
+  _myOrders.addAll(_cart);
+  _cart.clear();
+
+  return _cart;
+}
+
+Future<List<CartItem>> getMyOrders() async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
+    ),
+  );
+
+  return _myOrders;
+}
+
 final _cart = <CartItem>{};
+final _myOrders = <CartItem>[];
 
 final _categories = <Category>[
   Category(

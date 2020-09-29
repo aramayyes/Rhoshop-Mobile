@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hasAccountText" : MessageLookupByLibrary.simpleMessage("Уже есть учётная запись?"),
     "languageSettingsItem" : MessageLookupByLibrary.simpleMessage("Язык"),
     "myOrdersNavigationItem" : MessageLookupByLibrary.simpleMessage("Мои заказы"),
+    "myOrdersScreenTitle" : MessageLookupByLibrary.simpleMessage("My Orders"),
     "nameLabelText" : MessageLookupByLibrary.simpleMessage("Имя"),
     "newArrivalsSectionTitle" : MessageLookupByLibrary.simpleMessage("Новинки"),
     "noAccountText" : MessageLookupByLibrary.simpleMessage("Нет учетной записи?"),

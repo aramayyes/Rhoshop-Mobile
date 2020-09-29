@@ -326,6 +326,16 @@ class AppLocalization {
   }
   //#endregion SettingsScreen
 
+  //#region MyOrders
+  String get myOrdersScreenTitle {
+    return Intl.message(
+      'My Orders',
+      name: 'myOrdersScreenTitle',
+      desc: 'Title of the my orders screen.',
+    );
+  }
+  //#endregion MyOrders
+
   //#region Navigation
   String get profileNavigationItem {
     return Intl.message(

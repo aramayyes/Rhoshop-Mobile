@@ -50,7 +50,7 @@ class Cart extends ChangeNotifier {
     _loadingStates.add(CartOperation.order);
     notifyListeners();
 
-    _items = await MockDb.emptyCard();
+    _items = await MockDb.order();
     _loadingStates.remove(CartOperation.order);
 
     notifyListeners();

@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "hasAccountText" : MessageLookupByLibrary.simpleMessage("Already have an account?"),
     "languageSettingsItem" : MessageLookupByLibrary.simpleMessage("Language"),
     "myOrdersNavigationItem" : MessageLookupByLibrary.simpleMessage("My Orders"),
+    "myOrdersScreenTitle" : MessageLookupByLibrary.simpleMessage("My Orders"),
     "nameLabelText" : MessageLookupByLibrary.simpleMessage("Name"),
     "newArrivalsSectionTitle" : MessageLookupByLibrary.simpleMessage("New Arrivals"),
     "noAccountText" : MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
