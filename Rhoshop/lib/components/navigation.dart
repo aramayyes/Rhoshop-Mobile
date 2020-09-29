@@ -53,6 +53,7 @@ class Navigation extends StatelessWidget {
           thickness: 1,
         ),
         GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () {
             Navigator.pop(context);
             Navigator.pushNamed(
@@ -81,6 +82,7 @@ class Navigation extends StatelessWidget {
           thickness: 1,
         ),
         GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () {
             Navigator.pop(context);
             Navigator.pushNamed(
