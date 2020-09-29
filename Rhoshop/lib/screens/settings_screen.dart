@@ -5,6 +5,7 @@ import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/models/app_locale.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -61,8 +62,12 @@ class _SettingsScreenState extends State<SettingsScreen>
                           return Row(
                             children: [
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   if (!selectedEnglish) {
+                                    final prefs =
+                                        await SharedPreferences.getInstance();
+                                    await prefs.setString('counter', 'en');
+
                                     appLocale.setLocale(
                                       Locale('en', ''),
                                     );
@@ -80,11 +85,16 @@ class _SettingsScreenState extends State<SettingsScreen>
                                 width: 20,
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  if (selectedEnglish)
+                                onTap: () async {
+                                  if (selectedEnglish) {
+                                    final prefs =
+                                        await SharedPreferences.getInstance();
+                                    await prefs.setString('counter', 'ru');
+
                                     appLocale.setLocale(
                                       Locale('ru', ''),
                                     );
+                                  }
                                 },
                                 child: Opacity(
                                   opacity: !selectedEnglish ? 1 : 0.4,

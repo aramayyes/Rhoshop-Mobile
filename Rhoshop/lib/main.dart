@@ -8,15 +8,24 @@ import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/app_theme.dart';
 import 'package:rhoshop/utils/routes.dart' as Routes;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/cart.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  var localeCode = prefs.getString('counter');
+  if (localeCode == null) {
+    localeCode = 'en';
+  }
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<AppLocale>(
-          create: (context) => AppLocale(),
+          create: (context) => AppLocale(localeCode),
         ),
         ChangeNotifierProvider<Cart>(
           create: (context) => Cart(),

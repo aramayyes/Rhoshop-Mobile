@@ -3,7 +3,9 @@ import 'package:rhoshop/localization/app_localization.dart';
 
 /// Contains application localization state.
 class AppLocale extends ChangeNotifier {
-  var _locale = Locale('en', '');
+  Locale _locale;
+
+  AppLocale(String initialLocale) : _locale = Locale(initialLocale, '');
 
   Locale get locale => _locale;
 
