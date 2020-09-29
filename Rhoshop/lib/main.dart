@@ -79,6 +79,7 @@ class _RhoshopAppState extends State<RhoshopApp> {
           Routes.product: (context) =>
               ProductScreen(ModalRoute.of(context).settings.arguments),
           Routes.cart: (context) => CartScreen(),
+          Routes.orderConfirmation: (context) => OrderConfirmationScreen(),
         },
         theme: ThemeData(
           primaryColor: AppColors.primary,

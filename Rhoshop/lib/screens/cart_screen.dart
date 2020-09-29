@@ -8,6 +8,7 @@ import 'package:rhoshop/mock/models/cart_item.dart';
 import 'package:rhoshop/models/cart.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
+import 'package:rhoshop/utils/routes.dart' as Routes;
 
 /// Displays list with products in cart and contains a button to make an order.
 class CartScreen extends StatefulWidget {
@@ -88,11 +89,26 @@ class _CartScreenState extends State<CartScreen> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: PrimaryButton(
-                onPressed: cart.isEmpty ? null : () {},
-                child: Text(
-                  AppLocalization.of(context).orderButtonText,
-                  style: Theme.of(context).textTheme.button,
-                ),
+                onPressed: cart.isEmpty || cart.isLoading(CartOperation.order)
+                    ? null
+                    : () async {
+                        await cart.order();
+                        Navigator.pushNamed(context, Routes.orderConfirmation);
+                      },
+                child: cart.isLoading(CartOperation.order)
+                    ? SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                            AppColors.primary,
+                          ),
+                        ),
+                      )
+                    : Text(
+                        AppLocalization.of(context).orderButtonText,
+                        style: Theme.of(context).textTheme.button,
+                      ),
               ),
             ),
           )

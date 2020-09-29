@@ -6,7 +6,7 @@ import 'package:rhoshop/mock/models/norification.dart';
 import 'package:rhoshop/mock/models/product.dart';
 
 final random = Random();
-const maxLoadingDuration = 1400;
+const maxLoadingDuration = 900;
 
 Future<List<Category>> fetchCategories(String locale) async {
   await Future.delayed(
@@ -181,7 +181,7 @@ Future<List<AppNotification>> fetchNotifications(String locale) async {
 Future<Set<CartItem>> getCart() async {
   await Future.delayed(
     Duration(
-      milliseconds: 100 + random.nextInt(500),
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
 
@@ -212,7 +212,7 @@ Future<Set<CartItem>> removeFromCard(CartItem cartItem,
     {bool removeAll = true}) async {
   await Future.delayed(
     Duration(
-      milliseconds: 100 + random.nextInt(500),
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
     ),
   );
 
@@ -226,6 +226,18 @@ Future<Set<CartItem>> removeFromCard(CartItem cartItem,
   } else {
     _cart.remove(item);
   }
+
+  return _cart;
+}
+
+Future<Set<CartItem>> emptyCard() async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
+    ),
+  );
+
+  _cart.clear();
 
   return _cart;
 }
