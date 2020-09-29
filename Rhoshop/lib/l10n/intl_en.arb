@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-28T19:07:05.135993",
+  "@@last_modified": "2020-09-29T15:17:36.064869",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -173,6 +173,24 @@
   "orderButtonText": "Order",
   "@orderButtonText": {
     "description": "Title of the button that is intended for ordering products in the cart.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "thankYouMessageText": "Thank you for your order!",
+  "@thankYouMessageText": {
+    "description": "Gratitude message that is shown to user after making an order.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "weWillContactText": "We will contact you shortly to clarify details.",
+  "@weWillContactText": {
+    "description": "This message is shown to user after making an order to inform that they will be contacted soon to clarify details.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "backToHomeButtonText": "Back to Home",
+  "@backToHomeButtonText": {
+    "description": "Title of the button that is intended for going back to home after making an order.",
     "type": "text",
     "placeholders": {}
   }

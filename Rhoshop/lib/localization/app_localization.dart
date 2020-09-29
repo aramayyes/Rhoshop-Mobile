@@ -265,8 +265,7 @@ class AppLocalization {
     return Intl.message(
       'Total',
       name: 'totalCaptionText',
-      desc:
-          'Title of the caption that shows total sum of products in cart.',
+      desc: 'Title of the caption that shows total sum of products in cart.',
     );
   }
 
@@ -275,10 +274,38 @@ class AppLocalization {
       'Order',
       name: 'orderButtonText',
       desc:
-      'Title of the button that is intended for ordering products in the cart.',
+          'Title of the button that is intended for ordering products in the cart.',
     );
   }
   //#endregion CartScreen
+
+  //#region OrderConfirmationScreen
+  String get thankYouMessageText {
+    return Intl.message(
+      'Thank you for your order!',
+      name: 'thankYouMessageText',
+      desc: 'Gratitude message that is shown to user after making an order.',
+    );
+  }
+
+  String get weWillContactText {
+    return Intl.message(
+      'We will contact you shortly to clarify details.',
+      name: 'weWillContactText',
+      desc:
+          'This message is shown to user after making an order to inform that they will be contacted soon to clarify details.',
+    );
+  }
+
+  String get backToHomeButtonText {
+    return Intl.message(
+      'Back to Home',
+      name: 'backToHomeButtonText',
+      desc:
+          'Title of the button that is intended for going back to home after making an order.',
+    );
+  }
+  //#endregion OrderConfirmationScreen
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

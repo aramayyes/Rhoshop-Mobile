@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "addToCartText" : MessageLookupByLibrary.simpleMessage("ADD TO CART"),
     "alreadyInCartText" : MessageLookupByLibrary.simpleMessage("ALREADY IN CART"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("Rhoshop"),
+    "backToHomeButtonText" : MessageLookupByLibrary.simpleMessage("Back to Home"),
     "bestSellSectionTitle" : MessageLookupByLibrary.simpleMessage("Best Sell"),
     "cartScreenTitle" : MessageLookupByLibrary.simpleMessage("Cart"),
     "categoriesSectionTitle" : MessageLookupByLibrary.simpleMessage("Categories"),
@@ -49,7 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "signUp" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "signUpScreenTitle" : MessageLookupByLibrary.simpleMessage("Sign up"),
     "sizeSectionTitle" : MessageLookupByLibrary.simpleMessage("Size"),
+    "thankYouMessageText" : MessageLookupByLibrary.simpleMessage("Thank you for your order!"),
     "totalCaptionText" : MessageLookupByLibrary.simpleMessage("Total"),
+    "weWillContactText" : MessageLookupByLibrary.simpleMessage("We will contact you shortly to clarify details."),
     "welcomeMessageBody" : MessageLookupByLibrary.simpleMessage("Explore Us"),
     "welcomeMessageTitle" : MessageLookupByLibrary.simpleMessage("Welcome to Rhoshop")
   };
