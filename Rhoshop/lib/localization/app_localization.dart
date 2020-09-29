@@ -306,6 +306,32 @@ class AppLocalization {
     );
   }
   //#endregion OrderConfirmationScreen
+
+  //#region Navigation
+  String get profileNavigationItem {
+    return Intl.message(
+      'Profile',
+      name: 'profileNavigationItem',
+      desc: 'Title of the navigation item that leads to ProfileScreen.',
+    );
+  }
+
+  String get myOrdersNavigationItem {
+    return Intl.message(
+      'My Orders',
+      name: 'myOrdersNavigationItem',
+      desc: 'Title of the navigation item that leads to MyOrdersScreen.',
+    );
+  }
+
+  String get settingsNavigationItem {
+    return Intl.message(
+      'Settings',
+      name: 'settingsNavigationItem',
+      desc: 'Title of the navigation item that leads to SettingsScreen.',
+    );
+  }
+  //#endregion Navigation
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

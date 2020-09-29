@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-29T15:17:36.064869",
+  "@@last_modified": "2020-09-29T18:06:41.293824",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -191,6 +191,24 @@
   "backToHomeButtonText": "Back to Home",
   "@backToHomeButtonText": {
     "description": "Title of the button that is intended for going back to home after making an order.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "profileNavigationItem": "Profile",
+  "@profileNavigationItem": {
+    "description": "Title of the navigation item that leads to ProfileScreen.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "myOrdersNavigationItem": "My Orders",
+  "@myOrdersNavigationItem": {
+    "description": "Title of the navigation item that leads to MyOrdersScreen.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "settingsNavigationItem": "Settings",
+  "@settingsNavigationItem": {
+    "description": "Title of the navigation item that leads to SettingsScreen.",
     "type": "text",
     "placeholders": {}
   }
