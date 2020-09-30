@@ -18,12 +18,12 @@ class MyOrdersScreen extends StatefulWidget {
 }
 
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
-  Future<List<CartItem>> ordersFuture;
+  Future<List<CartItem>> _ordersFuture;
 
   @override
   Widget build(BuildContext context) {
-    if (ordersFuture == null) {
-      ordersFuture = MockDb.fetchMyOrders();
+    if (_ordersFuture == null) {
+      _ordersFuture = MockDb.fetchMyOrders();
     }
 
     Widget child;
@@ -66,7 +66,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
 
   FutureBuilder<List<CartItem>> _buildOrdersSection(Widget child) {
     return FutureBuilder<List<CartItem>>(
-      future: ordersFuture,
+      future: _ordersFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           child = snapshot.data.isEmpty

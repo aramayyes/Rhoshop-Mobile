@@ -24,10 +24,10 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
   /// Email address from input field.
-  String email;
+  String _email;
 
   /// Password from input field.
-  String password;
+  String _password;
 
   /// Handles 'Sign in' button presses.
   void onSignInButtonPressed() {
@@ -94,7 +94,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                         !RegExp(RegExps.email).hasMatch(value))
                                     ? ''
                                     : null,
-                                onChanged: (value) => email = value,
+                                onChanged: (value) => _email = value,
                               ),
                               SizedBox(
                                 height: 20,
@@ -128,7 +128,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     (value.isEmpty || value.length < 6)
                                         ? ''
                                         : null,
-                                onChanged: (value) => password = value,
+                                onChanged: (value) => _password = value,
                               ),
                               SizedBox(
                                 height: 60,

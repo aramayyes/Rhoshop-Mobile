@@ -31,18 +31,18 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  Future<Product> productFuture;
+  Future<Product> _productFuture;
 
   /// Selected size, which will be included in order.
-  ProductSize selectedSize = ProductSize.M;
+  ProductSize _selectedSize = ProductSize.M;
 
   /// Selected color, which be included in order.
-  Color selectedColor = productColors[0];
+  Color _selectedColor = productColors[0];
 
   @override
   Widget build(BuildContext context) {
-    if (productFuture == null) {
-      productFuture = MockDb.fetchProduct(
+    if (_productFuture == null) {
+      _productFuture = MockDb.fetchProduct(
         widget.arguments.productId,
         Localizations.localeOf(context).languageCode,
       );
@@ -78,7 +78,7 @@ class _ProductScreenState extends State<ProductScreen> {
         ],
       ),
       body: FutureBuilder(
-        future: productFuture,
+        future: _productFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return _buildProductSection(context, snapshot.data);
@@ -153,8 +153,8 @@ class _ProductScreenState extends State<ProductScreen> {
               final isInCart = cart.isInCart(
                 CartItem(
                   product,
-                  selectedSize,
-                  selectedColor,
+                  _selectedSize,
+                  _selectedColor,
                   1,
                 ),
               );
@@ -165,16 +165,16 @@ class _ProductScreenState extends State<ProductScreen> {
                       ? cart.remove(
                           CartItem(
                             product,
-                            selectedSize,
-                            selectedColor,
+                            _selectedSize,
+                            _selectedColor,
                             1,
                           ),
                         )
                       : cart.add(
                           CartItem(
                             product,
-                            selectedSize,
-                            selectedColor,
+                            _selectedSize,
+                            _selectedColor,
                             1,
                           ),
                         );
@@ -213,12 +213,12 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   GestureDetector _buildColorDot(Color color) {
-    final isSelected = color == selectedColor;
+    final isSelected = color == _selectedColor;
 
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedColor = color;
+          _selectedColor = color;
         });
       },
       child: Container(
@@ -263,14 +263,14 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   Padding _buildProductSizeBox(ProductSize productSize, BuildContext context) {
-    final isSelected = productSize == selectedSize;
+    final isSelected = productSize == _selectedSize;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: GestureDetector(
         onTap: () {
           setState(() {
-            selectedSize = productSize;
+            _selectedSize = productSize;
           });
         },
         child: Container(

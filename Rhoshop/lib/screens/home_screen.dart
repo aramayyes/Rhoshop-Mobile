@@ -27,9 +27,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<List<Category>> categoriesFuture;
-  Future<List<Product>> newArrivalsFuture;
-  Future<List<Product>> bestsellersFuture;
+  Future<List<Category>> _categoriesFuture;
+  Future<List<Product>> _newArrivalsFuture;
+  Future<List<Product>> _bestsellersFuture;
 
   @override
   void initState() {
@@ -39,9 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<AppLocale>(context, listen: false).addListener(() {
         final newLocale = Provider.of<AppLocale>(context, listen: false).locale;
 
-        categoriesFuture = MockDb.fetchCategories(newLocale.languageCode);
-        newArrivalsFuture = MockDb.fetchNewProducts(newLocale.languageCode);
-        bestsellersFuture =
+        _categoriesFuture = MockDb.fetchCategories(newLocale.languageCode);
+        _newArrivalsFuture = MockDb.fetchNewProducts(newLocale.languageCode);
+        _bestsellersFuture =
             MockDb.fetchBestSellProducts(newLocale.languageCode);
       });
     });
@@ -49,18 +49,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (categoriesFuture == null) {
-      categoriesFuture = MockDb.fetchCategories(
+    if (_categoriesFuture == null) {
+      _categoriesFuture = MockDb.fetchCategories(
         Localizations.localeOf(context).languageCode,
       );
     }
-    if (newArrivalsFuture == null) {
-      newArrivalsFuture = MockDb.fetchNewProducts(
+    if (_newArrivalsFuture == null) {
+      _newArrivalsFuture = MockDb.fetchNewProducts(
         Localizations.localeOf(context).languageCode,
       );
     }
-    if (bestsellersFuture == null) {
-      bestsellersFuture = MockDb.fetchBestSellProducts(
+    if (_bestsellersFuture == null) {
+      _bestsellersFuture = MockDb.fetchBestSellProducts(
         Localizations.localeOf(context).languageCode,
       );
     }
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ),
-                    _buildSection(context, newArrivalsFuture),
+                    _buildSection(context, _newArrivalsFuture),
                     SizedBox(
                       height: 20,
                     ),
@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ),
-                    _buildSection(context, bestsellersFuture),
+                    _buildSection(context, _bestsellersFuture),
                   ],
                 ),
               ),
@@ -327,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const imageBorderRadius = 6.0;
 
     return FutureBuilder<List<Category>>(
-      future: categoriesFuture,
+      future: _categoriesFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           child = ListView.separated(

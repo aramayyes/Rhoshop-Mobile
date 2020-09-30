@@ -17,21 +17,21 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  Future<User> userFuture;
+  Future<User> _userFuture;
 
   /// Controls whether or not to show the password in input field.
   var _passwordObscureText = true;
 
   /// Name from input field.
-  String name;
+  String _name;
 
   /// Password from input field.
-  String password;
+  String _password;
 
   @override
   Widget build(BuildContext context) {
-    if (userFuture == null) {
-      userFuture = MockDb.fetchUser();
+    if (_userFuture == null) {
+      _userFuture = MockDb.fetchUser();
     }
 
     return Scaffold(
@@ -76,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   FutureBuilder<User> _buildUserProfile() {
     return FutureBuilder<User>(
-      future: userFuture,
+      future: _userFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
@@ -90,7 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       decoration: AppTheme.constructTextFieldDecoration(
                           AppLocalization.of(context).nameLabelText),
                       validator: (value) => value.isEmpty ? '' : null,
-                      onChanged: (value) => name = value,
+                      onChanged: (value) => _name = value,
                     ),
                     SizedBox(
                       height: 20,
@@ -141,7 +141,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       validator: (value) =>
                           (value.isEmpty || value.length < 6) ? '' : null,
-                      onChanged: (value) => password = value,
+                      onChanged: (value) => _password = value,
                     ),
                     SizedBox(
                       height: 60,
@@ -172,17 +172,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _saveUser(User user) {
-    print(name);
-    print(user.name);
-    final hasChanges = (name != null && name != user.name) ||
-        (password != null && password != user.password);
-
-    if (!hasChanges) {
-      return;
+    final hasChanges = (_name != null && _name != user.name) ||
+        (_password != null && _password != user.password);
+    if (hasChanges) {
+      setState(() {
+        _userFuture = MockDb.updateUser(name: _name, password: _password);
+      });
     }
-
-    setState(() {
-      userFuture = MockDb.updateUser(name: name, password: password);
-    });
   }
 }

@@ -24,23 +24,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
   /// Name from input field.
-  String name;
+  String _name;
 
   /// Phone number from input field.
-  String phoneNumber;
+  String _phoneNumber;
 
   /// Email address from input field.
-  String email;
+  String _email;
 
   /// Password from input field.
-  String password;
+  String _password;
 
   /// Handles 'Sign up' button presses.
   void onSignUpButtonPressed() {
     if (_formKey.currentState.validate()) {
-      print(name);
-      print(email);
-      print(password);
+      print(_phoneNumber);
+      print(_name);
+      print(_email);
+      print(_password);
     }
   }
 
@@ -99,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         AppLocalization.of(context)
                                             .nameLabelText),
                                 validator: (value) => value.isEmpty ? '' : null,
-                                onChanged: (value) => name = value,
+                                onChanged: (value) => _name = value,
                               ),
                               SizedBox(
                                 height: 20,
@@ -115,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         value.length < 7)
                                     ? ''
                                     : null,
-                                onChanged: (value) => phoneNumber = value,
+                                onChanged: (value) => _phoneNumber = value,
                               ),
                               SizedBox(
                                 height: 20,
@@ -129,7 +130,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         !RegExp(RegExps.email).hasMatch(value))
                                     ? ''
                                     : null,
-                                onChanged: (value) => email = value,
+                                onChanged: (value) => _email = value,
                               ),
                               SizedBox(
                                 height: 20,
@@ -164,7 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     (value.isEmpty || value.length < 6)
                                         ? ''
                                         : null,
-                                onChanged: (value) => password = value,
+                                onChanged: (value) => _password = value,
                               ),
                               SizedBox(
                                 height: 60,

@@ -20,7 +20,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  Future<List<Product>> productsFuture;
+  Future<List<Product>> _productsFuture;
 
   @override
   void initState() {
@@ -29,20 +29,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (productsFuture == null) {
+    if (_productsFuture == null) {
       switch (widget.arguments.categoryId) {
         case Ids.newArrivalsPseudocategory:
-          productsFuture = MockDb.fetchNewProducts(
+          _productsFuture = MockDb.fetchNewProducts(
               Localizations.localeOf(context).languageCode,
               count: 12);
           break;
         case Ids.bestSellPseudocategory:
-          productsFuture = MockDb.fetchBestSellProducts(
+          _productsFuture = MockDb.fetchBestSellProducts(
               Localizations.localeOf(context).languageCode,
               count: 12);
           break;
         default:
-          productsFuture = MockDb.fetchProductsByCategory(
+          _productsFuture = MockDb.fetchProductsByCategory(
             widget.arguments.categoryId,
             Localizations.localeOf(context).languageCode,
           );
@@ -90,7 +90,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     const childAspectRatio = 5 / 8;
 
     return FutureBuilder<List<Product>>(
-      future: productsFuture,
+      future: _productsFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           child = GridView.builder(
