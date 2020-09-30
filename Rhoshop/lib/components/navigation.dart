@@ -17,7 +17,19 @@ class Navigation extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: _buildNavigationList(context),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 32.0),
+                      child: Image.asset(
+                        "assets/icons/ic_launcher.png",
+                        width: 100,
+                      ),
+                    ),
+                    _buildNavigationList(context),
+                  ],
+                ),
               ),
               _buildCloseButton(context),
             ],
