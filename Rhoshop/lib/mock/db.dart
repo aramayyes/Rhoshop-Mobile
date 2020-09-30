@@ -5,6 +5,8 @@ import 'package:rhoshop/mock/models/category.dart';
 import 'package:rhoshop/mock/models/norification.dart';
 import 'package:rhoshop/mock/models/product.dart';
 
+import 'models/user.dart';
+
 final random = Random();
 const maxLoadingDuration = 900;
 
@@ -264,6 +266,45 @@ Future<List<CartItem>> getMyOrders() async {
 
   return _myOrders;
 }
+
+Future<User> getUser() async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
+    ),
+  );
+
+  return _user;
+}
+
+Future<User> updateUser({String name, String password}) async {
+  await Future.delayed(
+    Duration(
+      milliseconds: 100 + random.nextInt(maxLoadingDuration),
+    ),
+  );
+
+  if (name == null && password == null) {
+    throw ArgumentError();
+  }
+
+  if (name != null) {
+    _user.name = name;
+  }
+
+  if (password != null) {
+    _user.password = password;
+  }
+
+  return _user;
+}
+
+final _user = User(
+  'Fabricio Escobar',
+  '+34910606181',
+  'fabricio.escobar@dreammail.com',
+  'APa55word',
+);
 
 final _cart = <CartItem>{};
 final _myOrders = <CartItem>[];
