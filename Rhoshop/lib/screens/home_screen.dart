@@ -35,12 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    Provider.of<AppLocale>(context, listen: false).addListener(() {
-      final newLocale = Provider.of<AppLocale>(context, listen: false).locale;
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      Provider.of<AppLocale>(context, listen: false).addListener(() {
+        final newLocale = Provider.of<AppLocale>(context, listen: false).locale;
 
-      categoriesFuture = MockDb.fetchCategories(newLocale.languageCode);
-      newArrivalsFuture = MockDb.fetchNewProducts(newLocale.languageCode);
-      bestsellersFuture = MockDb.fetchBestSellProducts(newLocale.languageCode);
+        categoriesFuture = MockDb.fetchCategories(newLocale.languageCode);
+        newArrivalsFuture = MockDb.fetchNewProducts(newLocale.languageCode);
+        bestsellersFuture =
+            MockDb.fetchBestSellProducts(newLocale.languageCode);
+      });
     });
   }
 
