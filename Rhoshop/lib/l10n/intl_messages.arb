@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-30T11:01:48.607141",
+  "@@last_modified": "2020-09-30T15:32:03.986522",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -15,6 +15,12 @@
   "signUp": "Sign up",
   "@signUp": {
     "description": "Sign up text.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "phoneNumber": "Phone number",
+  "@phoneNumber": {
+    "description": "Phone number text.",
     "type": "text",
     "placeholders": {}
   },

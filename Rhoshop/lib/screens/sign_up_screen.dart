@@ -26,6 +26,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   /// Name from input field.
   String name;
 
+  /// Phone number from input field.
+  String phoneNumber;
+
   /// Email address from input field.
   String email;
 
@@ -70,119 +73,147 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: Dimens.screenPadding),
             color: AppColors.primary,
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalization.of(context).signUpScreenTitle,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  SizedBox(
-                    height: 80,
-                  ),
-                  Form(
-                    key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalization.of(context).signUpScreenTitle,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                SizedBox(
+                  height: 80,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextFormField(
-                          decoration: AppTheme.constructTextFieldDecoration(
-                              AppLocalization.of(context).nameLabelText),
-                          validator: (value) => value.isEmpty ? '' : null,
-                          onChanged: (value) => name = value,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: AppTheme.constructTextFieldDecoration(
-                              AppLocalization.of(context).email),
-                          validator: (value) => (value.isEmpty ||
-                                  !RegExp(RegExps.email).hasMatch(value))
-                              ? ''
-                              : null,
-                          onChanged: (value) => email = value,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          obscureText: _passwordObscureText,
-                          decoration: AppTheme.constructTextFieldDecoration(
-                            AppLocalization.of(context).password,
-                            suffixIcon: SizedBox(
-                              height: 20,
-                              child: IconButton(
-                                padding: EdgeInsets.all(0),
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                icon: Icon(
-                                  _passwordObscureText
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: AppColors.descriptionText,
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextFormField(
+                                decoration:
+                                    AppTheme.constructTextFieldDecoration(
+                                        AppLocalization.of(context)
+                                            .nameLabelText),
+                                validator: (value) => value.isEmpty ? '' : null,
+                                onChanged: (value) => name = value,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.phone,
+                                decoration:
+                                    AppTheme.constructTextFieldDecoration(
+                                        AppLocalization.of(context)
+                                            .phoneNumber),
+                                validator: (value) => (value.isEmpty ||
+                                        !value.startsWith('+') ||
+                                        value.length < 7)
+                                    ? ''
+                                    : null,
+                                onChanged: (value) => phoneNumber = value,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.emailAddress,
+                                decoration:
+                                    AppTheme.constructTextFieldDecoration(
+                                        AppLocalization.of(context).email),
+                                validator: (value) => (value.isEmpty ||
+                                        !RegExp(RegExps.email).hasMatch(value))
+                                    ? ''
+                                    : null,
+                                onChanged: (value) => email = value,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              TextFormField(
+                                obscureText: _passwordObscureText,
+                                decoration:
+                                    AppTheme.constructTextFieldDecoration(
+                                  AppLocalization.of(context).password,
+                                  suffixIcon: SizedBox(
+                                    height: 20,
+                                    child: IconButton(
+                                      padding: EdgeInsets.all(0),
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      icon: Icon(
+                                        _passwordObscureText
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: AppColors.descriptionText,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _passwordObscureText =
+                                              !_passwordObscureText;
+                                        });
+                                      },
+                                    ),
+                                  ),
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    _passwordObscureText =
-                                        !_passwordObscureText;
-                                  });
-                                },
+                                validator: (value) =>
+                                    (value.isEmpty || value.length < 6)
+                                        ? ''
+                                        : null,
+                                onChanged: (value) => password = value,
+                              ),
+                              SizedBox(
+                                height: 60,
+                              ),
+                              PrimaryButton(
+                                onPressed: onSignUpButtonPressed,
+                                child: Text(
+                                  AppLocalization.of(context).signUp,
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlatButton(
+                              padding: EdgeInsets.symmetric(horizontal: 0),
+                              onPressed: onSignInButtonPressed,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              child: Text(
+                                AppLocalization.of(context).hasAccountText,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    .copyWith(color: AppColors.descriptionText),
                               ),
                             ),
-                          ),
-                          validator: (value) =>
-                              (value.isEmpty || value.length < 6) ? '' : null,
-                          onChanged: (value) => password = value,
-                        ),
-                        SizedBox(
-                          height: 60,
-                        ),
-                        PrimaryButton(
-                          onPressed: onSignUpButtonPressed,
-                          child: Text(
-                            AppLocalization.of(context).signUp,
-                            style: Theme.of(context).textTheme.button,
-                          ),
-                        ),
+                            FlatButton(
+                              onPressed: onSignInButtonPressed,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              child: Text(
+                                AppLocalization.of(context).signIn,
+                                style: Theme.of(context).textTheme.subtitle2,
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FlatButton(
-                        padding: EdgeInsets.symmetric(horizontal: 0),
-                        onPressed: onSignInButtonPressed,
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        child: Text(
-                          AppLocalization.of(context).hasAccountText,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle2
-                              .copyWith(color: AppColors.descriptionText),
-                        ),
-                      ),
-                      FlatButton(
-                        onPressed: onSignInButtonPressed,
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        child: Text(
-                          AppLocalization.of(context).signIn,
-                          style: Theme.of(context).textTheme.subtitle2,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

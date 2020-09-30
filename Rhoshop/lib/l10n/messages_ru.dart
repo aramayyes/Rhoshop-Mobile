@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notificationsScreenTitle" : MessageLookupByLibrary.simpleMessage("Уведомления"),
     "orderButtonText" : MessageLookupByLibrary.simpleMessage("Оформить заказ"),
     "password" : MessageLookupByLibrary.simpleMessage("Пароль"),
+    "phoneNumber" : MessageLookupByLibrary.simpleMessage("Телефон"),
     "profileNavigationItem" : MessageLookupByLibrary.simpleMessage("Профиль"),
     "reviewsCaptionText" : m0,
     "searchText" : MessageLookupByLibrary.simpleMessage("Поиск"),

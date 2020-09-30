@@ -65,109 +65,119 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: Dimens.screenPadding),
             color: AppColors.primary,
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalization.of(context).signInScreenTitle,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  SizedBox(
-                    height: 80,
-                  ),
-                  Form(
-                    key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalization.of(context).signInScreenTitle,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+                SizedBox(
+                  height: 80,
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: AppTheme.constructTextFieldDecoration(
-                              AppLocalization.of(context).email),
-                          validator: (value) => (value.isEmpty ||
-                                  !RegExp(RegExps.email).hasMatch(value))
-                              ? ''
-                              : null,
-                          onChanged: (value) => email = value,
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextFormField(
+                                keyboardType: TextInputType.emailAddress,
+                                decoration:
+                                    AppTheme.constructTextFieldDecoration(
+                                        AppLocalization.of(context).email),
+                                validator: (value) => (value.isEmpty ||
+                                        !RegExp(RegExps.email).hasMatch(value))
+                                    ? ''
+                                    : null,
+                                onChanged: (value) => email = value,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              TextFormField(
+                                obscureText: _obscureText,
+                                decoration:
+                                    AppTheme.constructTextFieldDecoration(
+                                  AppLocalization.of(context).password,
+                                  suffixIcon: SizedBox(
+                                    height: 20,
+                                    child: IconButton(
+                                      padding: EdgeInsets.all(0),
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      icon: Icon(
+                                        _obscureText
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: AppColors.descriptionText,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _obscureText = !_obscureText;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                validator: (value) =>
+                                    (value.isEmpty || value.length < 6)
+                                        ? ''
+                                        : null,
+                                onChanged: (value) => password = value,
+                              ),
+                              SizedBox(
+                                height: 60,
+                              ),
+                              PrimaryButton(
+                                onPressed: onSignInButtonPressed,
+                                child: Text(
+                                  AppLocalization.of(context).signIn,
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 20,
                         ),
-                        TextFormField(
-                          obscureText: _obscureText,
-                          decoration: AppTheme.constructTextFieldDecoration(
-                            AppLocalization.of(context).password,
-                            suffixIcon: SizedBox(
-                              height: 20,
-                              child: IconButton(
-                                padding: EdgeInsets.all(0),
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                icon: Icon(
-                                  _obscureText
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: AppColors.descriptionText,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlatButton(
+                              padding: EdgeInsets.symmetric(horizontal: 0),
+                              onPressed: onSignUpButtonPressed,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              child: Text(
+                                AppLocalization.of(context).noAccountText,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle2
+                                    .copyWith(color: AppColors.descriptionText),
                               ),
                             ),
-                          ),
-                          validator: (value) =>
-                              (value.isEmpty || value.length < 6) ? '' : null,
-                          onChanged: (value) => password = value,
-                        ),
-                        SizedBox(
-                          height: 60,
-                        ),
-                        PrimaryButton(
-                          onPressed: onSignInButtonPressed,
-                          child: Text(
-                            AppLocalization.of(context).signIn,
-                            style: Theme.of(context).textTheme.button,
-                          ),
-                        ),
+                            FlatButton(
+                              onPressed: onSignUpButtonPressed,
+                              splashColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              child: Text(
+                                AppLocalization.of(context).signUp,
+                                style: Theme.of(context).textTheme.subtitle2,
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FlatButton(
-                        padding: EdgeInsets.symmetric(horizontal: 0),
-                        onPressed: onSignUpButtonPressed,
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        child: Text(
-                          AppLocalization.of(context).noAccountText,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle2
-                              .copyWith(color: AppColors.descriptionText),
-                        ),
-                      ),
-                      FlatButton(
-                        onPressed: onSignUpButtonPressed,
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        child: Text(
-                          AppLocalization.of(context).signUp,
-                          style: Theme.of(context).textTheme.subtitle2,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

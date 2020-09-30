@@ -50,6 +50,14 @@ class AppLocalization {
     );
   }
 
+  String get phoneNumber {
+    return Intl.message(
+      'Phone number',
+      name: 'phoneNumber',
+      desc: 'Phone number text.',
+    );
+  }
+
   String get email {
     return Intl.message(
       'Email',
@@ -347,7 +355,8 @@ class AppLocalization {
     return Intl.message(
       'Shop now',
       name: 'shopNowButtonText',
-      desc: 'Title of the button that is intended for going back to home(shop).',
+      desc:
+          'Title of the button that is intended for going back to home(shop).',
     );
   }
   //#endregion MyOrders
