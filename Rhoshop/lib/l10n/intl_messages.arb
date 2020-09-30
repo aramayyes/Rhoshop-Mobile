@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-29T23:34:24.618344",
+  "@@last_modified": "2020-09-30T11:01:48.607141",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -209,6 +209,18 @@
   "myOrdersScreenTitle": "My Orders",
   "@myOrdersScreenTitle": {
     "description": "Title of the my orders screen.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "noOrderText": "No orders yet",
+  "@noOrderText": {
+    "description": "This message is shown to user if they have no orders yet.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "shopNowButtonText": "Shop now",
+  "@shopNowButtonText": {
+    "description": "Title of the button that is intended for going back to home(shop).",
     "type": "text",
     "placeholders": {}
   },

@@ -334,6 +334,22 @@ class AppLocalization {
       desc: 'Title of the my orders screen.',
     );
   }
+
+  String get noOrderText {
+    return Intl.message(
+      'No orders yet',
+      name: 'noOrderText',
+      desc: 'This message is shown to user if they have no orders yet.',
+    );
+  }
+
+  String get shopNowButtonText {
+    return Intl.message(
+      'Shop now',
+      name: 'shopNowButtonText',
+      desc: 'Title of the button that is intended for going back to home(shop).',
+    );
+  }
   //#endregion MyOrders
 
   //#region Navigation
