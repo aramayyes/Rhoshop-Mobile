@@ -334,7 +334,7 @@ class AppLocalization {
   }
   //#endregion SettingsScreen
 
-  //#region MyOrders
+  //#region MyOrdersScreen
   String get myOrdersScreenTitle {
     return Intl.message(
       'My Orders',
@@ -359,7 +359,17 @@ class AppLocalization {
           'Title of the button that is intended for going back to home(shop).',
     );
   }
-  //#endregion MyOrders
+  //#endregion MyOrdersScreen
+
+  //#region ProfileScreen
+  String get profileScreenTitle {
+    return Intl.message(
+      'Profile',
+      name: 'profileScreenTitle',
+      desc: 'Title of profile screen.',
+    );
+  }
+  //#endregion ProfileScreen
 
   //#region Navigation
   String get profileNavigationItem {

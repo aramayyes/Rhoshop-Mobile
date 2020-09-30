@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-30T15:32:03.986522",
+  "@@last_modified": "2020-09-30T15:44:03.940534",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -227,6 +227,12 @@
   "shopNowButtonText": "Заказать сейчас",
   "@shopNowButtonText": {
     "description": "Title of the button that is intended for going back to home(shop).",
+    "type": "text",
+    "placeholders": {}
+  },
+  "profileScreenTitle": "Профиль",
+  "@profileScreenTitle": {
+    "description": "Title of profile screen.",
     "type": "text",
     "placeholders": {}
   },
