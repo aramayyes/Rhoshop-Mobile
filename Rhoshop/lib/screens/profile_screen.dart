@@ -78,86 +78,85 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return FutureBuilder<User>(
       future: _userFuture,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-            return Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextFormField(
-                      initialValue: snapshot.data.name,
-                      decoration: AppTheme.constructTextFieldDecoration(
-                          AppLocalization.of(context).nameLabelText),
-                      validator: (value) => value.isEmpty ? '' : null,
-                      onChanged: (value) => _name = value,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      initialValue: snapshot.data.phoneNumber,
-                      readOnly: true,
-                      decoration: AppTheme.constructTextFieldDecoration(
-                          AppLocalization.of(context).phoneNumber),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      initialValue: snapshot.data.email,
-                      readOnly: true,
-                      decoration: AppTheme.constructTextFieldDecoration(
-                          AppLocalization.of(context).email),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      obscureText: _passwordObscureText,
-                      decoration: AppTheme.constructTextFieldDecoration(
-                        AppLocalization.of(context).password,
-                        suffixIcon: SizedBox(
-                          height: 20,
-                          child: IconButton(
-                            padding: EdgeInsets.all(0),
-                            splashColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            icon: Icon(
-                              _passwordObscureText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: AppColors.descriptionText,
-                            ),
-                            onPressed: () {
-                              setState(
-                                () {
-                                  _passwordObscureText = !_passwordObscureText;
-                                },
-                              );
-                            },
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData) {
+          return Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    initialValue: snapshot.data.name,
+                    decoration: AppTheme.constructTextFieldDecoration(
+                        AppLocalization.of(context).nameLabelText),
+                    validator: (value) => value.isEmpty ? '' : null,
+                    onChanged: (value) => _name = value,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    initialValue: snapshot.data.phoneNumber,
+                    readOnly: true,
+                    decoration: AppTheme.constructTextFieldDecoration(
+                        AppLocalization.of(context).phoneNumber),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    initialValue: snapshot.data.email,
+                    readOnly: true,
+                    decoration: AppTheme.constructTextFieldDecoration(
+                        AppLocalization.of(context).email),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    obscureText: _passwordObscureText,
+                    decoration: AppTheme.constructTextFieldDecoration(
+                      AppLocalization.of(context).password,
+                      suffixIcon: SizedBox(
+                        height: 20,
+                        child: IconButton(
+                          padding: EdgeInsets.all(0),
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          icon: Icon(
+                            _passwordObscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: AppColors.descriptionText,
                           ),
+                          onPressed: () {
+                            setState(
+                              () {
+                                _passwordObscureText = !_passwordObscureText;
+                              },
+                            );
+                          },
                         ),
                       ),
-                      validator: (value) =>
-                          (value.isEmpty || value.length < 6) ? '' : null,
-                      onChanged: (value) => _password = value,
                     ),
-                    SizedBox(
-                      height: 60,
+                    validator: (value) =>
+                        (value.isEmpty || value.length < 6) ? '' : null,
+                    onChanged: (value) => _password = value,
+                  ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  PrimaryButton(
+                    onPressed: () => _saveUser(snapshot.data),
+                    child: Text(
+                      AppLocalization.of(context).saveButtonText,
+                      style: Theme.of(context).textTheme.button,
                     ),
-                    PrimaryButton(
-                      onPressed: () => _saveUser(snapshot.data),
-                      child: Text(
-                        AppLocalization.of(context).saveButtonText,
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            );
-          }
+            ),
+          );
         }
         return Expanded(
           child: Center(
