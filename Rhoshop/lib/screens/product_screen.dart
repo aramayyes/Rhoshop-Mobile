@@ -7,6 +7,7 @@ import 'package:rhoshop/mock/db.dart' as MockDb;
 import 'package:rhoshop/mock/models/cart_item.dart';
 import 'package:rhoshop/mock/models/product.dart';
 import 'package:rhoshop/models/cart.dart';
+import 'package:rhoshop/screens/photo_screen.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/routes.dart' as Routes;
@@ -359,12 +360,28 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Container _buildImage(Product product) {
-    return Container(
-      width: double.infinity,
-      child: Image.asset(
-        product.imgUrl,
-        height: 200,
+  Widget _buildImage(Product product) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  PhotoScreen(
+                PhotoScreenArguments(product.imgUrl),
+              ),
+            ));
+      },
+      child: Container(
+        width: double.infinity,
+        child: Hero(
+          tag: product.imgUrl,
+          child: Image.asset(
+            product.imgUrl,
+            height: 200,
+          ),
+        ),
       ),
     );
   }
