@@ -34,20 +34,29 @@ class Navigation extends StatelessWidget {
         Divider(
           thickness: 1,
         ),
-        Row(
-          children: [
-            Icon(
-              Icons.person,
-              size: 28,
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              AppLocalization.of(context).profileNavigationItem,
-              style: Theme.of(context).textTheme.headline3,
-            ),
-          ],
+        GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              Routes.profile,
+            );
+          },
+          child: Row(
+            children: [
+              Icon(
+                Icons.person,
+                size: 28,
+              ),
+              SizedBox(
+                width: 16,
+              ),
+              Text(
+                AppLocalization.of(context).profileNavigationItem,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+            ],
+          ),
         ),
         Divider(
           thickness: 1,

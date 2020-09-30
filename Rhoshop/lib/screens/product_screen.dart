@@ -49,49 +49,50 @@ class _ProductScreenState extends State<ProductScreen> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          leading: IconButton(
+      appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          icon: SvgPicture.asset(
+            "assets/icons/left-arrow.svg",
+            color: AppColors.primaryText,
+            height: 24,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          IconButton(
             icon: SvgPicture.asset(
-              "assets/icons/left-arrow.svg",
+              "assets/icons/shopping-cart.svg",
               color: AppColors.primaryText,
               height: 24,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(
+                context,
+                Routes.cart,
+              );
             },
           ),
-          actions: [
-            IconButton(
-              icon: SvgPicture.asset(
-                "assets/icons/shopping-cart.svg",
-                color: AppColors.primaryText,
-                height: 24,
+        ],
+      ),
+      body: FutureBuilder(
+        future: productFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return _buildProductSection(context, snapshot.data);
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor:
+                    new AlwaysStoppedAnimation<Color>(AppColors.secondary),
               ),
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  Routes.cart,
-                );
-              },
-            ),
-          ],
-        ),
-        body: FutureBuilder(
-          future: productFuture,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return _buildProductSection(context, snapshot.data);
-            } else {
-              return Center(
-                child: CircularProgressIndicator(
-                  valueColor:
-                      new AlwaysStoppedAnimation<Color>(AppColors.secondary),
-                ),
-              );
-            }
-          },
-        ));
+            );
+          }
+        },
+      ),
+    );
   }
 
   Widget _buildProductSection(BuildContext context, Product product) {

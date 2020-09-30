@@ -10,3 +10,4 @@ export 'order_confirmation_screen.dart';
 export 'settings_screen.dart';
 export 'my_orders_screen.dart';
 export 'photo_screen.dart';
+export 'profile_screen.dart';

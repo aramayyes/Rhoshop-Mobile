@@ -91,6 +91,7 @@ class _RhoshopAppState extends State<RhoshopApp> {
           Routes.orderConfirmation: (context) => OrderConfirmationScreen(),
           Routes.settings: (context) => SettingsScreen(),
           Routes.myOrders: (context) => MyOrdersScreen(),
+          Routes.profile: (context) => ProfileScreen(),
         },
         theme: ThemeData(
           primaryColor: AppColors.primary,

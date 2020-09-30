@@ -22,7 +22,7 @@ class Cart extends ChangeNotifier {
 
   Future<void> load() async {
     try {
-      _items = await MockDb.getCart();
+      _items = await MockDb.fetchCart();
     } finally {
       notifyListeners();
     }

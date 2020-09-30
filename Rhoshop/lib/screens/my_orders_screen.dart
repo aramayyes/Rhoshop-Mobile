@@ -23,7 +23,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     if (ordersFuture == null) {
-      ordersFuture = MockDb.getMyOrders();
+      ordersFuture = MockDb.fetchMyOrders();
     }
 
     Widget child;

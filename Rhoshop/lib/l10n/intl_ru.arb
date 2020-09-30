@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-30T15:44:03.940534",
+  "@@last_modified": "2020-09-30T19:10:11.777310",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -233,6 +233,12 @@
   "profileScreenTitle": "Профиль",
   "@profileScreenTitle": {
     "description": "Title of profile screen.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "saveButtonText": "Сохранить",
+  "@saveButtonText": {
+    "description": "Title of the button that is intended for saving user updated profile.",
     "type": "text",
     "placeholders": {}
   },

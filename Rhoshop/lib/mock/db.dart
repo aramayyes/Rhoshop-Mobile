@@ -180,7 +180,7 @@ Future<List<AppNotification>> fetchNotifications(String locale) async {
   return notifications;
 }
 
-Future<Set<CartItem>> getCart() async {
+Future<Set<CartItem>> fetchCart() async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
@@ -257,7 +257,7 @@ Future<Set<CartItem>> order() async {
   return _cart;
 }
 
-Future<List<CartItem>> getMyOrders() async {
+Future<List<CartItem>> fetchMyOrders() async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
@@ -267,7 +267,7 @@ Future<List<CartItem>> getMyOrders() async {
   return _myOrders;
 }
 
-Future<User> getUser() async {
+Future<User> fetchUser() async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),

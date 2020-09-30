@@ -9,3 +9,4 @@ const cart = '/cart';
 const orderConfirmation = '/orderConfirmation';
 const settings = '/settings';
 const myOrders = '/myOrders';
+const profile = '/profile';

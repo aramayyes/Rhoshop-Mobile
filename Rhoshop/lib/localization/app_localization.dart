@@ -369,6 +369,14 @@ class AppLocalization {
       desc: 'Title of profile screen.',
     );
   }
+
+  String get saveButtonText {
+    return Intl.message(
+      'Save',
+      name: 'saveButtonText',
+      desc: 'Title of the button that is intended for saving user updated profile.',
+    );
+  }
   //#endregion ProfileScreen
 
   //#region Navigation

@@ -50,6 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "profileNavigationItem" : MessageLookupByLibrary.simpleMessage("Profile"),
     "profileScreenTitle" : MessageLookupByLibrary.simpleMessage("Profile"),
     "reviewsCaptionText" : m0,
+    "saveButtonText" : MessageLookupByLibrary.simpleMessage("Save"),
     "searchText" : MessageLookupByLibrary.simpleMessage("Search"),
     "seeAllText" : MessageLookupByLibrary.simpleMessage("See all"),
     "settingsNavigationItem" : MessageLookupByLibrary.simpleMessage("Settings"),
