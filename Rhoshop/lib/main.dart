@@ -54,6 +54,12 @@ class _RhoshopAppState extends State<RhoshopApp> {
       DeviceOrientation.portraitDown,
     ]);
 
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: AppColors.primary,
+      ),
+    );
+
     Provider.of<Cart>(context, listen: false).load();
 
     return Consumer<AppLocale>(

@@ -7,8 +7,9 @@ import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
         color: AppColors.primary,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
