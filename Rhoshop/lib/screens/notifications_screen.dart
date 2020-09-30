@@ -8,7 +8,7 @@ import 'package:rhoshop/mock/models/norification.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 
-/// Displays notifications as a list.
+/// Displays notifications like a list.
 class NotificationsScreen extends StatefulWidget {
   @override
   _NotificationsScreenState createState() => _NotificationsScreenState();

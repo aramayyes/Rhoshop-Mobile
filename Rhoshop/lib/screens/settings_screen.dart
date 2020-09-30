@@ -7,6 +7,7 @@ import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Displays and allows to change application settings.
 class SettingsScreen extends StatefulWidget {
   @override
   _SettingsScreenState createState() => _SettingsScreenState();

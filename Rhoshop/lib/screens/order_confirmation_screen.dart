@@ -5,6 +5,7 @@ import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/routes.dart' as Routes;
 
+/// Displays a confirmation and gratitude message for completed order.
 class OrderConfirmationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

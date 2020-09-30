@@ -11,6 +11,7 @@ import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/routes.dart' as Routes;
 
+/// Displays user orders like a list.
 class MyOrdersScreen extends StatefulWidget {
   @override
   _MyOrdersScreenState createState() => _MyOrdersScreenState();
