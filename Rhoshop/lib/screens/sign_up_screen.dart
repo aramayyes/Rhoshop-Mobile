@@ -95,6 +95,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TextFormField(
+                                style: TextStyle(
+                                  fontFamily: 'Nunito',
+                                ),
                                 decoration:
                                     AppTheme.constructTextFieldDecoration(
                                         AppLocalization.of(context)
@@ -107,6 +110,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               TextFormField(
                                 keyboardType: TextInputType.phone,
+                                style: TextStyle(
+                                  fontFamily: 'Nunito',
+                                ),
                                 decoration:
                                     AppTheme.constructTextFieldDecoration(
                                         AppLocalization.of(context)
@@ -123,6 +129,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               TextFormField(
                                 keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(
+                                  fontFamily: 'Nunito',
+                                ),
                                 decoration:
                                     AppTheme.constructTextFieldDecoration(
                                         AppLocalization.of(context).email),
@@ -137,6 +146,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               TextFormField(
                                 obscureText: _passwordObscureText,
+                                style: TextStyle(
+                                  fontFamily: 'Nunito',
+                                ),
                                 decoration:
                                     AppTheme.constructTextFieldDecoration(
                                   AppLocalization.of(context).password,

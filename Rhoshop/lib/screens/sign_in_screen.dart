@@ -87,6 +87,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             children: [
                               TextFormField(
                                 keyboardType: TextInputType.emailAddress,
+                                style: TextStyle(
+                                  fontFamily: 'Nunito',
+                                ),
                                 decoration:
                                     AppTheme.constructTextFieldDecoration(
                                         AppLocalization.of(context).email),
@@ -101,6 +104,9 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                               TextFormField(
                                 obscureText: _obscureText,
+                                style: TextStyle(
+                                  fontFamily: 'Nunito',
+                                ),
                                 decoration:
                                     AppTheme.constructTextFieldDecoration(
                                   AppLocalization.of(context).password,

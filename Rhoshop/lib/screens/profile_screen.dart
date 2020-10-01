@@ -87,6 +87,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   TextFormField(
                     initialValue: snapshot.data.name,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                    ),
                     decoration: AppTheme.constructTextFieldDecoration(
                         AppLocalization.of(context).nameLabelText),
                     validator: (value) => value.isEmpty ? '' : null,
@@ -98,6 +101,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   TextFormField(
                     initialValue: snapshot.data.phoneNumber,
                     readOnly: true,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                    ),
                     decoration: AppTheme.constructTextFieldDecoration(
                         AppLocalization.of(context).phoneNumber),
                   ),
@@ -107,6 +113,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   TextFormField(
                     initialValue: snapshot.data.email,
                     readOnly: true,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                    ),
                     decoration: AppTheme.constructTextFieldDecoration(
                         AppLocalization.of(context).email),
                   ),
@@ -115,6 +124,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   TextFormField(
                     obscureText: _passwordObscureText,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                    ),
                     decoration: AppTheme.constructTextFieldDecoration(
                       AppLocalization.of(context).password,
                       suffixIcon: SizedBox(
