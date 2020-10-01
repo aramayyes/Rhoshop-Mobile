@@ -21,7 +21,10 @@ class OrderConfirmationScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
-                    child: Image.asset('assets/images/like.png'),
+                    child: Image.asset(
+                      'assets/images/like.png',
+                      width: MediaQuery.of(context).size.width * 0.6,
+                    ),
                   ),
                   Text(
                     AppLocalization.of(context).thankYouMessageText,
