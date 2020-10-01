@@ -281,7 +281,13 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Text(suggestion.name),
           );
         },
-        onSuggestionSelected: (suggestion) {},
+        onSuggestionSelected: (suggestion) {
+          Navigator.pushNamed(
+            context,
+            Routes.product,
+            arguments: ProductScreenArguments(suggestion.id),
+          );
+        },
       ),
     );
   }
