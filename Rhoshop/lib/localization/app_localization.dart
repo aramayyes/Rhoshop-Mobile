@@ -374,7 +374,8 @@ class AppLocalization {
     return Intl.message(
       'Save',
       name: 'saveButtonText',
-      desc: 'Title of the button that is intended for saving user updated profile.',
+      desc:
+          'Title of the button that is intended for saving user updated profile.',
     );
   }
   //#endregion ProfileScreen
@@ -409,8 +410,11 @@ class AppLocalization {
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {
   const AppLocalizationDelegate();
 
+  static final supportedLocaleCodes = List.unmodifiable(['en', 'ru']);
+
   @override
-  bool isSupported(Locale locale) => ['en', 'ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      supportedLocaleCodes.contains(locale.languageCode);
 
   @override
   Future<AppLocalization> load(Locale locale) => AppLocalization.load(locale);

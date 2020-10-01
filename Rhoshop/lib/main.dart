@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -16,9 +18,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final prefs = await SharedPreferences.getInstance();
-  var localeCode = prefs.getString('counter');
+  var localeCode = prefs.getString('locale');
   if (localeCode == null) {
-    localeCode = 'en';
+    localeCode = Platform.localeName.split('_').first;
   }
 
   runApp(
@@ -77,10 +79,9 @@ class _RhoshopAppState extends State<RhoshopApp> {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
-        supportedLocales: [
-          const Locale('en', ''),
-          const Locale('ru', ''),
-        ],
+        supportedLocales: AppLocalizationDelegate.supportedLocaleCodes.map(
+          (code) => Locale(code, ''),
+        ),
         locale: appLocale.locale,
         initialRoute: Routes.intro,
         routes: {

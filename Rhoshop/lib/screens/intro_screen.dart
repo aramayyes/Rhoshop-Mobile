@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rhoshop/components/locale_selector.dart';
 import 'package:rhoshop/components/primary_button.dart';
 import 'package:rhoshop/localization/app_localization.dart';
+import 'package:rhoshop/models/app_locale.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 
 /// Welcomes user and provides routes to sign in and sign up screens.
@@ -25,6 +29,7 @@ class IntroScreen extends StatelessWidget {
               AppLocalization.of(context).welcomeMessageBody,
               style: Theme.of(context).textTheme.subtitle2,
             ),
+            _buildLanguageRow(),
             Spacer(),
             Image(
               image: AssetImage('assets/images/intro_main_img.png'),
@@ -58,6 +63,17 @@ class IntroScreen extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Padding _buildLanguageRow() {
+    return Padding(
+      padding: EdgeInsets.only(top: 24),
+      child: Consumer<AppLocale>(
+        builder: (context, appLocale, child) {
+          return LocaleSelector(appLocale);
+        },
       ),
     );
   }
