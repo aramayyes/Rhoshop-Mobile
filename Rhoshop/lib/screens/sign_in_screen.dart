@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:rhoshop/api/api_error.dart';
+import 'package:rhoshop/api/gql_client.dart';
+import 'package:rhoshop/api/mutations/all.dart' as Mutations;
 import 'package:rhoshop/components/primary_button.dart';
+import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/app_theme.dart' as AppTheme;
@@ -10,8 +13,6 @@ import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/helpers.dart' as Helpers;
 import 'package:rhoshop/utils/regexps.dart' as RegExps;
 import 'package:rhoshop/utils/routes.dart' as Routes;
-import 'package:rhoshop/api/mutations/all.dart' as Mutations;
-import 'package:rhoshop/dto/all.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Provides functionality for user signing in.
@@ -102,7 +103,11 @@ class _SignInScreenState extends State<SignInScreen> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', jwt.accessToken);
 
-      Navigator.pushNamed(context, Routes.home);
+      // Update graphql client to include jwt token for auth
+      GraphQLProvider.of(context).value =
+          createGqlClient(token: jwt.accessToken);
+
+      Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
     }
   }
 
@@ -215,8 +220,10 @@ class _SignInScreenState extends State<SignInScreen> {
                               GraphQLConsumer(
                                 builder: (client) => Builder(
                                   builder: (context) => PrimaryButton(
-                                    onPressed: () =>
-                                        onSignInButtonPressed(context, client),
+                                    onPressed: _isLoading
+                                        ? null
+                                        : () => onSignInButtonPressed(
+                                            context, client),
                                     child: _isLoading
                                         ? SizedBox(
                                             height: 30,

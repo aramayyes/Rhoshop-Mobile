@@ -1,9 +1,13 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-final createGqlClient = (String apiHost) => ValueNotifier(
-      GraphQLClient(
-        cache: InMemoryCache(),
-        link: HttpLink(uri: apiHost),
-      ),
-    );
+GraphQLClient createGqlClient({String apiHost, String token = ''}) {
+  apiHost = apiHost ?? DotEnv().env['API_HOST'];
+
+  return GraphQLClient(
+    cache: InMemoryCache(),
+    link: AuthLink(
+      getToken: () => 'Bearer $token',
+    ).concat(HttpLink(uri: apiHost)),
+  );
+}

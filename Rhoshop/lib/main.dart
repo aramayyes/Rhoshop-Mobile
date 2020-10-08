@@ -21,10 +21,9 @@ void main() async {
   await DotEnv().load('./lib/.env');
 
   final prefs = await SharedPreferences.getInstance();
-  var localeCode = prefs.getString('locale');
-  if (localeCode == null) {
-    localeCode = Platform.localeName.split('_').first;
-  }
+  final localeCode =
+      prefs.getString('locale') ?? Platform.localeName.split('_').first;
+  final token = prefs.getString('token') ?? '';
 
   runApp(
     MultiProvider(
@@ -36,12 +35,16 @@ void main() async {
           create: (context) => Cart(),
         ),
       ],
-      child: RhoshopApp(),
+      child: RhoshopApp(token),
     ),
   );
 }
 
 class RhoshopApp extends StatefulWidget {
+  final String token;
+
+  const RhoshopApp(this.token, {Key key}) : super(key: key);
+
   @override
   _RhoshopAppState createState() => _RhoshopAppState();
 }
@@ -68,7 +71,7 @@ class _RhoshopAppState extends State<RhoshopApp> {
     Provider.of<Cart>(context, listen: false).load();
 
     return GraphQLProvider(
-      client: createGqlClient(DotEnv().env['API_HOST']),
+      client: ValueNotifier(createGqlClient(token: widget.token)),
       child: Consumer<AppLocale>(
         builder: (context, appLocale, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -88,7 +91,7 @@ class _RhoshopAppState extends State<RhoshopApp> {
             (code) => Locale(code, ''),
           ),
           locale: appLocale.locale,
-          initialRoute: Routes.intro,
+          initialRoute: widget.token.isEmpty ? Routes.intro : Routes.home,
           routes: {
             Routes.intro: (context) => IntroScreen(),
             Routes.signIn: (context) => SignInScreen(),

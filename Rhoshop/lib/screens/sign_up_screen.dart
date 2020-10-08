@@ -251,8 +251,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               GraphQLConsumer(
                                 builder: (client) => Builder(
                                   builder: (context) => PrimaryButton(
-                                    onPressed: () =>
-                                        onSignUpButtonPressed(context, client),
+                                    onPressed: _isLoading
+                                        ? null
+                                        : () => onSignUpButtonPressed(
+                                            context, client),
                                     child: _isLoading
                                         ? SizedBox(
                                             height: 30,
