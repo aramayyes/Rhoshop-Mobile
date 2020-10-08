@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:progressive_image/progressive_image.dart';
 import 'package:provider/provider.dart';
 import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/navigation.dart';
@@ -385,7 +386,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(imageBorderRadius),
-                      child: Image.network(category.image, width: height * 2),
+                      child: ProgressiveImage(
+                        placeholder:
+                            AssetImage('assets/images/placeholder.jpg'),
+                        thumbnail: NetworkImage(category.thumbnail),
+                        image: NetworkImage(category.image),
+                        height: height,
+                        width: height * 2,
+                      ),
                     ),
                     Text(
                       category.name,

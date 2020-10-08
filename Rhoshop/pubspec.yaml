@@ -33,6 +33,7 @@ dependencies:
   photo_view: ^0.10.2
   graphql_flutter: ^3.1.0
   flutter_dotenv: ^2.1.0
+  progressive_image: ^1.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
