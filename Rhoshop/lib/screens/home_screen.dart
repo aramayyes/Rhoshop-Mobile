@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/navigation.dart';
 import 'package:rhoshop/components/product_item.dart';
+import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/mock/db.dart' as MockDb;
-import 'package:rhoshop/mock/models/category.dart';
 import 'package:rhoshop/mock/models/product.dart';
 import 'package:rhoshop/models/app_locale.dart';
 import 'package:rhoshop/screens/all.dart';
@@ -27,7 +29,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<List<Category>> _categoriesFuture;
+  QueryOptions _categoryQueryOptions;
   Future<List<Product>> _newArrivalsFuture;
   Future<List<Product>> _bestsellersFuture;
 
@@ -39,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<AppLocale>(context, listen: false).addListener(() {
         final newLocale = Provider.of<AppLocale>(context, listen: false).locale;
 
-        _categoriesFuture = MockDb.fetchCategories(newLocale.languageCode);
+        _categoryQueryOptions = QueryOptions(
+            documentNode: gql(Queries.categories),
+            variables: {"language": newLocale.languageCode});
         _newArrivalsFuture = MockDb.fetchNewProducts(newLocale.languageCode);
         _bestsellersFuture =
             MockDb.fetchBestSellProducts(newLocale.languageCode);
@@ -49,10 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_categoriesFuture == null) {
-      _categoriesFuture = MockDb.fetchCategories(
-        Localizations.localeOf(context).languageCode,
-      );
+    if (_categoryQueryOptions == null) {
+      _categoryQueryOptions = QueryOptions(
+          documentNode: gql(Queries.categories),
+          variables: {
+            "language": Localizations.localeOf(context).languageCode
+          });
     }
     if (_newArrivalsFuture == null) {
       _newArrivalsFuture = MockDb.fetchNewProducts(
@@ -332,18 +338,36 @@ class _HomeScreenState extends State<HomeScreen> {
     const gapBetweenCategories = 10.0;
     const imageBorderRadius = 6.0;
 
-    return FutureBuilder<List<Category>>(
-      future: _categoriesFuture,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
+    return Query(
+      options: _categoryQueryOptions,
+      builder: (result, {fetchMore, refetch}) {
+        if (result.hasException || result.loading) {
+          child = Center(
+            child: CircularProgressIndicator(
+              valueColor:
+                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
+            ),
+          );
+        } else {
+          child = Center(
+            child: CircularProgressIndicator(
+              valueColor:
+                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
+            ),
+          );
+
+          List<CategoryDto> categories = result.data['categories']
+              .map<CategoryDto>((c) => CategoryDto.fromJson(c))
+              .toList();
+
           child = ListView.separated(
             separatorBuilder: (context, index) => SizedBox(
               width: gapBetweenCategories,
             ),
             scrollDirection: Axis.horizontal,
-            itemCount: snapshot.data.length,
+            itemCount: categories.length,
             itemBuilder: (context, index) {
-              final category = snapshot.data[index];
+              final category = categories[index];
               return GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(
@@ -361,29 +385,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(imageBorderRadius),
-                      child: Image.asset(
-                        category.imgUrl,
-                        width: height * 2,
-                      ),
+                      child: Image.network(category.image, width: height * 2),
                     ),
                     Text(
                       category.name,
-                      style: Theme.of(context).textTheme.button.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .button
+                          .copyWith(fontWeight: FontWeight.w700),
                     )
                   ],
                 ),
               );
             },
-          );
-        } else {
-          // This indicator will be also shown in case of error.
-          child = Center(
-            child: CircularProgressIndicator(
-              valueColor:
-                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
-            ),
           );
         }
 
