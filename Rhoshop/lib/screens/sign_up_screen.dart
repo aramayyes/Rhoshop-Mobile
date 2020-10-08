@@ -102,7 +102,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     AppTheme.constructTextFieldDecoration(
                                         AppLocalization.of(context)
                                             .nameLabelText),
-                                validator: (value) => value.isEmpty ? '' : null,
+                                validator: (value) =>
+                                    value.isEmpty || value.length > 100
+                                        ? ''
+                                        : null,
                                 onChanged: (value) => _name = value,
                               ),
                               SizedBox(
@@ -119,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             .phoneNumber),
                                 validator: (value) => (value.isEmpty ||
                                         !value.startsWith('+') ||
-                                        value.length < 7)
+                                        value.length < 10)
                                     ? ''
                                     : null,
                                 onChanged: (value) => _phoneNumber = value,
@@ -136,7 +139,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     AppTheme.constructTextFieldDecoration(
                                         AppLocalization.of(context).email),
                                 validator: (value) => (value.isEmpty ||
-                                        !RegExp(RegExps.email).hasMatch(value))
+                                        !RegExp(RegExps.email)
+                                            .hasMatch(value) ||
+                                        value.length > 100)
                                     ? ''
                                     : null,
                                 onChanged: (value) => _email = value,
@@ -173,10 +178,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     ),
                                   ),
                                 ),
-                                validator: (value) =>
-                                    (value.isEmpty || value.length < 6)
-                                        ? ''
-                                        : null,
+                                validator: (value) => (value.isEmpty ||
+                                        value.length < 6 ||
+                                        value.length > 20)
+                                    ? ''
+                                    : null,
                                 onChanged: (value) => _password = value,
                               ),
                               SizedBox(
