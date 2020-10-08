@@ -155,8 +155,9 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                         Text(
                           cartItem.product.name,
                           style: Theme.of(context).textTheme.headline4,
-                          maxLines: 2,
-                          overflow: TextOverflow.clip,
+                          maxLines: 1,
+                          overflow: TextOverflow.fade,
+                          softWrap: false,
                         ),
                         Expanded(
                           child: Column(
