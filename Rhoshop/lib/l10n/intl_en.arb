@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2020-09-30T19:10:11.777310",
+  "@@last_modified": "2020-10-08T15:14:35.817362",
   "appTitle": "Rhoshop",
   "@appTitle": {
     "description": "Application title.",
@@ -39,6 +39,18 @@
   "close": "Close",
   "@close": {
     "description": "Close text.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "connectionError": "No connection",
+  "@connectionError": {
+    "description": "Error text that is displayed when there is no internet connection.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "serverError": "Something went wrong",
+  "@serverError": {
+    "description": "Error text that is displayed when server responded with server side error.",
     "type": "text",
     "placeholders": {}
   },

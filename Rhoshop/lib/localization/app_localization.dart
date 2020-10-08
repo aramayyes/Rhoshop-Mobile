@@ -81,6 +81,22 @@ class AppLocalization {
       desc: 'Close text.',
     );
   }
+
+  String get connectionError {
+    return Intl.message(
+      'No connection',
+      name: 'connectionError',
+      desc: 'Error text that is displayed when there is no internet connection.',
+    );
+  }
+
+  String get serverError {
+    return Intl.message(
+      'Something went wrong',
+      name: 'serverError',
+      desc: 'Error text that is displayed when server responded with server side error.',
+    );
+  }
   //#endregion Globals
 
   //#region IntroScreen

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:rhoshop/api/api_error.dart';
 import 'package:rhoshop/components/primary_button.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
@@ -8,6 +10,8 @@ import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/helpers.dart' as Helpers;
 import 'package:rhoshop/utils/regexps.dart' as RegExps;
 import 'package:rhoshop/utils/routes.dart' as Routes;
+import 'package:rhoshop/api/mutations/all.dart' as Mutations;
+import 'package:rhoshop/dto/all.dart';
 
 /// Provides functionality for user signing up.
 class SignUpScreen extends StatefulWidget {
@@ -35,13 +39,65 @@ class _SignUpScreenState extends State<SignUpScreen> {
   /// Password from input field.
   String _password;
 
+  /// Whether the sign up request is in loading state.
+  bool _isLoading = false;
+
+  /// Whether the input email already exist in api server.
+  bool _isEmailDuplicate = false;
+
   /// Handles 'Sign up' button presses.
-  void onSignUpButtonPressed() {
+  void onSignUpButtonPressed(BuildContext context, GraphQLClient client) async {
+    _isEmailDuplicate = false;
     if (_formKey.currentState.validate()) {
-      print(_phoneNumber);
-      print(_name);
-      print(_email);
-      print(_password);
+      setState(() {
+        _isLoading = true;
+      });
+
+      /// Create user
+      final result = await client.mutate(
+          MutationOptions(documentNode: gql(Mutations.createUser), variables: {
+        "createUserDto": CreateUserDto(
+          name: _name,
+          email: _email,
+          password: _password,
+          phoneNumber: _phoneNumber,
+        )
+      }));
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Manage exception if there is any.
+      if (result.exception != null) {
+        final error = parseApiError(result.exception);
+
+        switch (error) {
+          case ApiError.client:
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                AppLocalization.of(context).connectionError,
+                style: TextStyle(fontFamily: 'Nunito'),
+              ),
+            ));
+            return;
+          case ApiError.badUserInput:
+            _isEmailDuplicate = true;
+            _formKey.currentState.validate();
+            return;
+          default:
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                AppLocalization.of(context).serverError,
+                style: TextStyle(fontFamily: 'Nunito'),
+              ),
+            ));
+            return;
+        }
+      }
+
+      // Navigate to sign in screen if registration is successful.
+      Navigator.popAndPushNamed(context, Routes.signIn);
     }
   }
 
@@ -106,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     value.isEmpty || value.length > 100
                                         ? ''
                                         : null,
-                                onChanged: (value) => _name = value,
+                                onChanged: (value) => _name = value.trim(),
                               ),
                               SizedBox(
                                 height: 20,
@@ -125,7 +181,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         value.length < 10)
                                     ? ''
                                     : null,
-                                onChanged: (value) => _phoneNumber = value,
+                                onChanged: (value) =>
+                                    _phoneNumber = value.trim(),
                               ),
                               SizedBox(
                                 height: 20,
@@ -138,13 +195,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 decoration:
                                     AppTheme.constructTextFieldDecoration(
                                         AppLocalization.of(context).email),
-                                validator: (value) => (value.isEmpty ||
+                                validator: (value) => (_isEmailDuplicate ||
+                                        value.isEmpty ||
                                         !RegExp(RegExps.email)
                                             .hasMatch(value) ||
                                         value.length > 100)
                                     ? ''
                                     : null,
-                                onChanged: (value) => _email = value,
+                                onChanged: (value) => _email = value.trim(),
                               ),
                               SizedBox(
                                 height: 20,
@@ -188,11 +246,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               SizedBox(
                                 height: 60,
                               ),
-                              PrimaryButton(
-                                onPressed: onSignUpButtonPressed,
-                                child: Text(
-                                  AppLocalization.of(context).signUp,
-                                  style: Theme.of(context).textTheme.button,
+                              GraphQLConsumer(
+                                builder: (client) => Builder(
+                                  builder: (context) => PrimaryButton(
+                                    onPressed: () =>
+                                        onSignUpButtonPressed(context, client),
+                                    child: _isLoading
+                                        ? SizedBox(
+                                            height: 30,
+                                            width: 30,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  new AlwaysStoppedAnimation<
+                                                      Color>(
+                                                AppColors.primary,
+                                              ),
+                                            ),
+                                          )
+                                        : Text(
+                                            AppLocalization.of(context).signUp,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .button,
+                                          ),
+                                  ),
                                 ),
                               ),
                             ],
