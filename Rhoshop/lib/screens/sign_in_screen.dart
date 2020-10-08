@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:rhoshop/api/api_error.dart';
 import 'package:rhoshop/components/primary_button.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
@@ -8,6 +10,9 @@ import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/helpers.dart' as Helpers;
 import 'package:rhoshop/utils/regexps.dart' as RegExps;
 import 'package:rhoshop/utils/routes.dart' as Routes;
+import 'package:rhoshop/api/mutations/all.dart' as Mutations;
+import 'package:rhoshop/dto/all.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Provides functionality for user signing in.
 class SignInScreen extends StatefulWidget {
@@ -29,10 +34,76 @@ class _SignInScreenState extends State<SignInScreen> {
   /// Password from input field.
   String _password;
 
+  /// Whether the sign in request is in loading state.
+  bool _isLoading = false;
+
+  /// Whether input credentials are valid, i.e. whether input password is valid for the input email).
+  bool _areCredentialsValid = true;
+
   /// Handles 'Sign in' button presses.
-  void onSignInButtonPressed() {
-    // TODO: perform validation and make a request to sign in
-    Navigator.pushNamed(context, Routes.home);
+  void onSignInButtonPressed(BuildContext context, GraphQLClient client) async {
+    Helpers.dismissKeyboard(context);
+
+    _areCredentialsValid = true;
+    if (_formKey.currentState.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      /// Create user
+      final result = await client.mutate(
+        MutationOptions(
+          documentNode: gql(Mutations.signIn),
+          variables: {
+            "signInDto": SignInDto(
+              email: _email,
+              password: _password,
+            )
+          },
+        ),
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Manage exception if there is any.
+      if (result.exception != null) {
+        final error = parseApiError(result.exception);
+
+        switch (error) {
+          case ApiError.client:
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                AppLocalization.of(context).connectionError,
+                style: TextStyle(fontFamily: 'Nunito'),
+              ),
+            ));
+            return;
+          case ApiError.badUserInput:
+            _areCredentialsValid = false;
+            _formKey.currentState.validate();
+            return;
+          default:
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                AppLocalization.of(context).serverError,
+                style: TextStyle(fontFamily: 'Nunito'),
+              ),
+            ));
+            return;
+        }
+      }
+
+      // Parse response
+      final jwt = JwtTokenDto.fromJson(result.data['signIn']);
+
+      // Save access token
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', jwt.accessToken);
+
+      Navigator.pushNamed(context, Routes.home);
+    }
   }
 
   /// Handles 'Sign up' button presses.
@@ -93,7 +164,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                 decoration:
                                     AppTheme.constructTextFieldDecoration(
                                         AppLocalization.of(context).email),
-                                validator: (value) => (value.isEmpty ||
+                                validator: (value) => (!_areCredentialsValid ||
+                                        value.isEmpty ||
                                         !RegExp(RegExps.email).hasMatch(value))
                                     ? ''
                                     : null,
@@ -130,20 +202,40 @@ class _SignInScreenState extends State<SignInScreen> {
                                     ),
                                   ),
                                 ),
-                                validator: (value) =>
-                                    (value.isEmpty || value.length < 6)
-                                        ? ''
-                                        : null,
+                                validator: (value) => (!_areCredentialsValid ||
+                                        value.isEmpty ||
+                                        value.length < 6)
+                                    ? ''
+                                    : null,
                                 onChanged: (value) => _password = value,
                               ),
                               SizedBox(
                                 height: 60,
                               ),
-                              PrimaryButton(
-                                onPressed: onSignInButtonPressed,
-                                child: Text(
-                                  AppLocalization.of(context).signIn,
-                                  style: Theme.of(context).textTheme.button,
+                              GraphQLConsumer(
+                                builder: (client) => Builder(
+                                  builder: (context) => PrimaryButton(
+                                    onPressed: () =>
+                                        onSignInButtonPressed(context, client),
+                                    child: _isLoading
+                                        ? SizedBox(
+                                            height: 30,
+                                            width: 30,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  new AlwaysStoppedAnimation<
+                                                      Color>(
+                                                AppColors.primary,
+                                              ),
+                                            ),
+                                          )
+                                        : Text(
+                                            AppLocalization.of(context).signIn,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .button,
+                                          ),
+                                  ),
                                 ),
                               ),
                             ],

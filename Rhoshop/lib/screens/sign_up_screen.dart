@@ -42,11 +42,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   /// Whether the sign up request is in loading state.
   bool _isLoading = false;
 
-  /// Whether the input email already exist in api server.
+  /// Whether input email already exist in api server.
   bool _isEmailDuplicate = false;
 
   /// Handles 'Sign up' button presses.
   void onSignUpButtonPressed(BuildContext context, GraphQLClient client) async {
+    Helpers.dismissKeyboard(context);
+
     _isEmailDuplicate = false;
     if (_formKey.currentState.validate()) {
       setState(() {
