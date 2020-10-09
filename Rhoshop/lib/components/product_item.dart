@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rhoshop/mock/models/product.dart';
+import 'package:progressive_image/progressive_image.dart';
+import 'package:rhoshop/dto/product.dto.dart';
 
 /// Represents a single product and contains content about it.
 class ProductItem extends StatelessWidget {
-  final Product product;
+  final ProductDto product;
   final double imageBorderRadius;
   final void Function() onTap;
 
@@ -18,8 +19,12 @@ class ProductItem extends StatelessWidget {
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(imageBorderRadius),
-              child: Image.asset(
-                product.imgUrl,
+              child: ProgressiveImage(
+                placeholder: AssetImage('assets/images/placeholder.jpg'),
+                thumbnail: NetworkImage(product.thumbnail),
+                image: NetworkImage(product.image),
+                height: double.infinity,
+                width: double.infinity,
               ),
             ),
           ),

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rhoshop/components/product_item.dart';
 import 'package:rhoshop/mock/db.dart' as MockDb;
 import 'package:rhoshop/mock/models/product.dart';
-import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/ids.dart' as Ids;
-import 'package:rhoshop/utils/routes.dart' as Routes;
 
 /// Displays products which belong to given category.
 class CategoryScreen extends StatefulWidget {
@@ -94,24 +91,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           child = GridView.builder(
-            itemCount: snapshot.data.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
-              crossAxisSpacing: crossAxisSpacing,
-              mainAxisSpacing: mainAxisSpacing,
-              childAspectRatio: childAspectRatio,
-            ),
-            itemBuilder: (context, index) => ProductItem(
-              snapshot.data[index],
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  Routes.product,
-                  arguments: ProductScreenArguments(snapshot.data[index].id),
-                );
-              },
-            ),
-          );
+              itemCount: snapshot.data.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: crossAxisSpacing,
+                mainAxisSpacing: mainAxisSpacing,
+                childAspectRatio: childAspectRatio,
+              ),
+              itemBuilder: (context, index) => Container()
+              //     ProductItem(
+              //   snapshot.data[index],
+              //   onTap: () {
+              //     Navigator.pushNamed(
+              //       context,
+              //       Routes.product,
+              //       arguments: ProductScreenArguments(snapshot.data[index].id),
+              //     );
+              //   },
+              // ),
+              );
         } else {
           // This indicator will be also shown in case of error.
           child = Center(

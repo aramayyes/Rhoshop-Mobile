@@ -31,8 +31,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   QueryOptions _categoryQueryOptions;
-  Future<List<Product>> _newArrivalsFuture;
-  Future<List<Product>> _bestsellersFuture;
+  QueryOptions _newArrivalsQueryOptions;
+  QueryOptions _bestsellersQueryOptions;
+
+  /// How many elements should be displayed in a section.
+  final _sectionElementsCount = 7;
 
   @override
   void initState() {
@@ -45,9 +48,20 @@ class _HomeScreenState extends State<HomeScreen> {
         _categoryQueryOptions = QueryOptions(
             documentNode: gql(Queries.categories),
             variables: {"language": newLocale.languageCode});
-        _newArrivalsFuture = MockDb.fetchNewProducts(newLocale.languageCode);
-        _bestsellersFuture =
-            MockDb.fetchBestSellProducts(newLocale.languageCode);
+        _newArrivalsQueryOptions = QueryOptions(
+          documentNode: gql(Queries.newProducts),
+          variables: {
+            "count": _sectionElementsCount,
+            "language": newLocale.languageCode,
+          },
+        );
+        _bestsellersQueryOptions = QueryOptions(
+          documentNode: gql(Queries.bestSellerProducts),
+          variables: {
+            "count": _sectionElementsCount,
+            "language": newLocale.languageCode,
+          },
+        );
       });
     });
   }
@@ -61,14 +75,22 @@ class _HomeScreenState extends State<HomeScreen> {
             "language": Localizations.localeOf(context).languageCode
           });
     }
-    if (_newArrivalsFuture == null) {
-      _newArrivalsFuture = MockDb.fetchNewProducts(
-        Localizations.localeOf(context).languageCode,
+    if (_newArrivalsQueryOptions == null) {
+      _newArrivalsQueryOptions = QueryOptions(
+        documentNode: gql(Queries.newProducts),
+        variables: {
+          "count": _sectionElementsCount,
+          "language": Localizations.localeOf(context).languageCode
+        },
       );
     }
-    if (_bestsellersFuture == null) {
-      _bestsellersFuture = MockDb.fetchBestSellProducts(
-        Localizations.localeOf(context).languageCode,
+    if (_bestsellersQueryOptions == null) {
+      _bestsellersQueryOptions = QueryOptions(
+        documentNode: gql(Queries.bestSellerProducts),
+        variables: {
+          "count": _sectionElementsCount,
+          "language": Localizations.localeOf(context).languageCode
+        },
       );
     }
 
@@ -153,7 +175,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ),
-                    _buildSection(context, _newArrivalsFuture),
+                    _buildSection(
+                      context,
+                      _newArrivalsQueryOptions,
+                      'newProducts',
+                    ),
                     SizedBox(
                       height: 20,
                     ),
@@ -170,7 +196,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ),
-                    _buildSection(context, _bestsellersFuture),
+                    _buildSection(
+                      context,
+                      _bestsellersQueryOptions,
+                      'bestSellerProducts',
+                    ),
                   ],
                 ),
               ),
@@ -350,13 +380,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         } else {
-          child = Center(
-            child: CircularProgressIndicator(
-              valueColor:
-                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
-            ),
-          );
-
           List<CategoryDto> categories = result.data['categories']
               .map<CategoryDto>((c) => CategoryDto.fromJson(c))
               .toList();
@@ -417,42 +440,48 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /// Builds and returns section, i.e. a horizontal list with given products.
-  Widget _buildSection(BuildContext context, Future<List<Product>> products) {
+  /// Builds and returns a section, i.e. a horizontal list with given products.
+  ///
+  /// sqlDataKey is used to get data from result.
+  Widget _buildSection(
+      BuildContext context, QueryOptions options, String gqlDataKey) {
     Widget child;
     const height = 200.0;
     const gapBetweenCategories = 10.0;
 
-    return FutureBuilder<List<Product>>(
-      future: products,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
+    return Query(
+      options: options,
+      builder: (result, {fetchMore, refetch}) {
+        if (result.hasException || result.loading) {
+          child = Center(
+            child: CircularProgressIndicator(
+              valueColor:
+                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
+            ),
+          );
+        } else {
+          List<ProductDto> products = result.data[gqlDataKey]
+              .map<ProductDto>((p) => ProductDto.fromJson(p))
+              .toList();
+
           child = ListView.separated(
             separatorBuilder: (context, index) => SizedBox(
               width: gapBetweenCategories,
             ),
             scrollDirection: Axis.horizontal,
-            itemCount: snapshot.data.length,
+            itemCount: products.length,
             itemBuilder: (context, index) => AspectRatio(
               aspectRatio: 5 / 8,
               child: ProductItem(
-                snapshot.data[index],
+                products[index],
                 onTap: () {
                   Navigator.pushNamed(
                     context,
                     Routes.product,
-                    arguments: ProductScreenArguments(snapshot.data[index].id),
+                    arguments: ProductScreenArguments(products[index].id),
                   );
                 },
               ),
-            ),
-          );
-        } else {
-          // This indicator will be also shown in case of error.
-          child = Center(
-            child: CircularProgressIndicator(
-              valueColor:
-                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
             ),
           );
         }
