@@ -34,8 +34,8 @@ class ProductDto {
         category = json.containsKey(['category'])
             ? CategoryDto.fromJson(json['category'])
             : null,
-        price = json['price'],
-        oldPrice = json['oldPrice'],
-        rating = json['rating'],
+        price = json['price']?.toDouble(),
+        oldPrice = json['oldPrice']?.toDouble(),
+        rating = json['rating']?.toDouble(),
         reviewsCount = json['reviewsCount'];
 }

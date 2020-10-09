@@ -96,7 +96,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
   }
 
   Widget _buildProductsGrid() {
-    Widget child;
     const crossAxisCount = 2;
     const crossAxisSpacing = 30.0;
     const mainAxisSpacing = 20.0;
@@ -106,7 +105,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       options: _productsQueryOptions,
       builder: (result, {fetchMore, refetch}) {
         if (result.hasException || result.loading) {
-          child = Center(
+          return Center(
             child: CircularProgressIndicator(
               valueColor:
                   new AlwaysStoppedAnimation<Color>(AppColors.secondary),
@@ -117,7 +116,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               .map<ProductDto>((p) => ProductDto.fromJson(p))
               .toList();
 
-          child = GridView.builder(
+          return GridView.builder(
             itemCount: products.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: crossAxisCount,
@@ -137,10 +136,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
           );
         }
-
-        return Container(
-          child: child,
-        );
       },
     );
   }
