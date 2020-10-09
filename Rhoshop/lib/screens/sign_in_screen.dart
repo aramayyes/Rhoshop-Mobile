@@ -224,24 +224,11 @@ class _SignInScreenState extends State<SignInScreen> {
                                         ? null
                                         : () => onSignInButtonPressed(
                                             context, client),
-                                    child: _isLoading
-                                        ? SizedBox(
-                                            height: 30,
-                                            width: 30,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  new AlwaysStoppedAnimation<
-                                                      Color>(
-                                                AppColors.primary,
-                                              ),
-                                            ),
-                                          )
-                                        : Text(
-                                            AppLocalization.of(context).signIn,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .button,
-                                          ),
+                                    child: Text(
+                                      AppLocalization.of(context).signIn,
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
+                                    isLoading: _isLoading,
                                   ),
                                 ),
                               ),

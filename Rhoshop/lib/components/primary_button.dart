@@ -6,6 +6,7 @@ import 'package:rhoshop/styles/dimens.dart' as Dimens;
 class PrimaryButton extends StatelessWidget {
   final void Function() onPressed;
   final Widget child;
+  final bool isLoading;
   final double borderRadius;
   final List<Color> gradientColors;
   final double padding;
@@ -14,6 +15,7 @@ class PrimaryButton extends StatelessWidget {
     Key key,
     @required this.onPressed,
     this.child,
+    this.isLoading = false,
     this.borderRadius = Dimens.buttonBorderRadius,
     this.gradientColors = const [
       AppColors.buttonGradientStart,
@@ -41,7 +43,17 @@ class PrimaryButton extends StatelessWidget {
         child: Container(
           constraints: BoxConstraints(minHeight: 30),
           alignment: Alignment.center,
-          child: child,
+          child: isLoading
+              ? SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                      AppColors.primary,
+                    ),
+                  ),
+                )
+              : child,
         ),
       ),
     );

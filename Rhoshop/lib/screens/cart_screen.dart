@@ -95,20 +95,11 @@ class _CartScreenState extends State<CartScreen> {
                         await cart.order();
                         Navigator.pushNamed(context, Routes.orderConfirmation);
                       },
-                child: cart.isLoading(CartOperation.order)
-                    ? SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: CircularProgressIndicator(
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                            AppColors.primary,
-                          ),
-                        ),
-                      )
-                    : Text(
-                        AppLocalization.of(context).orderButtonText,
-                        style: Theme.of(context).textTheme.button,
-                      ),
+                child: Text(
+                  AppLocalization.of(context).orderButtonText,
+                  style: Theme.of(context).textTheme.button,
+                ),
+                isLoading: cart.isLoading(CartOperation.order),
               ),
             ),
           )

@@ -255,24 +255,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         ? null
                                         : () => onSignUpButtonPressed(
                                             context, client),
-                                    child: _isLoading
-                                        ? SizedBox(
-                                            height: 30,
-                                            width: 30,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  new AlwaysStoppedAnimation<
-                                                      Color>(
-                                                AppColors.primary,
-                                              ),
-                                            ),
-                                          )
-                                        : Text(
-                                            AppLocalization.of(context).signUp,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .button,
-                                          ),
+                                    child: Text(
+                                      AppLocalization.of(context).signUp,
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
+                                    isLoading: _isLoading,
                                   ),
                                 ),
                               ),
