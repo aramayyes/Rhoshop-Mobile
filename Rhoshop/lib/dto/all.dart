@@ -5,3 +5,4 @@ export 'category.dto.dart';
 export 'product.dto.dart';
 export 'filter_products.dart';
 export 'notification.dto.dart';
+export 'user.dto.dart';

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/primary_button.dart';
+import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
-import 'package:rhoshop/mock/db.dart' as MockDb;
-import 'package:rhoshop/mock/models/user.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/app_theme.dart' as AppTheme;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
@@ -17,7 +18,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  Future<User> _userFuture;
+  QueryOptions _userQueryOptions;
 
   /// Controls whether or not to show the password in input field.
   var _passwordObscureText = true;
@@ -30,8 +31,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_userFuture == null) {
-      _userFuture = MockDb.fetchUser();
+    if (_userQueryOptions == null) {
+      _userQueryOptions = QueryOptions(
+        documentNode: gql(Queries.user),
+      );
     }
 
     return Scaffold(
@@ -66,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: 20,
               ),
-              _buildUserProfile()
+              Expanded(child: _buildUserProfile())
             ],
           ),
         ),
@@ -74,121 +77,120 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  FutureBuilder<User> _buildUserProfile() {
-    return FutureBuilder<User>(
-      future: _userFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.hasData) {
-          return Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    initialValue: snapshot.data.name,
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                    ),
-                    decoration: AppTheme.constructTextFieldDecoration(
-                        AppLocalization.of(context).nameLabelText),
-                    validator: (value) => value.isEmpty ? '' : null,
-                    onChanged: (value) => _name = value,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    initialValue: snapshot.data.phoneNumber,
-                    readOnly: true,
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                    ),
-                    decoration: AppTheme.constructTextFieldDecoration(
-                        AppLocalization.of(context).phoneNumber),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    initialValue: snapshot.data.email,
-                    readOnly: true,
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                    ),
-                    decoration: AppTheme.constructTextFieldDecoration(
-                        AppLocalization.of(context).email),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    obscureText: _passwordObscureText,
-                    style: TextStyle(
-                      fontFamily: 'Nunito',
-                    ),
-                    decoration: AppTheme.constructTextFieldDecoration(
-                      AppLocalization.of(context).password,
-                      suffixIcon: SizedBox(
-                        height: 20,
-                        child: IconButton(
-                          padding: EdgeInsets.all(0),
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          icon: Icon(
-                            _passwordObscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: AppColors.descriptionText,
-                          ),
-                          onPressed: () {
-                            setState(
-                              () {
-                                _passwordObscureText = !_passwordObscureText;
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    validator: (value) =>
-                        (value.isEmpty || value.length < 6) ? '' : null,
-                    onChanged: (value) => _password = value,
-                  ),
-                  SizedBox(
-                    height: 60,
-                  ),
-                  PrimaryButton(
-                    onPressed: () => _saveUser(snapshot.data),
-                    child: Text(
-                      AppLocalization.of(context).saveButtonText,
-                      style: Theme.of(context).textTheme.button,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }
-        return Expanded(
-          child: Center(
+  Query _buildUserProfile() {
+    return Query(
+      options: _userQueryOptions,
+      builder: (result, {fetchMore, refetch}) {
+        if (result.hasException || result.loading) {
+          return Center(
             child: CircularProgressIndicator(
               valueColor:
                   new AlwaysStoppedAnimation<Color>(AppColors.secondary),
             ),
-          ),
-        );
+          );
+        } else {
+          UserDto user = UserDto.fromJson(result.data['user']);
+
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  initialValue: user.name,
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                  ),
+                  decoration: AppTheme.constructTextFieldDecoration(
+                      AppLocalization.of(context).nameLabelText),
+                  validator: (value) => value.isEmpty ? '' : null,
+                  onChanged: (value) => _name = value,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  initialValue: user.phoneNumber,
+                  readOnly: true,
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                  ),
+                  decoration: AppTheme.constructTextFieldDecoration(
+                      AppLocalization.of(context).phoneNumber),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  initialValue: user.email,
+                  readOnly: true,
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                  ),
+                  decoration: AppTheme.constructTextFieldDecoration(
+                      AppLocalization.of(context).email),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  obscureText: _passwordObscureText,
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
+                  ),
+                  decoration: AppTheme.constructTextFieldDecoration(
+                    AppLocalization.of(context).password,
+                    suffixIcon: SizedBox(
+                      height: 20,
+                      child: IconButton(
+                        padding: EdgeInsets.all(0),
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        icon: Icon(
+                          _passwordObscureText
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: AppColors.descriptionText,
+                        ),
+                        onPressed: () {
+                          setState(
+                            () {
+                              _passwordObscureText = !_passwordObscureText;
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  validator: (value) =>
+                      (value.isEmpty || value.length < 6) ? '' : null,
+                  onChanged: (value) => _password = value,
+                ),
+                SizedBox(
+                  height: 60,
+                ),
+                PrimaryButton(
+                  onPressed: () => _saveUser(user),
+                  child: Text(
+                    AppLocalization.of(context).saveButtonText,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
       },
     );
   }
 
-  void _saveUser(User user) {
-    final hasChanges = (_name != null && _name != user.name) ||
-        (_password != null && _password != user.password);
-    if (hasChanges) {
-      setState(() {
-        _userFuture = MockDb.updateUser(name: _name, password: _password);
-      });
-    }
+  void _saveUser(UserDto user) {
+    // TODO: add `update user` functionality.
+    // final hasChanges = (_name != null && _name != user.name) ||
+    //     (_password != null && _password != user.password);
+    // if (hasChanges) {
+    //   setState(() {
+    //     _userFuture = MockDb.updateUser(name: _name, password: _password);
+    //   });
+    // }
   }
 }
