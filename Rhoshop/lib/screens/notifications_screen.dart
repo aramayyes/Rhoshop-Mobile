@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/primary_button.dart';
+import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
-import 'package:rhoshop/mock/db.dart' as MockDb;
-import 'package:rhoshop/mock/models/norification.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 
@@ -15,7 +16,7 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  Future<List<AppNotification>> _notificationsFuture;
+  QueryOptions _notificationsQueryOptions;
 
   @override
   void initState() {
@@ -24,9 +25,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_notificationsFuture == null) {
-      _notificationsFuture = MockDb.fetchNotifications(
-          Localizations.localeOf(context).languageCode);
+    if (_notificationsQueryOptions == null) {
+      _notificationsQueryOptions = QueryOptions(
+        documentNode: gql(Queries.notifications),
+        variables: {"language": Localizations.localeOf(context).languageCode},
+      );
     }
 
     return Scaffold(
@@ -66,7 +69,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   void _showNotificationInAlert(
-      BuildContext context, AppNotification notification) {
+      BuildContext context, NotificationDto notification) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -82,7 +85,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             style: Theme.of(context).textTheme.headline4,
           ),
           content: Text(
-            notification.content,
+            notification.message,
             style: Theme.of(context).textTheme.bodyText1,
           ),
           actions: [
@@ -108,23 +111,30 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   Widget _buildNotifications() {
-    Widget child;
+    return Query(
+      options: _notificationsQueryOptions,
+      builder: (result, {fetchMore, refetch}) {
+        if (result.hasException || result.loading) {
+          return Center(
+              child: CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(AppColors.secondary),
+          ));
+        } else {
+          List<NotificationDto> notifications = result.data['notifications']
+              .map<NotificationDto>((n) => NotificationDto.fromJson(n))
+              .toList();
 
-    return FutureBuilder<List<AppNotification>>(
-      future: _notificationsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          child = ListView.separated(
+          return ListView.separated(
             padding: EdgeInsets.only(bottom: 20),
             separatorBuilder: (context, index) => Divider(),
-            itemCount: snapshot.data.length,
+            itemCount: notifications.length,
             itemBuilder: (context, index) => ListTile(
               contentPadding: EdgeInsets.all(0),
               onTap: () {
-                _showNotificationInAlert(context, snapshot.data[index]);
+                _showNotificationInAlert(context, notifications[index]);
               },
               title: Text(
-                snapshot.data[index].content,
+                notifications[index].message,
                 style: Theme.of(context).textTheme.bodyText1,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
@@ -136,24 +146,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     context,
                   ).toString(),
                 ).format(
-                  snapshot.data[index].date,
+                  notifications[index].date,
                 ),
               ),
             ),
           );
-        } else {
-          // This indicator will be also shown in case of error.
-          child = Center(
-            child: CircularProgressIndicator(
-              valueColor:
-                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
-            ),
-          );
         }
-
-        return Container(
-          child: child,
-        );
       },
     );
   }
