@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:rhoshop/mock/models/cart_item.dart';
+import 'package:rhoshop/mock/models/mock_cart_item.dart';
 import 'package:rhoshop/mock/models/category.dart';
 import 'package:rhoshop/mock/models/norification.dart';
 import 'package:rhoshop/mock/models/product.dart';
@@ -180,7 +180,7 @@ Future<List<AppNotification>> fetchNotifications(String locale) async {
   return notifications;
 }
 
-Future<Set<CartItem>> fetchCart() async {
+Future<Set<MockCartItem>> fetchCart() async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
@@ -190,7 +190,7 @@ Future<Set<CartItem>> fetchCart() async {
   return _cart;
 }
 
-Future<Set<CartItem>> addToCart(CartItem cartItem) async {
+Future<Set<MockCartItem>> addToCart(MockCartItem cartItem) async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(500),
@@ -210,7 +210,7 @@ Future<Set<CartItem>> addToCart(CartItem cartItem) async {
   return _cart;
 }
 
-Future<Set<CartItem>> removeFromCard(CartItem cartItem,
+Future<Set<MockCartItem>> removeFromCard(MockCartItem cartItem,
     {bool removeAll = true}) async {
   await Future.delayed(
     Duration(
@@ -232,7 +232,7 @@ Future<Set<CartItem>> removeFromCard(CartItem cartItem,
   return _cart;
 }
 
-Future<Set<CartItem>> emptyCard() async {
+Future<Set<MockCartItem>> emptyCard() async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
@@ -244,7 +244,7 @@ Future<Set<CartItem>> emptyCard() async {
   return _cart;
 }
 
-Future<Set<CartItem>> order() async {
+Future<Set<MockCartItem>> order() async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
@@ -257,7 +257,7 @@ Future<Set<CartItem>> order() async {
   return _cart;
 }
 
-Future<List<CartItem>> fetchMyOrders() async {
+Future<List<MockCartItem>> fetchMyOrders() async {
   await Future.delayed(
     Duration(
       milliseconds: 100 + random.nextInt(maxLoadingDuration),
@@ -306,8 +306,8 @@ final _user = User(
   'APa55word',
 );
 
-final _cart = <CartItem>{};
-final _myOrders = <CartItem>[];
+final _cart = <MockCartItem>{};
+final _myOrders = <MockCartItem>[];
 
 final _categories = <Category>[
   Category(

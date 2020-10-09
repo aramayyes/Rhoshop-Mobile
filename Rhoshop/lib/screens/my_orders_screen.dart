@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:rhoshop/components/primary_button.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/mock/db.dart' as MockDb;
-import 'package:rhoshop/mock/models/cart_item.dart';
+import 'package:rhoshop/mock/models/mock_cart_item.dart';
 import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
@@ -18,7 +18,7 @@ class MyOrdersScreen extends StatefulWidget {
 }
 
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
-  Future<List<CartItem>> _ordersFuture;
+  Future<List<MockCartItem>> _ordersFuture;
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +64,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     );
   }
 
-  FutureBuilder<List<CartItem>> _buildOrdersSection(Widget child) {
-    return FutureBuilder<List<CartItem>>(
+  FutureBuilder<List<MockCartItem>> _buildOrdersSection(Widget child) {
+    return FutureBuilder<List<MockCartItem>>(
       future: _ordersFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -121,7 +121,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     );
   }
 
-  ListView _buildOrdersList(AsyncSnapshot<List<CartItem>> snapshot) {
+  ListView _buildOrdersList(AsyncSnapshot<List<MockCartItem>> snapshot) {
     return ListView.separated(
       itemBuilder: (context, index) {
         final cartItem = snapshot.data[index];

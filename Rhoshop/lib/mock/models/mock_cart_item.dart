@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:rhoshop/mock/models/product.dart';
 
-class CartItem {
+class MockCartItem {
   Product product;
   ProductSize productSize;
   Color productColor;
   int count;
 
-  CartItem(this.product, this.productSize, this.productColor, this.count);
+  MockCartItem(this.product, this.productSize, this.productColor, this.count);
 
-  CartItem increment() {
+  MockCartItem increment() {
     this.count++;
     return this;
   }
 
-  CartItem decrement() {
+  MockCartItem decrement() {
     if (count > 1) {
       this.count--;
     }
@@ -23,7 +23,7 @@ class CartItem {
 
   @override
   bool operator ==(other) {
-    return other is CartItem &&
+    return other is MockCartItem &&
         this.product.id == other.product.id &&
         productColor == other.productColor &&
         this.productSize == other.productSize;

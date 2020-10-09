@@ -1,28 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:rhoshop/mock/db.dart' as MockDb;
-import 'package:rhoshop/mock/models/cart_item.dart';
+import 'package:rhoshop/service/app_database/app_database.dart';
 
 /// Contains cart's state.
 class Cart extends ChangeNotifier {
-  var _items = <CartItem>{};
+  var _items = <CartItem>[];
   final _loadingStates = <CartOperation>{};
 
-  Set<CartItem> get items => _items;
-
-  double get total {
-    double sum = 0;
-    for (var item in _items) {
-      sum += item.count * item.product.price;
-    }
-
-    return sum;
-  }
+  List<CartItem> get items => _items;
 
   bool get isEmpty => _items.isEmpty;
 
   Future<void> load() async {
     try {
-      _items = await MockDb.fetchCart();
+      _items = await AppDatabase.instance.getCartItems();
     } finally {
       notifyListeners();
     }
@@ -32,29 +22,43 @@ class Cart extends ChangeNotifier {
     return _loadingStates.contains(loading);
   }
 
-  bool isInCart(CartItem cartItem) {
-    return _items.any((item) => item == cartItem);
+  CartItem getByDetails(CartItem cartItem) {
+    return _items.singleWhere((item) => CartItem.areIdentical(item, cartItem),
+        orElse: () => null);
   }
 
-  Future add(CartItem cartItem) async {
-    _items = await MockDb.addToCart(cartItem);
+  Future<CartItem> add(CartItem cartItem) async {
+    cartItem = await AppDatabase.instance.addCartItem(cartItem);
+    _items.insert(0, cartItem);
+    notifyListeners();
+
+    return cartItem;
+  }
+
+  Future updateCount(CartItem cartItem) async {
+    await AppDatabase.instance.updateCartItemCount(cartItem);
+    final item = _items.singleWhere((c) => c.id == cartItem.id);
+    item.productCount = cartItem.productCount;
+
     notifyListeners();
   }
 
-  Future remove(CartItem cartItem, {bool removeAll = true}) async {
-    _items = await MockDb.removeFromCard(cartItem, removeAll: removeAll);
+  Future remove(CartItem cartItem) async {
+    await AppDatabase.instance.removeCartItem(cartItem);
+    _items.removeWhere((o) => o.id == cartItem.id);
     notifyListeners();
   }
 
-  Future order() async {
-    _loadingStates.add(CartOperation.order);
-    notifyListeners();
-
-    _items = await MockDb.order();
-    _loadingStates.remove(CartOperation.order);
-
-    notifyListeners();
-  }
+  // TODO: add ordering functionality
+  // Future order() async {
+  //   _loadingStates.add(CartOperation.order);
+  //   notifyListeners();
+  //
+  //   _items = await MockDb.order();
+  //   _loadingStates.remove(CartOperation.order);
+  //
+  //   notifyListeners();
+  // }
 }
 
 enum CartOperation {

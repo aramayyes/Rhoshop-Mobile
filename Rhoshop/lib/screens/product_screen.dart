@@ -10,6 +10,7 @@ import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/mock/models/product.dart';
 import 'package:rhoshop/models/cart.dart';
 import 'package:rhoshop/screens/photo_screen.dart';
+import 'package:rhoshop/service/app_database/app_database.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/routes.dart' as Routes;
@@ -156,41 +157,34 @@ class _ProductScreenState extends State<ProductScreen> {
           height: 60,
           child: Consumer<Cart>(
             builder: (context, cart, child) {
-              // TODO: add `add to cart` functionality
-              // final isInCart = cart.isInCart(
-              //   CartItem(
-              //     product,
-              //     _selectedSize,
-              //     _selectedColor,
-              //     1,
-              //   ),
-              // );
+              final cartItem = cart.getByDetails(
+                CartItem(
+                  product: product.id,
+                  productColor: _selectedColor.value.toRadixString(16),
+                  productSize: _selectedSize.toString().split('.').last,
+                  productCount: 1,
+                ),
+              );
               return PrimaryButton(
                 borderRadius: 0,
                 onPressed: () {
-                  // isInCart
-                  //     ? cart.remove(
-                  //         CartItem(
-                  //           product,
-                  //           _selectedSize,
-                  //           _selectedColor,
-                  //           1,
-                  //         ),
-                  //       )
-                  //     : cart.add(
-                  //         CartItem(
-                  //           product,
-                  //           _selectedSize,
-                  //           _selectedColor,
-                  //           1,
-                  //         ),
-                  //       );
+                  cartItem != null
+                      ? cart.remove(cartItem)
+                      : cart.add(
+                          CartItem(
+                            product: product.id,
+                            productColor:
+                                _selectedColor.value.toRadixString(16),
+                            productSize:
+                                _selectedSize.toString().split('.').last,
+                            productCount: 1,
+                          ),
+                        );
                 },
                 child: Text(
-                  // isInCart
-                  //     ? AppLocalization.of(context).alreadyInCartText
-                  //     :
-                  AppLocalization.of(context).addToCartText,
+                  cartItem != null
+                      ? AppLocalization.of(context).alreadyInCartText
+                      : AppLocalization.of(context).addToCartText,
                   style: Theme.of(context).textTheme.button,
                 ),
               );
