@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:progressive_image/progressive_image.dart';
 import 'package:provider/provider.dart';
+import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/primary_button.dart';
+import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
-import 'package:rhoshop/mock/db.dart' as MockDb;
-import 'package:rhoshop/mock/models/cart_item.dart';
 import 'package:rhoshop/mock/models/product.dart';
 import 'package:rhoshop/models/cart.dart';
 import 'package:rhoshop/screens/photo_screen.dart';
@@ -31,7 +33,7 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  Future<Product> _productFuture;
+  QueryOptions _productQueryOptions;
 
   /// Selected size, which will be included in order.
   ProductSize _selectedSize = ProductSize.M;
@@ -41,10 +43,13 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_productFuture == null) {
-      _productFuture = MockDb.fetchProduct(
-        widget.arguments.productId,
-        Localizations.localeOf(context).languageCode,
+    if (_productQueryOptions == null) {
+      _productQueryOptions = QueryOptions(
+        documentNode: gql(Queries.product),
+        variables: {
+          "id": widget.arguments.productId,
+          "language": Localizations.localeOf(context).languageCode,
+        },
       );
     }
 
@@ -77,25 +82,26 @@ class _ProductScreenState extends State<ProductScreen> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: _productFuture,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return _buildProductSection(context, snapshot.data);
-          } else {
+      body: Query(
+        options: _productQueryOptions,
+        builder: (result, {fetchMore, refetch}) {
+          if (result.hasException || result.loading) {
             return Center(
               child: CircularProgressIndicator(
                 valueColor:
                     new AlwaysStoppedAnimation<Color>(AppColors.secondary),
               ),
             );
+          } else {
+            final product = ProductDto.fromJson(result.data['product']);
+            return _buildProductSection(context, product);
           }
         },
       ),
     );
   }
 
-  Widget _buildProductSection(BuildContext context, Product product) {
+  Widget _buildProductSection(BuildContext context, ProductDto product) {
     return Container(
       color: AppColors.primary,
       child: Stack(
@@ -142,7 +148,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Align _buildAddToCart(BuildContext context, Product product) {
+  Align _buildAddToCart(BuildContext context, ProductDto product) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: SafeArea(
@@ -150,39 +156,41 @@ class _ProductScreenState extends State<ProductScreen> {
           height: 60,
           child: Consumer<Cart>(
             builder: (context, cart, child) {
-              final isInCart = cart.isInCart(
-                CartItem(
-                  product,
-                  _selectedSize,
-                  _selectedColor,
-                  1,
-                ),
-              );
+              // TODO: add `add to cart` functionality
+              // final isInCart = cart.isInCart(
+              //   CartItem(
+              //     product,
+              //     _selectedSize,
+              //     _selectedColor,
+              //     1,
+              //   ),
+              // );
               return PrimaryButton(
                 borderRadius: 0,
                 onPressed: () {
-                  isInCart
-                      ? cart.remove(
-                          CartItem(
-                            product,
-                            _selectedSize,
-                            _selectedColor,
-                            1,
-                          ),
-                        )
-                      : cart.add(
-                          CartItem(
-                            product,
-                            _selectedSize,
-                            _selectedColor,
-                            1,
-                          ),
-                        );
+                  // isInCart
+                  //     ? cart.remove(
+                  //         CartItem(
+                  //           product,
+                  //           _selectedSize,
+                  //           _selectedColor,
+                  //           1,
+                  //         ),
+                  //       )
+                  //     : cart.add(
+                  //         CartItem(
+                  //           product,
+                  //           _selectedSize,
+                  //           _selectedColor,
+                  //           1,
+                  //         ),
+                  //       );
                 },
                 child: Text(
-                  isInCart
-                      ? AppLocalization.of(context).alreadyInCartText
-                      : AppLocalization.of(context).addToCartText,
+                  // isInCart
+                  //     ? AppLocalization.of(context).alreadyInCartText
+                  //     :
+                  AppLocalization.of(context).addToCartText,
                   style: Theme.of(context).textTheme.button,
                 ),
               );
@@ -306,7 +314,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Column _buildDescription(BuildContext context, Product product) {
+  Column _buildDescription(BuildContext context, ProductDto product) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -325,7 +333,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Text _buildTitle(Product product, BuildContext context) {
+  Text _buildTitle(ProductDto product, BuildContext context) {
     return Text(
       product.name,
       style: Theme.of(context)
@@ -336,7 +344,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Row _buildRatingRow(Product product, BuildContext context) {
+  Row _buildRatingRow(ProductDto product, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -361,7 +369,7 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Widget _buildImage(Product product) {
+  Widget _buildImage(ProductDto product) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -370,24 +378,28 @@ class _ProductScreenState extends State<ProductScreen> {
               opaque: false,
               pageBuilder: (context, animation, secondaryAnimation) =>
                   PhotoScreen(
-                PhotoScreenArguments(product.imgUrl),
+                PhotoScreenArguments(product.image),
               ),
             ));
       },
       child: Container(
         width: double.infinity,
         child: Hero(
-          tag: product.imgUrl,
-          child: Image.asset(
-            product.imgUrl,
+          tag: product.image,
+          child: ProgressiveImage(
+            placeholder: AssetImage('assets/images/placeholder.jpg'),
+            thumbnail: NetworkImage(product.thumbnail),
+            image: NetworkImage(product.image),
             height: 200,
+            width: 200 /
+                1.2, // All product images from server have this aspect ratio.
           ),
         ),
       ),
     );
   }
 
-  Widget _buildPriceRow(Product product, BuildContext context) {
+  Widget _buildPriceRow(ProductDto product, BuildContext context) {
     return Row(
       children: [
         Text(
