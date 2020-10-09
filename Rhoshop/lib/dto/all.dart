@@ -6,3 +6,4 @@ export 'product.dto.dart';
 export 'filter_products.dart';
 export 'notification.dto.dart';
 export 'user.dto.dart';
+export 'update_user.dto.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:rhoshop/api/mutations/all.dart' as Mutations;
 import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/primary_button.dart';
 import 'package:rhoshop/dto/all.dart';
@@ -19,6 +20,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   QueryOptions _userQueryOptions;
+
+  /// Update user profile form key.
+  final _formKey = GlobalKey<FormState>();
 
   /// Controls whether or not to show the password in input field.
   var _passwordObscureText = true;
@@ -89,93 +93,108 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
         } else {
-          UserDto user = UserDto.fromJson(result.data['user']);
+          // If the request was of type 'mutation',
+          // then the result data key is 'updateUser'.
+          UserDto user = UserDto.fromJson(
+              result.data['user'] ?? result.data['updateUser']);
 
           return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormField(
-                  initialValue: user.name,
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    initialValue: user.name,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                    ),
+                    decoration: AppTheme.constructTextFieldDecoration(
+                        AppLocalization.of(context).nameLabelText),
+                    validator: (value) =>
+                        _name != null && (value.isEmpty || value.length > 100)
+                            ? ''
+                            : null,
+                    onChanged: (value) => _name = value,
                   ),
-                  decoration: AppTheme.constructTextFieldDecoration(
-                      AppLocalization.of(context).nameLabelText),
-                  validator: (value) => value.isEmpty ? '' : null,
-                  onChanged: (value) => _name = value,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  initialValue: user.phoneNumber,
-                  readOnly: true,
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
+                  SizedBox(
+                    height: 20,
                   ),
-                  decoration: AppTheme.constructTextFieldDecoration(
-                      AppLocalization.of(context).phoneNumber),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  initialValue: user.email,
-                  readOnly: true,
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
+                  TextFormField(
+                    initialValue: user.phoneNumber,
+                    readOnly: true,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                    ),
+                    decoration: AppTheme.constructTextFieldDecoration(
+                        AppLocalization.of(context).phoneNumber),
                   ),
-                  decoration: AppTheme.constructTextFieldDecoration(
-                      AppLocalization.of(context).email),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  obscureText: _passwordObscureText,
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
+                  SizedBox(
+                    height: 20,
                   ),
-                  decoration: AppTheme.constructTextFieldDecoration(
-                    AppLocalization.of(context).password,
-                    suffixIcon: SizedBox(
-                      height: 20,
-                      child: IconButton(
-                        padding: EdgeInsets.all(0),
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        icon: Icon(
-                          _passwordObscureText
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: AppColors.descriptionText,
+                  TextFormField(
+                    initialValue: user.email,
+                    readOnly: true,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                    ),
+                    decoration: AppTheme.constructTextFieldDecoration(
+                        AppLocalization.of(context).email),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    obscureText: _passwordObscureText,
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                    ),
+                    decoration: AppTheme.constructTextFieldDecoration(
+                      AppLocalization.of(context).password,
+                      suffixIcon: SizedBox(
+                        height: 20,
+                        child: IconButton(
+                          padding: EdgeInsets.all(0),
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          icon: Icon(
+                            _passwordObscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: AppColors.descriptionText,
+                          ),
+                          onPressed: () {
+                            setState(
+                              () {
+                                _passwordObscureText = !_passwordObscureText;
+                              },
+                            );
+                          },
                         ),
-                        onPressed: () {
-                          setState(
-                            () {
-                              _passwordObscureText = !_passwordObscureText;
-                            },
-                          );
-                        },
+                      ),
+                    ),
+                    validator: (value) => _password != null &&
+                            (value.isEmpty ||
+                                value.length < 6 ||
+                                value.length > 20)
+                        ? ''
+                        : null,
+                    onChanged: (value) => _password = value,
+                  ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  GraphQLConsumer(
+                    builder: (client) => PrimaryButton(
+                      onPressed: () => _saveUser(user, client),
+                      child: Text(
+                        AppLocalization.of(context).saveButtonText,
+                        style: Theme.of(context).textTheme.button,
                       ),
                     ),
                   ),
-                  validator: (value) =>
-                      (value.isEmpty || value.length < 6) ? '' : null,
-                  onChanged: (value) => _password = value,
-                ),
-                SizedBox(
-                  height: 60,
-                ),
-                PrimaryButton(
-                  onPressed: () => _saveUser(user),
-                  child: Text(
-                    AppLocalization.of(context).saveButtonText,
-                    style: Theme.of(context).textTheme.button,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }
@@ -183,14 +202,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _saveUser(UserDto user) {
-    // TODO: add `update user` functionality.
-    // final hasChanges = (_name != null && _name != user.name) ||
-    //     (_password != null && _password != user.password);
-    // if (hasChanges) {
-    //   setState(() {
-    //     _userFuture = MockDb.updateUser(name: _name, password: _password);
-    //   });
-    // }
+  void _saveUser(UserDto user, GraphQLClient client) {
+    Helpers.dismissKeyboard(context);
+
+    final hasChanges =
+        (_name != null && _name != user.name) || (_password != null);
+    if (hasChanges && _formKey.currentState.validate()) {
+      setState(() {
+        _userQueryOptions = QueryOptions(
+          documentNode: gql(Mutations.updateUser),
+          variables: {
+            "updateUserDto": UpdateUserDto(name: _name, password: _password)
+          },
+        );
+        _name = null;
+        _password = null;
+      });
+    }
   }
 }
