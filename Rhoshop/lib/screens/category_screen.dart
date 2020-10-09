@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rhoshop/mock/db.dart' as MockDb;
-import 'package:rhoshop/mock/models/product.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:rhoshop/api/queries/all.dart' as Queries;
+import 'package:rhoshop/components/product_item.dart';
+import 'package:rhoshop/dto/all.dart';
+import 'package:rhoshop/screens/product_screen.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/ids.dart' as Ids;
+import 'package:rhoshop/utils/routes.dart' as Routes;
 
 /// Displays products which belong to given category.
 class CategoryScreen extends StatefulWidget {
@@ -17,31 +21,43 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  Future<List<Product>> _productsFuture;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  QueryOptions _productsQueryOptions;
+  String gqlDataKey;
 
   @override
   Widget build(BuildContext context) {
-    if (_productsFuture == null) {
+    const pseudoSectionElementsCount = 10;
+    if (_productsQueryOptions == null) {
       switch (widget.arguments.categoryId) {
         case Ids.newArrivalsPseudocategory:
-          _productsFuture = MockDb.fetchNewProducts(
-              Localizations.localeOf(context).languageCode,
-              count: 12);
+          gqlDataKey = 'newProducts';
+          _productsQueryOptions = QueryOptions(
+            documentNode: gql(Queries.newProducts),
+            variables: {
+              "count": pseudoSectionElementsCount,
+              "language": Localizations.localeOf(context).languageCode,
+            },
+          );
           break;
         case Ids.bestSellPseudocategory:
-          _productsFuture = MockDb.fetchBestSellProducts(
-              Localizations.localeOf(context).languageCode,
-              count: 12);
+          gqlDataKey = 'bestSellerProducts';
+          _productsQueryOptions = QueryOptions(
+            documentNode: gql(Queries.bestSellerProducts),
+            variables: {
+              "count": pseudoSectionElementsCount,
+              "language": Localizations.localeOf(context).languageCode
+            },
+          );
           break;
         default:
-          _productsFuture = MockDb.fetchProductsByCategory(
-            widget.arguments.categoryId,
-            Localizations.localeOf(context).languageCode,
+          gqlDataKey = 'products';
+          _productsQueryOptions = QueryOptions(
+            documentNode: gql(Queries.productsByCategory),
+            variables: {
+              "filter":
+                  FilterProductsDto(category: widget.arguments.categoryId),
+              "language": Localizations.localeOf(context).languageCode
+            },
           );
       }
     }
@@ -86,36 +102,38 @@ class _CategoryScreenState extends State<CategoryScreen> {
     const mainAxisSpacing = 20.0;
     const childAspectRatio = 5 / 8;
 
-    return FutureBuilder<List<Product>>(
-      future: _productsFuture,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          child = GridView.builder(
-              itemCount: snapshot.data.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                crossAxisSpacing: crossAxisSpacing,
-                mainAxisSpacing: mainAxisSpacing,
-                childAspectRatio: childAspectRatio,
-              ),
-              itemBuilder: (context, index) => Container()
-              //     ProductItem(
-              //   snapshot.data[index],
-              //   onTap: () {
-              //     Navigator.pushNamed(
-              //       context,
-              //       Routes.product,
-              //       arguments: ProductScreenArguments(snapshot.data[index].id),
-              //     );
-              //   },
-              // ),
-              );
-        } else {
-          // This indicator will be also shown in case of error.
+    return Query(
+      options: _productsQueryOptions,
+      builder: (result, {fetchMore, refetch}) {
+        if (result.hasException || result.loading) {
           child = Center(
             child: CircularProgressIndicator(
               valueColor:
                   new AlwaysStoppedAnimation<Color>(AppColors.secondary),
+            ),
+          );
+        } else {
+          List<ProductDto> products = result.data[gqlDataKey]
+              .map<ProductDto>((p) => ProductDto.fromJson(p))
+              .toList();
+
+          child = GridView.builder(
+            itemCount: products.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
+              crossAxisSpacing: crossAxisSpacing,
+              mainAxisSpacing: mainAxisSpacing,
+              childAspectRatio: childAspectRatio,
+            ),
+            itemBuilder: (context, index) => ProductItem(
+              products[index],
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  Routes.product,
+                  arguments: ProductScreenArguments(products[index].id),
+                );
+              },
             ),
           );
         }
