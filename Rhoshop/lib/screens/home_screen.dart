@@ -10,8 +10,6 @@ import 'package:rhoshop/components/navigation.dart';
 import 'package:rhoshop/components/product_item.dart';
 import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
-import 'package:rhoshop/mock/db.dart' as MockDb;
-import 'package:rhoshop/mock/models/product.dart';
 import 'package:rhoshop/models/app_locale.dart';
 import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
@@ -250,81 +248,108 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      child: TypeAheadField<Product>(
-        textFieldConfiguration: TextFieldConfiguration(
-          style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 22),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            prefixIcon: SvgPicture.asset(
-              'assets/icons/loupe.svg',
-              color: AppColors.primaryText,
+      child: GraphQLConsumer(
+        builder: (client) => TypeAheadField<ProductDto>(
+          textFieldConfiguration: TextFieldConfiguration(
+            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 22),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              prefixIcon: SvgPicture.asset(
+                'assets/icons/loupe.svg',
+                color: AppColors.primaryText,
+              ),
+              prefixIconConstraints: BoxConstraints(
+                maxHeight: 20,
+                maxWidth: 60,
+              ),
+              contentPadding: EdgeInsets.symmetric(vertical: 12),
+              alignLabelWithHint: true,
+              hintText: AppLocalization.of(context).searchText,
+              hintStyle:
+                  Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 22),
             ),
-            prefixIconConstraints: BoxConstraints(
-              maxHeight: 20,
-              maxWidth: 60,
+          ),
+          hideOnError: true,
+          transitionBuilder: (context, suggestionsBox, animationController) =>
+              FadeTransition(
+            child: suggestionsBox,
+            opacity: CurvedAnimation(
+              parent: animationController,
+              curve: Curves.fastOutSlowIn,
             ),
-            contentPadding: EdgeInsets.symmetric(vertical: 12),
-            alignLabelWithHint: true,
-            hintText: AppLocalization.of(context).searchText,
-            hintStyle:
-                Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 22),
           ),
-        ),
-        hideOnError: true,
-        transitionBuilder: (context, suggestionsBox, animationController) =>
-            FadeTransition(
-          child: suggestionsBox,
-          opacity: CurvedAnimation(
-            parent: animationController,
-            curve: Curves.fastOutSlowIn,
+          loadingBuilder: (context) => Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondary),
+              ),
+            ),
           ),
-        ),
-        loadingBuilder: (context) => Align(
-          alignment: Alignment.center,
-          child: Padding(
+          errorBuilder: (context, error) => Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondary),
+              ),
+            ),
+          ),
+          noItemsFoundBuilder: (context) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondary),
+            child: Text(
+              AppLocalization.of(context).noItemsFoundText,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Theme.of(context).disabledColor, fontSize: 18.0),
             ),
           ),
+          suggestionsCallback: (pattern) async {
+            if (pattern.length < 3) {
+              return [];
+            }
+
+            final result = await client.query(
+              QueryOptions(
+                documentNode: gql(Queries.productSearchSuggestions),
+                variables: {
+                  "filter": FilterProductsDto(name: pattern),
+                  "language": Localizations.localeOf(context).languageCode
+                },
+              ),
+            );
+
+            if (result.hasException) {
+              throw result.exception;
+            } else {
+              return result.data['products']
+                  .map<ProductDto>((p) => ProductDto.fromJson(p))
+                  .toList();
+            }
+          },
+          itemBuilder: (context, suggestion) {
+            return ListTile(
+              leading: ClipOval(
+                child: ProgressiveImage(
+                  placeholder: AssetImage('assets/images/placeholder.jpg'),
+                  thumbnail: NetworkImage(suggestion.thumbnail),
+                  image: NetworkImage(suggestion.image),
+                  height: 40,
+                  width: 40,
+                ),
+              ),
+              title: Text(suggestion.name),
+            );
+          },
+          onSuggestionSelected: (suggestion) {
+            Navigator.pushNamed(
+              context,
+              Routes.product,
+              arguments: ProductScreenArguments(suggestion.id),
+            );
+          },
         ),
-        errorBuilder: (context, error) => Align(
-          alignment: Alignment.center,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.secondary),
-            ),
-          ),
-        ),
-        noItemsFoundBuilder: (context) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(
-            AppLocalization.of(context).noItemsFoundText,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Theme.of(context).disabledColor, fontSize: 18.0),
-          ),
-        ),
-        suggestionsCallback: (pattern) async {
-          return await MockDb.searchProducts(
-              pattern, Localizations.localeOf(context).languageCode);
-        },
-        itemBuilder: (context, suggestion) {
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: AssetImage(suggestion.imgUrl),
-            ),
-            title: Text(suggestion.name),
-          );
-        },
-        onSuggestionSelected: (suggestion) {
-          Navigator.pushNamed(
-            context,
-            Routes.product,
-            arguments: ProductScreenArguments(suggestion.id),
-          );
-        },
       ),
     );
   }
