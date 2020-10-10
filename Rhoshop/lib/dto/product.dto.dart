@@ -13,17 +13,18 @@ class ProductDto {
   double rating;
   int reviewsCount;
 
-  ProductDto(
-      {this.id,
-      this.name,
-      this.description,
-      this.image,
-      this.thumbnail,
-      this.category,
-      this.price,
-      this.oldPrice,
-      this.rating,
-      this.reviewsCount});
+  ProductDto({
+    this.id,
+    this.name,
+    this.description,
+    this.image,
+    this.thumbnail,
+    this.category,
+    this.price,
+    this.oldPrice,
+    this.rating,
+    this.reviewsCount,
+  });
 
   ProductDto.fromJson(Map<String, dynamic> json)
       : id = json['id'],
