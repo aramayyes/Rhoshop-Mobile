@@ -7,7 +7,6 @@ import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/primary_button.dart';
 import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
-import 'package:rhoshop/mock/models/product.dart';
 import 'package:rhoshop/models/cart.dart';
 import 'package:rhoshop/screens/photo_screen.dart';
 import 'package:rhoshop/service/app_database/app_database.dart';
@@ -15,13 +14,21 @@ import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/routes.dart' as Routes;
 
-// Mock
+// Available product colors.
 final productColors = <Color>[
   Colors.black,
   Color(0xFFcfb034),
   Color(0xFFededed),
   Color(0xFF800d0d),
 ];
+
+// Available product sizes.
+enum ProductSize {
+  S,
+  M,
+  L,
+  XL,
+}
 
 /// Displays detailed information about a certain product.
 class ProductScreen extends StatefulWidget {
