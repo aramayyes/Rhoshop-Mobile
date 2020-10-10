@@ -2,7 +2,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 
 enum ApiError { client, badUserInput, authentication, internalServer }
 
-/// Parses api error which in our case is graphql exception and returns an ApiError.
+/// Parses api error (which in our case is graphql exception) and returns an ApiError.
 ApiError parseApiError(OperationException exception) {
   if (exception.clientException != null) {
     return ApiError.client;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rhoshop/service/app_database/app_database.dart';
 
-/// Contains cart's state.
+/// Contains cart state.
 class Cart extends ChangeNotifier {
   var _items = <CartItem>[];
 
@@ -9,13 +9,11 @@ class Cart extends ChangeNotifier {
   bool get isEmpty => _items.isEmpty;
 
   Future<void> load() async {
-    try {
-      _items = await AppDatabase.instance.getCartItems();
-    } finally {
-      notifyListeners();
-    }
+    _items = await AppDatabase.instance.getCartItems();
+    notifyListeners();
   }
 
+  /// Gets a cart item from cart, that has same properties (details) that given one.
   CartItem getByDetails(CartItem cartItem) {
     return _items.singleWhere((item) => CartItem.areIdentical(item, cartItem),
         orElse: () => null);

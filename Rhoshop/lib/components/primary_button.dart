@@ -3,6 +3,8 @@ import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 
 /// Gradient button that is used as the primary button in the app.
+///
+/// If {loading} is true, displays a circular progress indicator instead of child.
 class PrimaryButton extends StatelessWidget {
   final void Function() onPressed;
   final Widget child;

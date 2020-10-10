@@ -7,9 +7,4 @@ class JwtTokenDto {
   JwtTokenDto.fromJson(Map<String, dynamic> json)
       : accessToken = json['access_token'],
         email = json['email'];
-
-  Map<String, dynamic> toJson() => {
-        'access_token': accessToken,
-        'email': email,
-      };
 }

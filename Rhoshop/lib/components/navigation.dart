@@ -3,6 +3,7 @@ import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/utils/routes.dart' as Routes;
 
+/// Represents application main navigation menu.
 class Navigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,7 @@ class Navigation extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    // Rhoshop icon.
                     Padding(
                       padding: const EdgeInsets.only(bottom: 32.0),
                       child: Image.asset(
@@ -40,6 +42,10 @@ class Navigation extends StatelessWidget {
   }
 
   Column _buildNavigationList(BuildContext context) {
+    const iconSize = 28.0;
+    const iconPadding = 16.0;
+    const dividerThickness = 1.0;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -58,10 +64,10 @@ class Navigation extends StatelessWidget {
             children: [
               Icon(
                 Icons.person,
-                size: 28,
+                size: iconSize,
               ),
               SizedBox(
-                width: 16,
+                width: iconPadding,
               ),
               Text(
                 AppLocalization.of(context).profileNavigationItem,
@@ -71,7 +77,7 @@ class Navigation extends StatelessWidget {
           ),
         ),
         Divider(
-          thickness: 1,
+          thickness: dividerThickness,
         ),
         GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -90,17 +96,17 @@ class Navigation extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline3,
               ),
               SizedBox(
-                width: 16,
+                width: iconPadding,
               ),
               Icon(
                 Icons.shopping_basket,
-                size: 28,
+                size: iconSize,
               ),
             ],
           ),
         ),
         Divider(
-          thickness: 1,
+          thickness: dividerThickness,
         ),
         GestureDetector(
           behavior: HitTestBehavior.translucent,
@@ -115,10 +121,10 @@ class Navigation extends StatelessWidget {
             children: [
               Icon(
                 Icons.settings,
-                size: 28,
+                size: iconSize,
               ),
               SizedBox(
-                width: 16,
+                width: iconPadding,
               ),
               Text(
                 AppLocalization.of(context).settingsNavigationItem,
@@ -128,7 +134,7 @@ class Navigation extends StatelessWidget {
           ),
         ),
         Divider(
-          thickness: 1,
+          thickness: dividerThickness,
         ),
       ],
     );
