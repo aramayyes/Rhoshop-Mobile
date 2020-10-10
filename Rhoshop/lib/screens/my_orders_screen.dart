@@ -10,6 +10,7 @@ import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
+import 'package:rhoshop/styles/app_images.dart' as AppImages;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/routes.dart' as Routes;
 
@@ -153,7 +154,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               child: Row(
                 children: [
                   ProgressiveImage(
-                    placeholder: AssetImage('assets/images/placeholder.jpg'),
+                    placeholder: AssetImage(AppImages.placeholder),
                     thumbnail: NetworkImage(order.product.thumbnail),
                     image: NetworkImage(order.product.image),
                     height: 112, // 120 - 8

@@ -11,6 +11,7 @@ import 'package:rhoshop/models/cart.dart';
 import 'package:rhoshop/screens/photo_screen.dart';
 import 'package:rhoshop/service/app_database/app_database.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
+import 'package:rhoshop/styles/app_images.dart' as AppImages;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/routes.dart' as Routes;
 
@@ -174,7 +175,7 @@ class _ProductScreenState extends State<ProductScreen> {
         child: Hero(
           tag: product.image,
           child: ProgressiveImage(
-            placeholder: AssetImage('assets/images/placeholder.jpg'),
+            placeholder: AssetImage(AppImages.placeholder),
             thumbnail: NetworkImage(product.thumbnail),
             image: NetworkImage(product.image),
             height: 200,

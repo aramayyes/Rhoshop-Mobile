@@ -13,6 +13,7 @@ import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/models/app_locale.dart';
 import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
+import 'package:rhoshop/styles/app_images.dart' as AppImages;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
 import 'package:rhoshop/utils/helpers.dart' as Helpers;
 import 'package:rhoshop/utils/ids.dart' as Ids;
@@ -310,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return ListTile(
               leading: ClipOval(
                 child: ProgressiveImage(
-                  placeholder: AssetImage('assets/images/placeholder.jpg'),
+                  placeholder: AssetImage(AppImages.placeholder),
                   thumbnail: NetworkImage(suggestion.thumbnail),
                   image: NetworkImage(suggestion.image),
                   height: 40,
@@ -413,8 +414,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(imageBorderRadius),
                       child: ProgressiveImage(
-                        placeholder:
-                            AssetImage('assets/images/placeholder.jpg'),
+                        placeholder: AssetImage(AppImages.placeholder),
                         thumbnail: NetworkImage(category.thumbnail),
                         image: NetworkImage(category.image),
                         height: height,

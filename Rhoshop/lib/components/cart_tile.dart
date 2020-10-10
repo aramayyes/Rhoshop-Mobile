@@ -3,6 +3,7 @@ import 'package:progressive_image/progressive_image.dart';
 import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/service/app_database/app_database.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
+import 'package:rhoshop/styles/app_images.dart' as AppImages;
 
 /// Displays cart item details as a tile (or card).
 class CartTile extends StatelessWidget {
@@ -31,7 +32,7 @@ class CartTile extends StatelessWidget {
         child: Row(
           children: [
             ProgressiveImage(
-              placeholder: AssetImage('assets/images/placeholder.jpg'),
+              placeholder: AssetImage(AppImages.placeholder),
               thumbnail: NetworkImage(product.thumbnail),
               image: NetworkImage(product.image),
               height: 142, // 150 - 8

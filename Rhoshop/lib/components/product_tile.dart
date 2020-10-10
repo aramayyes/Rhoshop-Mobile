@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progressive_image/progressive_image.dart';
 import 'package:rhoshop/dto/product.dto.dart';
+import 'package:rhoshop/styles/app_images.dart' as AppImages;
 
 /// Displays product details as a tile (or card).
 class ProductTile extends StatelessWidget {
@@ -20,7 +21,7 @@ class ProductTile extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(imageBorderRadius),
               child: ProgressiveImage(
-                placeholder: AssetImage('assets/images/placeholder.jpg'),
+                placeholder: AssetImage(AppImages.placeholder),
                 thumbnail: NetworkImage(product.thumbnail),
                 image: NetworkImage(product.image),
                 height: double.infinity,
