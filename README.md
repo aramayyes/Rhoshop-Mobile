@@ -28,13 +28,20 @@ Application is available in two languages: `English` and `Russian`.
 * Flag icons: made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
 ## Screenshots
-<img src="https://i.imgur.com/SEduERN.png" width="240">
-<img src="https://i.imgur.com/i0R04AA.png" width="240">
-<img src="https://i.imgur.com/QUVxN8I.png" width="240">
-<img src="https://i.imgur.com/waZuJwR.png" width="240">
-<img src="https://i.imgur.com/HYKr2kf.png" width="240">
-<img src="https://i.imgur.com/vvs7WFS.png" width="240">
-<img src="https://i.imgur.com/CPj2YHM.png" width="240">
-<img src="https://i.imgur.com/MedaqnL.png" width="240">
-<img src="https://i.imgur.com/WD4GyPl.png" width="240">
-<img src="https://i.imgur.com/YwRWIjC.png" width="240">
+<p float="left">
+<img src="https://i.imgur.com/SEduERN.png" width="200">
+<img src="https://i.imgur.com/i0R04AA.png" width="200">
+<img src="https://i.imgur.com/QUVxN8I.png" width="200">
+</p>
+<p float="left">
+<img src="https://i.imgur.com/waZuJwR.png" width="200">
+<img src="https://i.imgur.com/HYKr2kf.png" width="200">
+<img src="https://i.imgur.com/vvs7WFS.png" width="200">
+</p>
+<p float="left">
+<img src="https://i.imgur.com/CPj2YHM.png" width="200">
+<img src="https://i.imgur.com/MedaqnL.png" width="200">
+<img src="https://i.imgur.com/WD4GyPl.png" width="200">
+<p float="left">
+<img src="https://i.imgur.com/YwRWIjC.png" width="200">
+</p>
