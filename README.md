@@ -28,23 +28,23 @@ Application is available in two languages: `English` and `Russian`.
 * Flag icons: made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
 ## Screenshots
-<p float="left">
+<p align="center">
 <img src="https://i.imgur.com/SEduERN.png" width="300">
 <img src="https://i.imgur.com/i0R04AA.png" width="300">
 </p>
-<p float="left">
+<p align="center">
 <img src="https://i.imgur.com/QUVxN8I.png" width="300">
 <img src="https://i.imgur.com/waZuJwR.png" width="300">
 </p>
-<p float="left">
+<p align="center">
 <img src="https://i.imgur.com/HYKr2kf.png" width="300">
 <img src="https://i.imgur.com/vvs7WFS.png" width="300">
 </p>
-<p float="left">
+<p align="center">
 <img src="https://i.imgur.com/CPj2YHM.png" width="300">
 <img src="https://i.imgur.com/MedaqnL.png" width="300">
 </p>
-<p float="left">
+<p align="center">
 <img src="https://i.imgur.com/WD4GyPl.png" width="300">
 <img src="https://i.imgur.com/YwRWIjC.png" width="300">
 </p>
