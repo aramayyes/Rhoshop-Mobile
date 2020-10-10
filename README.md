@@ -29,19 +29,22 @@ Application is available in two languages: `English` and `Russian`.
 
 ## Screenshots
 <p float="left">
-<img src="https://i.imgur.com/SEduERN.png" width="200">
-<img src="https://i.imgur.com/i0R04AA.png" width="200">
-<img src="https://i.imgur.com/QUVxN8I.png" width="200">
+<img src="https://i.imgur.com/SEduERN.png" width="300">
+<img src="https://i.imgur.com/i0R04AA.png" width="300">
 </p>
 <p float="left">
-<img src="https://i.imgur.com/waZuJwR.png" width="200">
-<img src="https://i.imgur.com/HYKr2kf.png" width="200">
-<img src="https://i.imgur.com/vvs7WFS.png" width="200">
+<img src="https://i.imgur.com/QUVxN8I.png" width="300">
+<img src="https://i.imgur.com/waZuJwR.png" width="300">
 </p>
 <p float="left">
-<img src="https://i.imgur.com/CPj2YHM.png" width="200">
-<img src="https://i.imgur.com/MedaqnL.png" width="200">
-<img src="https://i.imgur.com/WD4GyPl.png" width="200">
+<img src="https://i.imgur.com/HYKr2kf.png" width="300">
+<img src="https://i.imgur.com/vvs7WFS.png" width="300">
+</p>
 <p float="left">
-<img src="https://i.imgur.com/YwRWIjC.png" width="200">
+<img src="https://i.imgur.com/CPj2YHM.png" width="300">
+<img src="https://i.imgur.com/MedaqnL.png" width="300">
+</p>
+<p float="left">
+<img src="https://i.imgur.com/WD4GyPl.png" width="300">
+<img src="https://i.imgur.com/YwRWIjC.png" width="300">
 </p>
