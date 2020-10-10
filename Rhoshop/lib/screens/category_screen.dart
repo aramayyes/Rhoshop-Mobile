@@ -22,10 +22,15 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   QueryOptions _productsQueryOptions;
+
+  /// Specifies which key contains the result data in QueryResult.
   String gqlDataKey;
 
   @override
   Widget build(BuildContext context) {
+    // Although `New Arrivals` or `Best Sell` are not categories,
+    // after pressing the `See all` button in those sections, this screen is shown.
+    // They are considered pseudocategories have special ids.
     const pseudoSectionElementsCount = 10;
     if (_productsQueryOptions == null) {
       switch (widget.arguments.categoryId) {
@@ -88,14 +93,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
             SizedBox(
               height: 20,
             ),
-            Expanded(child: _buildProductsGrid()),
+            Expanded(child: _buildProductsSection()),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildProductsGrid() {
+  Widget _buildProductsSection() {
     const crossAxisCount = 2;
     const crossAxisSpacing = 30.0;
     const mainAxisSpacing = 20.0;

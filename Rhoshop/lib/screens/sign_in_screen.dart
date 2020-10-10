@@ -41,81 +41,6 @@ class _SignInScreenState extends State<SignInScreen> {
   /// Whether input credentials are valid, i.e. whether input password is valid for the input email).
   bool _areCredentialsValid = true;
 
-  /// Handles 'Sign in' button presses.
-  void onSignInButtonPressed(BuildContext context, GraphQLClient client) async {
-    Helpers.dismissKeyboard(context);
-
-    _areCredentialsValid = true;
-    if (_formKey.currentState.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-
-      /// Create user
-      final result = await client.mutate(
-        MutationOptions(
-          documentNode: gql(Mutations.signIn),
-          variables: {
-            "signInDto": SignInDto(
-              email: _email,
-              password: _password,
-            )
-          },
-        ),
-      );
-
-      setState(() {
-        _isLoading = false;
-      });
-
-      // Manage exception if there is any.
-      if (result.exception != null) {
-        final error = parseApiError(result.exception);
-
-        switch (error) {
-          case ApiError.client:
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(
-                AppLocalization.of(context).connectionError,
-                style: TextStyle(fontFamily: 'Nunito'),
-              ),
-            ));
-            return;
-          case ApiError.badUserInput:
-            _areCredentialsValid = false;
-            _formKey.currentState.validate();
-            return;
-          default:
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(
-                AppLocalization.of(context).serverError,
-                style: TextStyle(fontFamily: 'Nunito'),
-              ),
-            ));
-            return;
-        }
-      }
-
-      // Parse response
-      final jwt = JwtTokenDto.fromJson(result.data['signIn']);
-
-      // Save access token
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', jwt.accessToken);
-
-      // Update graphql client to include jwt token for auth
-      GraphQLProvider.of(context).value =
-          createGqlClient(token: jwt.accessToken);
-
-      Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
-    }
-  }
-
-  /// Handles 'Sign up' button presses.
-  void onSignUpButtonPressed() {
-    Navigator.popAndPushNamed(context, Routes.signUp);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -222,7 +147,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   builder: (context) => PrimaryButton(
                                     onPressed: _isLoading
                                         ? null
-                                        : () => onSignInButtonPressed(
+                                        : () => _onSignInButtonPressed(
                                             context, client),
                                     child: Text(
                                       AppLocalization.of(context).signIn,
@@ -243,7 +168,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           children: [
                             FlatButton(
                               padding: EdgeInsets.symmetric(horizontal: 0),
-                              onPressed: onSignUpButtonPressed,
+                              onPressed: _onSignUpButtonPressed,
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               child: Text(
@@ -255,7 +180,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                             ),
                             FlatButton(
-                              onPressed: onSignUpButtonPressed,
+                              onPressed: _onSignUpButtonPressed,
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               child: Text(
@@ -275,5 +200,81 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
+  }
+
+  /// Handles 'Sign in' button presses.
+  void _onSignInButtonPressed(
+      BuildContext context, GraphQLClient client) async {
+    Helpers.dismissKeyboard(context);
+
+    _areCredentialsValid = true;
+    if (_formKey.currentState.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      /// Create user.
+      final result = await client.mutate(
+        MutationOptions(
+          documentNode: gql(Mutations.signIn),
+          variables: {
+            "signInDto": SignInDto(
+              email: _email,
+              password: _password,
+            )
+          },
+        ),
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Manage exception if there is any.
+      if (result.exception != null) {
+        final error = parseApiError(result.exception);
+
+        switch (error) {
+          case ApiError.client:
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                AppLocalization.of(context).connectionError,
+                style: TextStyle(fontFamily: 'Nunito'),
+              ),
+            ));
+            return;
+          case ApiError.badUserInput:
+            _areCredentialsValid = false;
+            _formKey.currentState.validate();
+            return;
+          default:
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                AppLocalization.of(context).serverError,
+                style: TextStyle(fontFamily: 'Nunito'),
+              ),
+            ));
+            return;
+        }
+      }
+
+      // Parse response.
+      final jwt = JwtTokenDto.fromJson(result.data['signIn']);
+
+      // Save access token.
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', jwt.accessToken);
+
+      // Update graphql client to include jwt token for auth.
+      GraphQLProvider.of(context).value =
+          createGqlClient(token: jwt.accessToken);
+
+      Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
+    }
+  }
+
+  /// Handles 'Sign up' button presses.
+  void _onSignUpButtonPressed() {
+    Navigator.popAndPushNamed(context, Routes.signUp);
   }
 }

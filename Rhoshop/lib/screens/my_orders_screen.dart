@@ -31,8 +31,6 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
       );
     }
 
-    Widget child;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -61,7 +59,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               height: 20,
             ),
             Expanded(
-              child: _buildOrdersSection(child),
+              child: _buildOrdersSection(),
             ),
           ],
         ),
@@ -69,7 +67,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     );
   }
 
-  Query _buildOrdersSection(Widget child) {
+  Query _buildOrdersSection() {
     return Query(
       options: _ordersQueryOptions,
       builder: (result, {fetchMore, refetch}) {
@@ -86,47 +84,55 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               .toList();
 
           return orders.isEmpty
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/blank.svg',
-                      width: MediaQuery.of(context).size.width * 0.3,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: Text(
-                        AppLocalization.of(context).noOrderText,
-                        style: Theme.of(context).textTheme.headline3,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 40),
-                      child: PrimaryButton(
-                        onPressed: () {
-                          Navigator.popUntil(
-                            context,
-                            ModalRoute.withName(Routes.home),
-                          );
-                        },
-                        child: Text(
-                          AppLocalization.of(context).shopNowButtonText,
-                          style: Theme.of(context).textTheme.button,
-                        ),
-                      ),
-                    )
-                  ],
-                )
+              ? _buildNoItemsView()
               : _buildOrdersList(orders);
         }
       },
     );
   }
 
+  Column _buildNoItemsView() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SvgPicture.asset(
+          'assets/images/blank.svg',
+          width: MediaQuery.of(context).size.width * 0.3,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: Text(
+            AppLocalization.of(context).noOrderText,
+            style: Theme.of(context).textTheme.headline3,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 40),
+          child: PrimaryButton(
+            onPressed: () {
+              Navigator.popUntil(
+                context,
+                ModalRoute.withName(Routes.home),
+              );
+            },
+            child: Text(
+              AppLocalization.of(context).shopNowButtonText,
+              style: Theme.of(context).textTheme.button,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
   ListView _buildOrdersList(List<OrderDto> orders) {
     return ListView.separated(
+      itemCount: orders.length,
+      separatorBuilder: (context, index) => SizedBox(
+        height: 4,
+      ),
       itemBuilder: (context, index) {
         final order = orders[index];
         return GestureDetector(
@@ -244,10 +250,6 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
           ),
         );
       },
-      separatorBuilder: (context, index) => SizedBox(
-        height: 4,
-      ),
-      itemCount: orders.length,
     );
   }
 }

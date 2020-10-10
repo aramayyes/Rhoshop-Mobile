@@ -45,69 +45,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   /// Whether input email already exist in api server.
   bool _isEmailDuplicate = false;
 
-  /// Handles 'Sign up' button presses.
-  void onSignUpButtonPressed(BuildContext context, GraphQLClient client) async {
-    Helpers.dismissKeyboard(context);
-
-    _isEmailDuplicate = false;
-    if (_formKey.currentState.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-
-      /// Create user
-      final result = await client.mutate(
-          MutationOptions(documentNode: gql(Mutations.createUser), variables: {
-        "createUserDto": CreateUserDto(
-          name: _name,
-          email: _email,
-          password: _password,
-          phoneNumber: _phoneNumber,
-        )
-      }));
-
-      setState(() {
-        _isLoading = false;
-      });
-
-      // Manage exception if there is any.
-      if (result.exception != null) {
-        final error = parseApiError(result.exception);
-
-        switch (error) {
-          case ApiError.client:
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(
-                AppLocalization.of(context).connectionError,
-                style: TextStyle(fontFamily: 'Nunito'),
-              ),
-            ));
-            return;
-          case ApiError.badUserInput:
-            _isEmailDuplicate = true;
-            _formKey.currentState.validate();
-            return;
-          default:
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text(
-                AppLocalization.of(context).serverError,
-                style: TextStyle(fontFamily: 'Nunito'),
-              ),
-            ));
-            return;
-        }
-      }
-
-      // Navigate to sign in screen if registration is successful.
-      Navigator.popAndPushNamed(context, Routes.signIn);
-    }
-  }
-
-  /// Handles 'Sign in' button presses.
-  void onSignInButtonPressed() {
-    Navigator.popAndPushNamed(context, Routes.signIn);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -253,7 +190,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   builder: (context) => PrimaryButton(
                                     onPressed: _isLoading
                                         ? null
-                                        : () => onSignUpButtonPressed(
+                                        : () => _onSignUpButtonPressed(
                                             context, client),
                                     child: Text(
                                       AppLocalization.of(context).signUp,
@@ -274,7 +211,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             FlatButton(
                               padding: EdgeInsets.symmetric(horizontal: 0),
-                              onPressed: onSignInButtonPressed,
+                              onPressed: _onSignInButtonPressed,
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               child: Text(
@@ -286,7 +223,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             ),
                             FlatButton(
-                              onPressed: onSignInButtonPressed,
+                              onPressed: _onSignInButtonPressed,
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               child: Text(
@@ -306,5 +243,69 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  /// Handles 'Sign up' button presses.
+  void _onSignUpButtonPressed(
+      BuildContext context, GraphQLClient client) async {
+    Helpers.dismissKeyboard(context);
+
+    _isEmailDuplicate = false;
+    if (_formKey.currentState.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      /// Create user
+      final result = await client.mutate(
+          MutationOptions(documentNode: gql(Mutations.createUser), variables: {
+        "createUserDto": CreateUserDto(
+          name: _name,
+          email: _email,
+          password: _password,
+          phoneNumber: _phoneNumber,
+        )
+      }));
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Manage exception if there is any.
+      if (result.exception != null) {
+        final error = parseApiError(result.exception);
+
+        switch (error) {
+          case ApiError.client:
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                AppLocalization.of(context).connectionError,
+                style: TextStyle(fontFamily: 'Nunito'),
+              ),
+            ));
+            return;
+          case ApiError.badUserInput:
+            _isEmailDuplicate = true;
+            _formKey.currentState.validate();
+            return;
+          default:
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(
+                AppLocalization.of(context).serverError,
+                style: TextStyle(fontFamily: 'Nunito'),
+              ),
+            ));
+            return;
+        }
+      }
+
+      // Navigate to sign in screen if registration is successful.
+      Navigator.popAndPushNamed(context, Routes.signIn);
+    }
+  }
+
+  /// Handles 'Sign in' button presses.
+  void _onSignInButtonPressed() {
+    Navigator.popAndPushNamed(context, Routes.signIn);
   }
 }

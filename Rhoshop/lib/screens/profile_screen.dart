@@ -73,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(
                 height: 20,
               ),
-              Expanded(child: _buildUserProfile())
+              Expanded(child: _buildUserProfileSection())
             ],
           ),
         ),
@@ -81,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Query _buildUserProfile() {
+  Query _buildUserProfileSection() {
     return Query(
       options: _userQueryOptions,
       builder: (result, {fetchMore, refetch}) {

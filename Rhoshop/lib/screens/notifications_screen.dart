@@ -19,11 +19,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   QueryOptions _notificationsQueryOptions;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     if (_notificationsQueryOptions == null) {
       _notificationsQueryOptions = QueryOptions(
@@ -60,7 +55,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               height: 20,
             ),
             Expanded(
-              child: _buildNotifications(),
+              child: _buildNotificationsSection(),
             ),
           ],
         ),
@@ -68,49 +63,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     );
   }
 
-  void _showNotificationInAlert(
-      BuildContext context, NotificationDto notification) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            DateFormat.MMMMd(
-              Localizations.localeOf(
-                context,
-              ).toString(),
-            ).format(
-              notification.date,
-            ),
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          content: Text(
-            notification.message,
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-          actions: [
-            SizedBox(
-              width: 140,
-              height: 40,
-              child: PrimaryButton(
-                child: Text(
-                  AppLocalization.of(context).close,
-                  style: Theme.of(context).textTheme.button.copyWith(
-                        fontSize: 16,
-                      ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildNotifications() {
+  Widget _buildNotificationsSection() {
     return Query(
       options: _notificationsQueryOptions,
       builder: (result, {fetchMore, refetch}) {
@@ -152,6 +105,48 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             ),
           );
         }
+      },
+    );
+  }
+
+  void _showNotificationInAlert(
+      BuildContext context, NotificationDto notification) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            DateFormat.MMMMd(
+              Localizations.localeOf(
+                context,
+              ).toString(),
+            ).format(
+              notification.date,
+            ),
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          content: Text(
+            notification.message,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+          actions: [
+            SizedBox(
+              width: 140,
+              height: 40,
+              child: PrimaryButton(
+                child: Text(
+                  AppLocalization.of(context).close,
+                  style: Theme.of(context).textTheme.button.copyWith(
+                        fontSize: 16,
+                      ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        );
       },
     );
   }

@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((duration) {
+      // Update all data after language change.
       Provider.of<AppLocale>(context, listen: false).addListener(() {
         final newLocale = Provider.of<AppLocale>(context, listen: false).locale;
 
@@ -205,29 +206,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ));
-  }
-
-  Future _showNavigationDrawer(BuildContext context) {
-    return showGeneralDialog(
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionBuilder: (context, a1, a2, child) {
-        final curvedValue = Curves.easeInOut.transform(a1.value) - 1.0;
-        return Transform(
-          transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
-          child: Opacity(
-            opacity: a1.value,
-            child: Container(
-              child: child,
-            ),
-          ),
-        );
-      },
-      transitionDuration: Duration(milliseconds: 300),
-      barrierDismissible: true,
-      barrierLabel: '',
-      context: context,
-      pageBuilder: (context, animation1, animation2) => Navigation(),
-    );
   }
 
   /// Builds and returns search bar with dropdown suggestions.
@@ -516,6 +494,27 @@ class _HomeScreenState extends State<HomeScreen> {
           child: child,
         );
       },
+    );
+  }
+
+  Future _showNavigationDrawer(BuildContext context) {
+    return showGeneralDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, child) {
+        final curvedValue = Curves.easeInOut.transform(a1.value) - 1.0;
+        return Transform(
+          transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+          child: Opacity(
+            opacity: a1.value,
+            child: child,
+          ),
+        );
+      },
+      transitionDuration: Duration(milliseconds: 300),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) => Navigation(),
     );
   }
 }

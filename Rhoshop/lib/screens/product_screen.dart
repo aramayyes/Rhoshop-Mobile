@@ -43,10 +43,10 @@ class ProductScreen extends StatefulWidget {
 class _ProductScreenState extends State<ProductScreen> {
   QueryOptions _productQueryOptions;
 
-  /// Selected size, which will be included in order.
+  /// Selected size, which will be included in cart.
   ProductSize _selectedSize = ProductSize.M;
 
-  /// Selected color, which be included in order.
+  /// Selected color, which be included in cart.
   Color _selectedColor = productColors[0];
 
   @override
@@ -156,99 +156,112 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Align _buildAddToCart(BuildContext context, ProductDto product) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: SafeArea(
-        child: SizedBox(
-          height: 60,
-          child: Consumer<Cart>(
-            builder: (context, cart, child) {
-              final cartItem = cart.getByDetails(
-                CartItem(
-                  product: product.id,
-                  productColor: _selectedColor.value.toRadixString(16),
-                  productSize: _selectedSize.toString().split('.').last,
-                  productCount: 1,
-                ),
-              );
-              return PrimaryButton(
-                borderRadius: 0,
-                onPressed: () {
-                  cartItem != null
-                      ? cart.remove(cartItem)
-                      : cart.add(
-                          CartItem(
-                            product: product.id,
-                            productColor:
-                                _selectedColor.value.toRadixString(16),
-                            productSize:
-                                _selectedSize.toString().split('.').last,
-                            productCount: 1,
-                          ),
-                        );
-                },
-                child: Text(
-                  cartItem != null
-                      ? AppLocalization.of(context).alreadyInCartText
-                      : AppLocalization.of(context).addToCartText,
-                  style: Theme.of(context).textTheme.button,
-                ),
-              );
-            },
+  Widget _buildImage(ProductDto product) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  PhotoScreen(
+                PhotoScreenArguments(product.image),
+              ),
+            ));
+      },
+      child: Container(
+        width: double.infinity,
+        child: Hero(
+          tag: product.image,
+          child: ProgressiveImage(
+            placeholder: AssetImage('assets/images/placeholder.jpg'),
+            thumbnail: NetworkImage(product.thumbnail),
+            image: NetworkImage(product.image),
+            height: 200,
+            width: 200 /
+                1.2, // All product images from server have this aspect ratio.
           ),
         ),
       ),
     );
   }
 
-  Row _buildColorRow(BuildContext context) {
+  Text _buildTitle(ProductDto product, BuildContext context) {
+    return Text(
+      product.name,
+      style: Theme.of(context)
+          .textTheme
+          .headline2
+          .copyWith(fontWeight: FontWeight.w600),
+      maxLines: 2,
+    );
+  }
+
+  Widget _buildPriceRow(ProductDto product, BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          '\$${product.price.toStringAsFixed(2)}',
+          style: Theme.of(context).textTheme.headline3.copyWith(
+                color: AppColors.secondary,
+              ),
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        if (product.oldPrice != null)
+          Text(
+            '\$${product.oldPrice.toStringAsFixed(2)}',
+            style: Theme.of(context)
+                .textTheme
+                .bodyText2
+                .copyWith(decoration: TextDecoration.lineThrough),
+          ),
+      ],
+    );
+  }
+
+  Row _buildRatingRow(ProductDto product, BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          AppLocalization.of(context).colorSectionTitle,
-          style: Theme.of(context).textTheme.headline3,
+        SizedBox(
+          width: 80,
+          child: PrimaryButton(
+            padding: 6,
+            onPressed: null,
+            child: Text(
+              product.rating.toStringAsFixed(1),
+              style: Theme.of(context).textTheme.button,
+            ),
+          ),
         ),
-        Row(
-          children: productColors
-              .map<Widget>(
-                (color) => _buildColorDot(color),
-              )
-              .toList(),
+        Text(
+          AppLocalization.of(context).reviewsCaptionText(product.reviewsCount),
+          style: Theme.of(context).textTheme.headline4.copyWith(
+                color: AppColors.secondary,
+              ),
         ),
       ],
     );
   }
 
-  GestureDetector _buildColorDot(Color color) {
-    final isSelected = color == _selectedColor;
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedColor = color;
-        });
-      },
-      child: Container(
-        height: 36,
-        width: 36,
-        padding: EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppColors.primary,
-          border: Border.all(
-            color: isSelected ? AppColors.secondary : Colors.transparent,
-            width: 4,
-          ),
+  Column _buildDescription(BuildContext context, ProductDto product) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppLocalization.of(context).descriptionSectionTitle,
+          style: Theme.of(context).textTheme.bodyText1,
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color,
-          ),
+        SizedBox(
+          height: 4,
         ),
-      ),
+        Text(
+          product.description,
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+      ],
     );
   }
 
@@ -315,112 +328,99 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Column _buildDescription(BuildContext context, ProductDto product) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          AppLocalization.of(context).descriptionSectionTitle,
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        Text(
-          product.description,
-          style: Theme.of(context).textTheme.bodyText2,
-        ),
-      ],
-    );
-  }
-
-  Text _buildTitle(ProductDto product, BuildContext context) {
-    return Text(
-      product.name,
-      style: Theme.of(context)
-          .textTheme
-          .headline2
-          .copyWith(fontWeight: FontWeight.w600),
-      maxLines: 2,
-    );
-  }
-
-  Row _buildRatingRow(ProductDto product, BuildContext context) {
+  Row _buildColorRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          width: 80,
-          child: PrimaryButton(
-            padding: 6,
-            onPressed: null,
-            child: Text(
-              product.rating.toStringAsFixed(1),
-              style: Theme.of(context).textTheme.button,
-            ),
-          ),
-        ),
         Text(
-          AppLocalization.of(context).reviewsCaptionText(product.reviewsCount),
-          style: Theme.of(context).textTheme.headline4.copyWith(
-                color: AppColors.secondary,
-              ),
+          AppLocalization.of(context).colorSectionTitle,
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        Row(
+          children: productColors
+              .map<Widget>(
+                (color) => _buildColorDot(color),
+              )
+              .toList(),
         ),
       ],
     );
   }
 
-  Widget _buildImage(ProductDto product) {
+  GestureDetector _buildColorDot(Color color) {
+    final isSelected = color == _selectedColor;
+
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            PageRouteBuilder(
-              opaque: false,
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  PhotoScreen(
-                PhotoScreenArguments(product.image),
-              ),
-            ));
+        setState(() {
+          _selectedColor = color;
+        });
       },
       child: Container(
-        width: double.infinity,
-        child: Hero(
-          tag: product.image,
-          child: ProgressiveImage(
-            placeholder: AssetImage('assets/images/placeholder.jpg'),
-            thumbnail: NetworkImage(product.thumbnail),
-            image: NetworkImage(product.image),
-            height: 200,
-            width: 200 /
-                1.2, // All product images from server have this aspect ratio.
+        height: 36,
+        width: 36,
+        padding: EdgeInsets.all(2),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.primary,
+          border: Border.all(
+            color: isSelected ? AppColors.secondary : Colors.transparent,
+            width: 4,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: color,
           ),
         ),
       ),
     );
   }
 
-  Widget _buildPriceRow(ProductDto product, BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          '\$${product.price.toStringAsFixed(2)}',
-          style: Theme.of(context).textTheme.headline3.copyWith(
-                color: AppColors.secondary,
-              ),
-        ),
-        SizedBox(
-          width: 20,
-        ),
-        if (product.oldPrice != null)
-          Text(
-            '\$${product.oldPrice.toStringAsFixed(2)}',
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(decoration: TextDecoration.lineThrough),
+  Align _buildAddToCart(BuildContext context, ProductDto product) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: SafeArea(
+        child: SizedBox(
+          height: 60,
+          child: Consumer<Cart>(
+            builder: (context, cart, child) {
+              final cartItem = cart.getByDetails(
+                CartItem(
+                  product: product.id,
+                  productColor: _selectedColor.value.toRadixString(16),
+                  productSize: _selectedSize.toString().split('.').last,
+                  productCount: 1,
+                ),
+              );
+              return PrimaryButton(
+                borderRadius: 0,
+                onPressed: () {
+                  cartItem != null
+                      ? cart.remove(cartItem)
+                      : cart.add(
+                          CartItem(
+                            product: product.id,
+                            productColor:
+                                _selectedColor.value.toRadixString(16),
+                            productSize:
+                                _selectedSize.toString().split('.').last,
+                            productCount: 1,
+                          ),
+                        );
+                },
+                child: Text(
+                  cartItem != null
+                      ? AppLocalization.of(context).alreadyInCartText
+                      : AppLocalization.of(context).addToCartText,
+                  style: Theme.of(context).textTheme.button,
+                ),
+              );
+            },
           ),
-      ],
+        ),
+      ),
     );
   }
 }
