@@ -8,3 +8,4 @@ export 'notification.dto.dart';
 export 'user.dto.dart';
 export 'update_user.dto.dart';
 export 'create_order.dto.dart';
+export 'order.dto.dart';

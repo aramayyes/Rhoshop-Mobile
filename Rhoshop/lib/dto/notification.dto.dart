@@ -6,5 +6,5 @@ class NotificationDto {
   NotificationDto.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         message = json['message'],
-        date = DateTime.parse(json['date']);
+        date = json.containsKey('date') ? DateTime.parse(json['date']) : null;
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:progressive_image/progressive_image.dart';
+import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/primary_button.dart';
+import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
-import 'package:rhoshop/mock/db.dart' as MockDb;
-import 'package:rhoshop/mock/models/mock_cart_item.dart';
 import 'package:rhoshop/screens/all.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
 import 'package:rhoshop/styles/dimens.dart' as Dimens;
@@ -18,12 +20,15 @@ class MyOrdersScreen extends StatefulWidget {
 }
 
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
-  Future<List<MockCartItem>> _ordersFuture;
+  QueryOptions _ordersQueryOptions;
 
   @override
   Widget build(BuildContext context) {
-    if (_ordersFuture == null) {
-      _ordersFuture = MockDb.fetchMyOrders();
+    if (_ordersQueryOptions == null) {
+      _ordersQueryOptions = QueryOptions(
+        documentNode: gql(Queries.orders),
+        variables: {"language": Localizations.localeOf(context).languageCode},
+      );
     }
 
     Widget child;
@@ -64,12 +69,23 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
     );
   }
 
-  FutureBuilder<List<MockCartItem>> _buildOrdersSection(Widget child) {
-    return FutureBuilder<List<MockCartItem>>(
-      future: _ordersFuture,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          child = snapshot.data.isEmpty
+  Query _buildOrdersSection(Widget child) {
+    return Query(
+      options: _ordersQueryOptions,
+      builder: (result, {fetchMore, refetch}) {
+        if (result.hasException || result.loading) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor:
+                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
+            ),
+          );
+        } else {
+          List<OrderDto> orders = result.data['orders']
+              .map<OrderDto>((o) => OrderDto.fromJson(o))
+              .toList();
+
+          return orders.isEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,35 +119,23 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                     )
                   ],
                 )
-              : _buildOrdersList(snapshot);
-        } else {
-          // This indicator will be also shown in case of error.
-          child = Center(
-            child: CircularProgressIndicator(
-              valueColor:
-                  new AlwaysStoppedAnimation<Color>(AppColors.secondary),
-            ),
-          );
+              : _buildOrdersList(orders);
         }
-
-        return Center(
-          child: child,
-        );
       },
     );
   }
 
-  ListView _buildOrdersList(AsyncSnapshot<List<MockCartItem>> snapshot) {
+  ListView _buildOrdersList(List<OrderDto> orders) {
     return ListView.separated(
       itemBuilder: (context, index) {
-        final cartItem = snapshot.data[index];
+        final order = orders[index];
         return GestureDetector(
           onTap: () {
             Navigator.pushNamed(
               context,
               Routes.product,
               arguments: ProductScreenArguments(
-                snapshot.data[index].product.id,
+                order.product.id,
               ),
             );
           },
@@ -142,8 +146,13 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               height: 120,
               child: Row(
                 children: [
-                  Image.asset(
-                    cartItem.product.imgUrl,
+                  ProgressiveImage(
+                    placeholder: AssetImage('assets/images/placeholder.jpg'),
+                    thumbnail: NetworkImage(order.product.thumbnail),
+                    image: NetworkImage(order.product.image),
+                    height: 112, // 120 - 8
+                    width: 112 /
+                        1.2, // All product images from server have this aspect ratio.
                   ),
                   SizedBox(
                     width: 8,
@@ -153,7 +162,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          cartItem.product.name,
+                          order.product.name,
                           style: Theme.of(context).textTheme.headline4,
                           maxLines: 1,
                           overflow: TextOverflow.fade,
@@ -181,7 +190,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                     ),
                                   ),
                                   Text(
-                                    'x${cartItem.count}',
+                                    'x${order.productCount}',
                                     style:
                                         Theme.of(context).textTheme.bodyText2,
                                   ),
@@ -191,7 +200,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      '\$${cartItem.product.price.toStringAsFixed(2)}',
+                                      '\$${order.product.price.toStringAsFixed(2)}',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1
@@ -206,7 +215,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                     width: 16,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: cartItem.productColor,
+                                      color: Color(int.parse(order.productColor,
+                                          radix: 16)),
                                     ),
                                   ),
                                   SizedBox(
@@ -214,7 +224,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                   ),
                                   Container(
                                     child: Text(
-                                      cartItem.productSize
+                                      order.productSize
                                           .toString()
                                           .split('.')
                                           .last,
@@ -237,7 +247,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
       separatorBuilder: (context, index) => SizedBox(
         height: 4,
       ),
-      itemCount: snapshot.data.length,
+      itemCount: orders.length,
     );
   }
 }

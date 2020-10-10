@@ -181,8 +181,9 @@ class _CartScreenState extends State<CartScreen> {
                         width: 16,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Color(int.parse('FF${cartItem.productColor}',
-                              radix: 16)),
+                          color: Color(
+                            int.parse(cartItem.productColor, radix: 16),
+                          ),
                         ),
                       ),
                       SizedBox(
