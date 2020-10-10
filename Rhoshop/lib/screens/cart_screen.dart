@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:progressive_image/progressive_image.dart';
 import 'package:provider/provider.dart';
+import 'package:rhoshop/api/mutations/all.dart' as Mutations;
 import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/primary_button.dart';
 import 'package:rhoshop/dto/all.dart';
@@ -23,6 +24,9 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   QueryOptions _productsQueryOptions;
+
+  /// Whether the order request is in loading state.
+  bool _isOrderLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -320,24 +324,61 @@ class _CartScreenState extends State<CartScreen> {
           Align(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: PrimaryButton(
-                onPressed: cart.isEmpty || cart.isLoading(CartOperation.order)
-                    ? null
-                    : () async {
-                        // TODO: add order functionality
-                        //await cart.order();
-                        Navigator.pushNamed(context, Routes.orderConfirmation);
-                      },
-                child: Text(
-                  AppLocalization.of(context).orderButtonText,
-                  style: Theme.of(context).textTheme.button,
+              child: GraphQLConsumer(
+                builder: (client) => PrimaryButton(
+                  onPressed: cart.isEmpty || _isOrderLoading
+                      ? null
+                      : () => _order(cart, client),
+                  child: Text(
+                    AppLocalization.of(context).orderButtonText,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                  isLoading: _isOrderLoading,
                 ),
-                isLoading: cart.isLoading(CartOperation.order),
               ),
             ),
           )
         ],
       ),
     );
+  }
+
+  Future _order(Cart cart, GraphQLClient client) async {
+    setState(() {
+      _isOrderLoading = true;
+    });
+
+    /// API server expects a single cart item.
+    await Future.wait(
+      cart.items
+          .map<Future<QueryResult>>(
+            (c) => client.mutate(
+              MutationOptions(
+                documentNode: gql(
+                  Mutations.createOrder,
+                ),
+                variables: {
+                  "createOrderDto": CreateOrderDto(
+                    product: c.product,
+                    productSize: c.productSize,
+                    // Color in cart item contains Alpha channel, while
+                    // color in server doesn't.
+                    productColor: c.productColor.substring(2),
+                    productCount: c.productCount,
+                  )
+                },
+              ),
+            ),
+          )
+          .toList(),
+    );
+
+    await cart.clear();
+
+    setState(() {
+      _isOrderLoading = false;
+    });
+
+    Navigator.pushNamed(context, Routes.orderConfirmation);
   }
 }

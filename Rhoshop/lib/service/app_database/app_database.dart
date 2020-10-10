@@ -77,4 +77,9 @@ class AppDatabase {
       whereArgs: [cartItem.id],
     );
   }
+
+  Future removeAllCartItems() async {
+    final db = await database;
+    await db.delete(_cartItemsTableName);
+  }
 }

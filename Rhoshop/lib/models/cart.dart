@@ -4,10 +4,8 @@ import 'package:rhoshop/service/app_database/app_database.dart';
 /// Contains cart's state.
 class Cart extends ChangeNotifier {
   var _items = <CartItem>[];
-  final _loadingStates = <CartOperation>{};
 
   List<CartItem> get items => _items;
-
   bool get isEmpty => _items.isEmpty;
 
   Future<void> load() async {
@@ -16,10 +14,6 @@ class Cart extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
-  }
-
-  bool isLoading(CartOperation loading) {
-    return _loadingStates.contains(loading);
   }
 
   CartItem getByDetails(CartItem cartItem) {
@@ -49,18 +43,9 @@ class Cart extends ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: add ordering functionality
-  // Future order() async {
-  //   _loadingStates.add(CartOperation.order);
-  //   notifyListeners();
-  //
-  //   _items = await MockDb.order();
-  //   _loadingStates.remove(CartOperation.order);
-  //
-  //   notifyListeners();
-  // }
-}
-
-enum CartOperation {
-  order,
+  Future clear() async {
+    await AppDatabase.instance.removeAllCartItems();
+    _items.clear();
+    notifyListeners();
+  }
 }
