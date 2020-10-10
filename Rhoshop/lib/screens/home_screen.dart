@@ -7,7 +7,7 @@ import 'package:progressive_image/progressive_image.dart';
 import 'package:provider/provider.dart';
 import 'package:rhoshop/api/queries/all.dart' as Queries;
 import 'package:rhoshop/components/navigation.dart';
-import 'package:rhoshop/components/product_item.dart';
+import 'package:rhoshop/components/product_tile.dart';
 import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/localization/app_localization.dart';
 import 'package:rhoshop/models/app_locale.dart';
@@ -497,7 +497,7 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: products.length,
             itemBuilder: (context, index) => AspectRatio(
               aspectRatio: 5 / 8,
-              child: ProductItem(
+              child: ProductTile(
                 products[index],
                 onTap: () {
                   Navigator.pushNamed(

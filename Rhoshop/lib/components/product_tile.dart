@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:progressive_image/progressive_image.dart';
 import 'package:rhoshop/dto/product.dto.dart';
 
-/// Represents a single product and contains content about it.
-class ProductItem extends StatelessWidget {
+/// Displays product details as a tile (or card).
+class ProductTile extends StatelessWidget {
   final ProductDto product;
   final double imageBorderRadius;
   final void Function() onTap;
 
-  ProductItem(this.product, {this.imageBorderRadius = 6.0, this.onTap});
+  ProductTile(this.product, {this.imageBorderRadius = 6.0, this.onTap});
 
   @override
   Widget build(BuildContext context) {

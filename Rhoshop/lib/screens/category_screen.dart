@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:rhoshop/api/queries/all.dart' as Queries;
-import 'package:rhoshop/components/product_item.dart';
+import 'package:rhoshop/components/product_tile.dart';
 import 'package:rhoshop/dto/all.dart';
 import 'package:rhoshop/screens/product_screen.dart';
 import 'package:rhoshop/styles/app_colors.dart' as AppColors;
@@ -124,7 +124,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               mainAxisSpacing: mainAxisSpacing,
               childAspectRatio: childAspectRatio,
             ),
-            itemBuilder: (context, index) => ProductItem(
+            itemBuilder: (context, index) => ProductTile(
               products[index],
               onTap: () {
                 Navigator.pushNamed(
