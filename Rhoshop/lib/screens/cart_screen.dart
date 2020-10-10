@@ -26,16 +26,15 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartItems = Provider.of<Cart>(context, listen: false).items;
+
     // Get product with ids contained in cart items.
-    if (_productsQueryOptions == null) {
+    if (_productsQueryOptions == null && cartItems.isNotEmpty) {
       _productsQueryOptions = _productsQueryOptions = QueryOptions(
         documentNode: gql(Queries.productsForCart),
         variables: {
           "filter": FilterProductsDto(
-            ids: Provider.of<Cart>(context, listen: false)
-                .items
-                .map<String>((c) => c.product)
-                .toList(),
+            ids: cartItems.map<String>((c) => c.product).toList(),
           ),
           "language": Localizations.localeOf(context).languageCode
         },
@@ -68,36 +67,45 @@ class _CartScreenState extends State<CartScreen> {
                 style: Theme.of(context).textTheme.headline1,
               ),
               Expanded(
-                child: Query(
-                    options: _productsQueryOptions,
-                    builder: (result, {fetchMore, refetch}) {
-                      if (result.hasException || result.loading) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            valueColor: new AlwaysStoppedAnimation<Color>(
-                                AppColors.secondary),
+                child: cartItems.isEmpty
+                    ? Column(
+                        children: [
+                          Expanded(
+                            child: _buildItemsList(cart, []),
                           ),
-                        );
-                      } else {
-                        List<ProductDto> products = result.data['products']
-                            .map<ProductDto>((p) => ProductDto.fromJson(p))
-                            .toList();
+                          _buildOrderSection(context, cart, [])
+                        ],
+                      )
+                    : Query(
+                        options: _productsQueryOptions,
+                        builder: (result, {fetchMore, refetch}) {
+                          if (result.hasException || result.loading) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    AppColors.secondary),
+                              ),
+                            );
+                          } else {
+                            List<ProductDto> products = result.data['products']
+                                .map<ProductDto>((p) => ProductDto.fromJson(p))
+                                .toList();
 
-                        // If products are deletable in server
-                        // then products got from server should be compared with
-                        // cart items and cart items for which no product is fetched
-                        // should be removed from card.
+                            // If products are deletable in server
+                            // then products got from server should be compared with
+                            // cart items and cart items for which no product is fetched
+                            // should be removed from card.
 
-                        return Column(
-                          children: [
-                            Expanded(
-                              child: _buildItemsList(cart, products),
-                            ),
-                            _buildOrderSection(context, cart, products)
-                          ],
-                        );
-                      }
-                    }),
+                            return Column(
+                              children: [
+                                Expanded(
+                                  child: _buildItemsList(cart, products),
+                                ),
+                                _buildOrderSection(context, cart, products)
+                              ],
+                            );
+                          }
+                        }),
               ),
             ],
           ),
