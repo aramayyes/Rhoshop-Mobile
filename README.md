@@ -12,7 +12,7 @@ All data is taken from online stores and images are taken from [Pexels](https://
 
 ## Application
 
-To run application using local fake API, use [local](https://github.com/aramayyes/Rhoshop-Mobile/tree/local) branch or download [<img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/APK_format_icon.png" width="16">](http://bit.ly/ayy_rhoshop_local). To run application using remote API server (available [here](https://github.com/aramayyes/Rhoshop-Backend)) use [master](https://github.com/aramayyes/Rhoshop-Mobile/tree/master) branch or download [<img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/APK_format_icon.png" width="16">](http://bit.ly/ayy__rhoshop).
+To run application using local fake API, use [local](https://github.com/aramayyes/Rhoshop-Mobile/tree/local) branch or download [<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/APK_format_icon_%282014-2019%29.png" width="16">](http://bit.ly/ayy_rhoshop_local). To run application using remote API server (available [here](https://github.com/aramayyes/Rhoshop-Backend)) use [master](https://github.com/aramayyes/Rhoshop-Mobile/tree/master) branch or download [<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/APK_format_icon_%282014-2019%29.png" width="16">](http://bit.ly/ayy__rhoshop).
 
 Application is available in two languages: `English` and `Russian`.
 
